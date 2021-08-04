@@ -1,17 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./styles/index.scss";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// Components
+import NavBar from "./components/NavBar";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const App = () => {
+  return (
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/login">Login Page</Route>
+        <Route path="/registration">Registration</Route>
+        <Route path="/">Home</Route>
+      </Switch>
+    </Router>
+  );
+};
+
+ReactDOM.render(<App />, document.querySelector("#root"));

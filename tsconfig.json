@@ -1,26 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": [
-    "src"
-  ]
+	"compilerOptions": {
+		"target": "es6",
+		"lib": ["ES6", "DOM", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"declaration": true,
+		"noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
+		"strictNullChecks": true /* Enable strict null checks. */,
+		"strictFunctionTypes": true /* Enable strict checking of function types. */,
+		"noUnusedLocals": true /* Report errors on unused locals. */,
+		"noUnusedParameters": true /* Report errors on unused parameters. */,
+		"noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+		"noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
+		"importHelpers": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"typeRoots": ["./src/@types", "./node_modules/@types"]
+	},
+	"include": ["src/**/*.ts", "custom.d.ts"],
+	"exclude": ["node_modules", "**/*.test.ts"]
 }
