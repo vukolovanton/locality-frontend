@@ -60,12 +60,19 @@
 
                 li {
                     list-style: none;
-                    padding: 0.5rem 1rem;
                     transition: background-color 200ms ease-in-out;
                     cursor: pointer;
 
                     &:hover, &:focus {
                         background-color: $locality-primary;
+                    }
+
+                    a {
+                        text-decoration: none;
+                        color: inherit;
+                        width: 100%;
+                        display: inline-block;
+                        padding: 0.5rem 1rem;
                     }
                 }
             }
