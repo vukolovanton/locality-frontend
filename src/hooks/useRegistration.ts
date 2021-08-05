@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { UserModelDto } from "../interfaces/UserModelDto";
+import { useDispatch } from "react-redux";
+import { postNewUser } from "../state/registration/registrationSlice";
 
 const initialRegistrationState: UserModelDto = {
   firstName: "",
@@ -11,6 +13,8 @@ const initialRegistrationState: UserModelDto = {
 };
 
 export const useRegistration = () => {
+  const dispatch = useDispatch();
+
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [registrationState, setRegistrationState] = useState<UserModelDto>(
     initialRegistrationState
@@ -22,7 +26,6 @@ export const useRegistration = () => {
 
   const handleSubmitRegistrationForm = (e: FormEvent) => {
     e.preventDefault();
-
     // Make sure all values in there
     const values: Array<string> = Object.values(registrationState);
     values.forEach((value) => {
@@ -37,6 +40,7 @@ export const useRegistration = () => {
       return;
     }
     // Call Api
+    dispatch(postNewUser(registrationState));
     // Clean up
     setRegistrationState(initialRegistrationState);
   };

@@ -1,5 +1,6 @@
 import React from "react";
 import { useRegistration } from "../../hooks/useRegistration";
+import "./styles.scss";
 
 const Registration: React.FC = () => {
   const {
@@ -10,7 +11,7 @@ const Registration: React.FC = () => {
   } = useRegistration();
 
   return (
-    <section>
+    <section className="container">
       <h3>Welcome to Locality!</h3>
       {errorMessage && <span>{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitRegistrationForm}>
