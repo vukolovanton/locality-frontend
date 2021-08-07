@@ -5,7 +5,7 @@ import "./styles.scss";
 const NavBar: React.FC = () => {
   return (
     <header className="nav">
-      <h2>LOCALITY</h2>
+      <h3>LOCALITY</h3>
       <nav className="nav__list">
         <li className="nav__listitem">
           Navigation

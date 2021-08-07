@@ -1,58 +1,73 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { RootState } from "../store";
 import { UserModelDto } from "../../interfaces/UserModelDto";
 
 interface IRegistrationState {
   loading: boolean;
   hasErrors: boolean;
-  user: Array<Object>;
+  userRegistrationStatus: {
+    message: string;
+  };
 }
 
-export const registrationState: IRegistrationState = {
+export interface RegistrationResponseMessage {
+  message: string;
+}
+
+const initialRegistrationState: IRegistrationState = {
   loading: false,
   hasErrors: false,
-  user: [],
+  userRegistrationStatus: {
+    message: "",
+  },
 };
 
 export const registrationSlice = createSlice({
   name: "registration",
-  initialState: registrationState,
+  initialState: initialRegistrationState,
   reducers: {
     userRegistrationStart: (state) => {
       state.loading = true;
     },
     userRegistrationSuccess: (state, { payload }) => {
-      state.user = payload;
+      state.userRegistrationStatus = payload;
       state.loading = false;
       state.hasErrors = false;
     },
-    userRegistrationFail: (state) => {
+    userRegistrationFail: (state, { payload }) => {
+      state.userRegistrationStatus = payload;
       state.loading = false;
       state.hasErrors = true;
     },
   },
 });
 
-export const postNewUser = (newUser: UserModelDto) => {
-  return async (dispatch: (arg0: { payload: any; type: string }) => void) => {
-    dispatch(userRegistrationStart());
-    console.log(process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX);
+export const postNewUser = (newUser: UserModelDto) => async (dispatch: any) => {
+  dispatch(userRegistrationStart());
 
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signup`,
-        {
-          ...newUser,
-        }
-      );
-      const { data } = response;
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(newUser),
+      }
+    );
 
-      dispatch(userRegistrationSuccess(data));
-    } catch (error) {
-      dispatch(userRegistrationFail());
+    const result = await response.json();
+
+    if (response.status === 200) {
+      dispatch(userRegistrationSuccess(result));
+    } else {
+      dispatch(userRegistrationFail(result));
     }
-  };
+  } catch (error) {
+    dispatch(userRegistrationFail(error));
+  }
 };
 
 export const {

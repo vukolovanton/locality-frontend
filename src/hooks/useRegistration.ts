@@ -1,7 +1,12 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import { UserModelDto } from "../interfaces/UserModelDto";
-import { useDispatch } from "react-redux";
-import { postNewUser } from "../state/registration/registrationSlice";
+import {
+  postNewUser,
+  userSelector,
+} from "../state/registration/registrationSlice";
 
 const initialRegistrationState: UserModelDto = {
   firstName: "",
@@ -13,18 +18,21 @@ const initialRegistrationState: UserModelDto = {
 };
 
 export const useRegistration = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { userRegistrationStatus, hasErrors } = useSelector(userSelector);
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [registrationState, setRegistrationState] = useState<UserModelDto>(
     initialRegistrationState
   );
 
-  const handleStateChange = (key: string, value: string): void => {
+  // Set state properties on registration form changes
+  const handleStateChange = (key: string, value: string) => {
     setRegistrationState({ ...registrationState, [key]: value });
   };
 
-  const handleSubmitRegistrationForm = (e: FormEvent) => {
+  const handleSubmitRegistrationForm = async (e: FormEvent) => {
     e.preventDefault();
     // Make sure all values in there
     const values: Array<string> = Object.values(registrationState);
@@ -39,11 +47,19 @@ export const useRegistration = () => {
       setErrorMessage("Passwords should match");
       return;
     }
-    // Call Api
+    // Call registration API
     dispatch(postNewUser(registrationState));
     // Clean up
     setRegistrationState(initialRegistrationState);
   };
+
+  useEffect(() => {
+    if (userRegistrationStatus.message === "SUCCESS" && !hasErrors) {
+      history.push("/registration/create-locality");
+    } else {
+      setErrorMessage(userRegistrationStatus.message);
+    }
+  }, [userRegistrationStatus, hasErrors, history]);
 
   return {
     registrationState,

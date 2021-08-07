@@ -13,79 +13,85 @@ const Registration: React.FC = () => {
   return (
     <section className="container">
       <h3>Welcome to Locality!</h3>
-      {errorMessage && <span>{errorMessage}</span>}
+      {errorMessage && <span className="error">{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitRegistrationForm}>
         <fieldset>
-          <legend>Finish your registration</legend>
-          <div>
+          <legend>Create a new user</legend>
+          <div className="input-container">
             <label htmlFor="first-name">First name</label>
             <input
               type="text"
               id="first-name"
               aria-required={true}
               value={registrationState.firstName}
+              className="input-field"
               onChange={(e) => handleStateChange("firstName", e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="input-container">
             <label htmlFor="last-name">Last name</label>
             <input
               type="text"
               id="last-name"
               aria-required={true}
               value={registrationState.lastName}
+              className="input-field"
               onChange={(e) => handleStateChange("lastName", e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="input-container">
             <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
               aria-required={true}
               value={registrationState.username}
+              className="input-field"
               onChange={(e) => handleStateChange("username", e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="input-container">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               aria-required={true}
               value={registrationState.email}
+              className="input-field"
               onChange={(e) => handleStateChange("email", e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="input-container">
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               aria-required={true}
               value={registrationState.password}
+              className="input-field"
               onChange={(e) => handleStateChange("password", e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="input-container">
             <label htmlFor="password">Confirm Password</label>
             <input
               type="password"
               id="passwordConfirm"
               aria-required={true}
               value={registrationState.confirmPassword}
+              className="input-field"
               onChange={(e) =>
                 handleStateChange("confirmPassword", e.target.value)
               }
             />
           </div>
 
-          <input type="submit" value="Register" className="btn" />
+          <input type="submit" value="Create user" className="btn" />
         </fieldset>
 
         {/*<fieldset>*/}
