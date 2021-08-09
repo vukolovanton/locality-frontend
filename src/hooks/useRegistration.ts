@@ -2,13 +2,13 @@ import { FormEvent, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UserModelDto } from "../interfaces/UserModelDto";
+import { UserRegistrationDto } from "../interfaces/UserRegistrationDto";
 import {
   postNewUser,
-  userSelector,
+  registrationUserSelector,
 } from "../state/registration/registrationSlice";
 
-const initialRegistrationState: UserModelDto = {
+const initialRegistrationState: UserRegistrationDto = {
   firstName: "",
   lastName: "",
   username: "",
@@ -20,12 +20,13 @@ const initialRegistrationState: UserModelDto = {
 export const useRegistration = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { userRegistrationStatus, hasErrors } = useSelector(userSelector);
+  const { userRegistrationStatus, hasErrors } = useSelector(
+    registrationUserSelector
+  );
 
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [registrationState, setRegistrationState] = useState<UserModelDto>(
-    initialRegistrationState
-  );
+  const [registrationState, setRegistrationState] =
+    useState<UserRegistrationDto>(initialRegistrationState);
 
   // Set state properties on registration form changes
   const handleStateChange = (key: string, value: string) => {
@@ -49,16 +50,24 @@ export const useRegistration = () => {
     }
     // Call registration API
     dispatch(postNewUser(registrationState));
-    // Clean up
-    setRegistrationState(initialRegistrationState);
   };
 
   useEffect(() => {
     if (userRegistrationStatus.message === "SUCCESS" && !hasErrors) {
-      history.push("/registration/create-locality");
+      history.push({
+        pathname: "/registration/create-locality",
+        state: {
+          username: registrationState.username,
+          password: registrationState.password,
+        },
+      });
+      // Clean up
+      setRegistrationState(initialRegistrationState);
     } else {
       setErrorMessage(userRegistrationStatus.message);
     }
+    // No eslint, I don't want to add additional dependencies, go away
+    // eslint-disable-next-line
   }, [userRegistrationStatus, hasErrors, history]);
 
   return {

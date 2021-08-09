@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserModelDto } from "../../interfaces/UserModelDto";
+import { UserRegistrationDto } from "../../interfaces/UserRegistrationDto";
 
 interface IRegistrationState {
   loading: boolean;
@@ -42,33 +42,35 @@ export const registrationSlice = createSlice({
   },
 });
 
-export const postNewUser = (newUser: UserModelDto) => async (dispatch: any) => {
-  dispatch(userRegistrationStart());
+export const postNewUser =
+  (newUser: UserRegistrationDto) => async (dispatch: any) => {
+    dispatch(userRegistrationStart());
 
-  try {
-    const response = await fetch(
-      `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signup`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(newUser),
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+          },
+          body: JSON.stringify(newUser),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.status === 200) {
+        dispatch(userRegistrationSuccess(result));
+      } else {
+        dispatch(userRegistrationFail(result));
       }
-    );
-
-    const result = await response.json();
-
-    if (response.status === 200) {
-      dispatch(userRegistrationSuccess(result));
-    } else {
-      dispatch(userRegistrationFail(result));
+    } catch (error) {
+      dispatch(userRegistrationFail(error));
     }
-  } catch (error) {
-    dispatch(userRegistrationFail(error));
-  }
-};
+  };
 
 export const {
   userRegistrationStart,
@@ -76,6 +78,7 @@ export const {
   userRegistrationFail,
 } = registrationSlice.actions;
 
-export const userSelector = (state: RootState) => state.registration;
+export const registrationUserSelector = (state: RootState) =>
+  state.registration;
 
 export default registrationSlice.reducer;

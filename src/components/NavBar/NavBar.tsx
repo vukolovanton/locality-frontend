@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Profile from "./Profile";
 import "./styles.scss";
 
 const NavBar: React.FC = () => {
@@ -28,7 +29,7 @@ const NavBar: React.FC = () => {
           </ul>
         </li>
       </nav>
-      <span className="nav__account">Vukolov Anton</span>
+      <Profile />
     </header>
   );
 };

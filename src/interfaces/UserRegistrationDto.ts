@@ -1,4 +1,4 @@
-export interface UserModelDto {
+export interface UserRegistrationDto {
   firstName: string;
   lastName: string;
   username: string;

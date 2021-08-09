@@ -9,6 +9,7 @@ import "./styles/index.scss";
 // Components
 import NavBar from "./components/NavBar";
 import Registration from "./components/Registration";
+import LocalityCreation from "./components/Registration/LocalityCreation";
 
 const App = () => {
   return (
@@ -21,6 +22,9 @@ const App = () => {
           </Route>
           <Route exact path="/registration">
             <Registration />
+          </Route>
+          <Route exact path="/registration/create-locality">
+            <LocalityCreation />
           </Route>
           <Route exact path="/">
             Home
