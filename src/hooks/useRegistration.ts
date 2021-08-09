@@ -2,11 +2,11 @@ import { FormEvent, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UserRegistrationDto } from "../interfaces/UserRegistrationDto";
+import { UserRegistrationDto } from "src/interfaces/UserRegistrationDto";
 import {
   postNewUser,
   registrationUserSelector,
-} from "../state/auth/registration/registrationSlice";
+} from "src/state/auth/registration/registrationSlice";
 
 const initialRegistrationState: UserRegistrationDto = {
   firstName: "",

@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"baseUrl": ".",
 		"target": "es6",
 		"lib": ["ES6", "DOM", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -28,5 +29,5 @@
 		"typeRoots": ["./src/@types", "./node_modules/@types"]
 	},
 	"include": ["src/**/*.ts", "custom.d.ts"],
-	"exclude": ["node_modules", "**/*.test.ts"]
+	"exclude": ["node_modules", "build","**/*.test.ts"]
 }

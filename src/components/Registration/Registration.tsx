@@ -1,7 +1,7 @@
 import React from "react";
-import { useRegistration } from "../../hooks/useRegistration";
-import "./styles.scss";
+import { useRegistration } from "src/hooks/useRegistration";
 import InputField from "./InputField/InputField";
+import "./styles.scss";
 
 const Registration: React.FC = () => {
   const {

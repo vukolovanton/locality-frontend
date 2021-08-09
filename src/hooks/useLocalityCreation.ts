@@ -2,11 +2,11 @@ import { FormEvent, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { LocalityDto } from "../interfaces/LocalityDto";
-import { Roles } from "../interfaces/roles";
-import { postNewLocality } from "../state/locality/localityCreation/localityCreationSlice";
-import { UserLoginDto } from "../interfaces/UserLoginDto";
-import { userLoginFetch } from "../state/auth/login/loginSlice";
+import { LocalityDto } from "src/interfaces/LocalityDto";
+import { Roles } from "src/interfaces/roles";
+import { postNewLocality } from "src/state/locality/localityCreation/localityCreationSlice";
+import { UserLoginDto } from "src/interfaces/UserLoginDto";
+import { userLoginFetch } from "src/state/auth/login/loginSlice";
 
 const initialLocalityCreationState = {
   title: "",

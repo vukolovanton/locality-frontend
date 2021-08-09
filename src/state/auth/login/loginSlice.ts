@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserModel } from "../../../interfaces/UserModel";
-import { UserLoginDto } from "../../../interfaces/UserLoginDto";
-import { RootState } from "../../store";
+import { UserModel } from "src/interfaces/UserModel";
+import { UserLoginDto } from "src/interfaces/UserLoginDto";
+import { RootState } from "src/state/store";
 
 interface IUserLogin {
   loading: boolean;

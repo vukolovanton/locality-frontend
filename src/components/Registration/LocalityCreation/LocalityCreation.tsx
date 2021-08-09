@@ -1,6 +1,6 @@
 import React from "react";
+import { useLocalityCreation } from "src/hooks/useLocalityCreation";
 import InputField from "../InputField/InputField";
-import { useLocalityCreation } from "../../../hooks/useLocalityCreation";
 
 const LocalityCreation: React.FC = () => {
   const {

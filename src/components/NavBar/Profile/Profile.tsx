@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../../state/auth/login/loginSlice";
+import { userSelector } from "src/state/auth/login/loginSlice";
 import "./styles.scss";
 
 const Profile: React.FC = () => {

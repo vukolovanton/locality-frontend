@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.scss";
 
 interface InputFieldProps {
   value: string;
