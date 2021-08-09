@@ -3,17 +3,16 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { LocalityDto } from "src/interfaces/LocalityDto";
-import { Roles } from "src/interfaces/roles";
 import { postNewLocality } from "src/state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { userLoginFetch } from "src/state/auth/login/loginSlice";
+import { validateObjectValues } from "src/utils/helpers";
 
 const initialLocalityCreationState = {
   title: "",
   description: "",
   city: "",
   street: "",
-  role: Roles.USER,
 };
 
 export const useLocalityCreation = () => {
@@ -32,17 +31,15 @@ export const useLocalityCreation = () => {
   const handleSubmitCreateLocalityForm = async (e: FormEvent) => {
     e.preventDefault();
     // Make sure all values in there
-    const values: Array<string> = Object.values(localityCreationState);
-    values.forEach((value) => {
-      if (!value) {
-        setErrorMessage("Review your entities and try again");
-        return;
-      }
-    });
-    // Call locality creation API
-    dispatch(postNewLocality(localityCreationState));
-    // Clean up
-    setLocalityCreationState(initialLocalityCreationState);
+    validateObjectValues(localityCreationState, setErrorMessage);
+
+    if (errorMessage === "") {
+      // Call locality creation API
+      console.log("calling api");
+      dispatch(postNewLocality(localityCreationState));
+      // Clean up
+      setLocalityCreationState(initialLocalityCreationState);
+    }
   };
 
   useEffect(() => {

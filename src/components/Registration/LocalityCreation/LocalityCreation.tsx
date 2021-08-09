@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocalityCreation } from "src/hooks/useLocalityCreation";
+import { useLocalityCreation } from "src/hooks/locality/useLocalityCreation";
 import InputField from "../InputField/InputField";
 
 const LocalityCreation: React.FC = () => {
@@ -43,15 +43,6 @@ const LocalityCreation: React.FC = () => {
             title="Street"
             id="street"
           />
-
-          <label htmlFor="options">
-            Choose role:
-            <select name="options" id="options" required>
-              <option value="value1">User</option>
-              <option value="value2">Supervisor</option>
-              <option value="value3">Contractor</option>
-            </select>
-          </label>
 
           <input type="submit" value="Create Locality" className="btn" />
         </fieldset>

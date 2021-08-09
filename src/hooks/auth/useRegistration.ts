@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,6 +7,8 @@ import {
   postNewUser,
   registrationUserSelector,
 } from "src/state/auth/registration/registrationSlice";
+import { validateObjectValues } from "src/utils/helpers";
+import { Roles } from "../../interfaces/roles";
 
 const initialRegistrationState: UserRegistrationDto = {
   firstName: "",
@@ -15,6 +17,7 @@ const initialRegistrationState: UserRegistrationDto = {
   email: "",
   password: "",
   confirmPassword: "",
+  roles: [Roles.USER],
 };
 
 export const useRegistration = () => {
@@ -29,27 +32,27 @@ export const useRegistration = () => {
     useState<UserRegistrationDto>(initialRegistrationState);
 
   // Set state properties on registration form changes
-  const handleStateChange = (key: string, value: string) => {
+  const handleStateChange = (key: string, value: string | Roles) => {
+    if (key === "roles") {
+      setRegistrationState({ ...registrationState, roles: [value as Roles] });
+      return;
+    }
     setRegistrationState({ ...registrationState, [key]: value });
   };
 
   const handleSubmitRegistrationForm = async (e: FormEvent) => {
     e.preventDefault();
     // Make sure all values in there
-    const values: Array<string> = Object.values(registrationState);
-    values.forEach((value) => {
-      if (!value) {
-        setErrorMessage("Review your entities and try again");
-        return;
-      }
-    });
+    validateObjectValues(registrationState, setErrorMessage);
     // Compare passwords
     if (registrationState.password !== registrationState.confirmPassword) {
       setErrorMessage("Passwords should match");
       return;
     }
-    // Call registration API
-    dispatch(postNewUser(registrationState));
+    if (errorMessage === "") {
+      // Call registration API
+      dispatch(postNewUser(registrationState));
+    }
   };
 
   useEffect(() => {

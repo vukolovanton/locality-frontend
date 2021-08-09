@@ -1,3 +1,5 @@
+import { Roles } from "./roles";
+
 export interface UserRegistrationDto {
   firstName: string;
   lastName: string;
@@ -5,4 +7,5 @@ export interface UserRegistrationDto {
   email: string;
   password: string;
   confirmPassword: string;
+  roles: Roles[];
 }

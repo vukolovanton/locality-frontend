@@ -1,5 +1,5 @@
 import React from "react";
-import { useRegistration } from "src/hooks/useRegistration";
+import { useRegistration } from "src/hooks/auth/useRegistration";
 import InputField from "./InputField/InputField";
 import "./styles.scss";
 
@@ -58,6 +58,21 @@ const Registration: React.FC = () => {
             id="confirmPassword"
             inputType="confirmPassword"
           />
+
+          <label htmlFor="options">
+            Choose role:
+            <select
+              name="options"
+              id="options"
+              required
+              onChange={(e) => handleStateChange("roles", e.target.value)}
+            >
+              <option value="USER">User</option>
+              <option value="SUPERVISOR">Supervisor</option>
+              <option value="CONTRACTOR">Contractor</option>
+            </select>
+          </label>
+
           <input type="submit" value="Create user" className="btn" />
         </fieldset>
       </form>
