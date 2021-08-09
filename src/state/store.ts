@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import registrationReducer from "./registration/registrationSlice";
-import loginReducer from "./userLogin/userLoginSlice";
-import localityCreationReducer from "./localityCreation/localityCreationSlice";
+import registrationReducer from "./auth/registration/registrationSlice";
+import loginReducer from "./auth/login/loginSlice";
+import localityCreationReducer from "./locality/localityCreation/localityCreationSlice";
 
 const store: any = configureStore({
   reducer: {

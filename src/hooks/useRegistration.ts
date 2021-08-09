@@ -6,7 +6,7 @@ import { UserRegistrationDto } from "../interfaces/UserRegistrationDto";
 import {
   postNewUser,
   registrationUserSelector,
-} from "../state/registration/registrationSlice";
+} from "../state/auth/registration/registrationSlice";
 
 const initialRegistrationState: UserRegistrationDto = {
   firstName: "",

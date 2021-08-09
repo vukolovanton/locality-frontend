@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { UserRegistrationDto } from "../../interfaces/UserRegistrationDto";
+import { RootState } from "../../store";
+import { UserRegistrationDto } from "../../../interfaces/UserRegistrationDto";
 
 interface IRegistrationState {
   loading: boolean;

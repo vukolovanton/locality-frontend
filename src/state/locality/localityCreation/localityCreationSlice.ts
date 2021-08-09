@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LocalityDto } from "../../interfaces/LocalityDto";
+import { LocalityDto } from "../../../interfaces/LocalityDto";
 
 interface ILocalityCreationState {
   loading: boolean;

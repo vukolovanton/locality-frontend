@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserModel } from "../../interfaces/UserModel";
-import { UserLoginDto } from "../../interfaces/UserLoginDto";
-import { RootState } from "../store";
+import { UserModel } from "../../../interfaces/UserModel";
+import { UserLoginDto } from "../../../interfaces/UserLoginDto";
+import { RootState } from "../../store";
 
 interface IUserLogin {
   loading: boolean;
@@ -15,8 +15,8 @@ const initialUserLogin: IUserLogin = {
   user: "",
 };
 
-export const userLoginSlice = createSlice({
-  name: "userLogin",
+export const loginSlice = createSlice({
+  name: "login",
   initialState: initialUserLogin,
   reducers: {
     userLoginStart: (state) => {
@@ -66,8 +66,8 @@ export const userLoginFetch =
   };
 
 export const { userLoginStart, userLoginFail, userLoginSuccess } =
-  userLoginSlice.actions;
+  loginSlice.actions;
 
 export const userSelector = (state: RootState) => state.user;
 
-export default userLoginSlice.reducer;
+export default loginSlice.reducer;

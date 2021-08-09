@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 
 import { LocalityDto } from "../interfaces/LocalityDto";
 import { Roles } from "../interfaces/roles";
-import { postNewLocality } from "../state/localityCreation/localityCreationSlice";
+import { postNewLocality } from "../state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "../interfaces/UserLoginDto";
-import { userLoginFetch } from "../state/userLogin/userLoginSlice";
+import { userLoginFetch } from "../state/auth/login/loginSlice";
 
 const initialLocalityCreationState = {
   title: "",
