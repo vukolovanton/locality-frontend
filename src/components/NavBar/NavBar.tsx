@@ -12,6 +12,9 @@ const NavBar: React.FC = () => {
           Navigation
           <ul className="nav__listitemdrop">
             <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
               <Link to="/login">Login</Link>
             </li>
             <li>
@@ -24,7 +27,7 @@ const NavBar: React.FC = () => {
               <Link to="/documents">Documents</Link>
             </li>
             <li>
-              <Link to="issues">Issues</Link>
+              <Link to="/issues">Issues</Link>
             </li>
           </ul>
         </li>

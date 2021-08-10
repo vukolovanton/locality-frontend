@@ -1,6 +1,6 @@
 import React from "react";
 import { useRegistration } from "src/hooks/auth/useRegistration";
-import InputField from "./InputField/InputField";
+import InputField from "src/components/shared/InputField";
 import "./styles.scss";
 
 const Registration: React.FC = () => {

@@ -1,11 +1,29 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { userSelector } from "src/state/auth/login/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout, userSelector } from "src/state/auth/login/loginSlice";
 import "./styles.scss";
 
 const Profile: React.FC = () => {
   const { user } = useSelector(userSelector);
-  return <span className="account">{user.username || ""}</span>;
+  const dispatch = useDispatch();
+
+  const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    // Remove token from localStorage
+    localStorage.removeItem("token");
+    // Remove user from store
+    dispatch(userLogout());
+  };
+
+  console.log(user, "user");
+  console.log(localStorage.getItem("token"));
+
+  return (
+    <div>
+      <span className="account">{user.username || ""}</span>
+      <button onClick={handleLogout}>Log Out</button>
+    </div>
+  );
 };
 
 export default Profile;

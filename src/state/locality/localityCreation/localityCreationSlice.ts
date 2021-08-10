@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { LocalityDto } from "src/interfaces/LocalityDto";
+import { RootState } from "../../store";
 
 interface ILocalityCreationState {
   loading: boolean;
   hasErrors: boolean;
+  isCreationSuccessful: boolean;
   errorMessage: string;
 }
 
 const initialLocalityCreationState: ILocalityCreationState = {
   loading: false,
   hasErrors: false,
+  isCreationSuccessful: false,
   errorMessage: "",
 };
 
@@ -23,6 +26,7 @@ export const localityCreationSlice = createSlice({
     localityCreationSuccess: (state) => {
       state.loading = false;
       state.hasErrors = false;
+      state.isCreationSuccessful = true;
     },
     localityCreationFail: (state, { payload }) => {
       state.loading = false;
@@ -77,5 +81,9 @@ export const {
   localityCreationSuccess,
   localityCreationFail,
 } = localityCreationSlice.actions;
+
+export const isSuccessfulLocalityCreationSelector = (state: RootState) => {
+  return state.localityCreation;
+};
 
 export default localityCreationSlice.reducer;

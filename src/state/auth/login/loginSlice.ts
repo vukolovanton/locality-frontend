@@ -6,13 +6,13 @@ import { RootState } from "src/state/store";
 interface IUserLogin {
   loading: boolean;
   hasErrors: boolean;
-  user: string;
+  user: {};
 }
 
 const initialUserLogin: IUserLogin = {
   loading: false,
   hasErrors: false,
-  user: "",
+  user: {},
 };
 
 export const loginSlice = createSlice({
@@ -30,6 +30,9 @@ export const loginSlice = createSlice({
     userLoginFail: (state) => {
       state.loading = false;
       state.hasErrors = true;
+    },
+    userLogout: (state) => {
+      state.user = {};
     },
   },
 });
@@ -65,7 +68,7 @@ export const userLoginFetch =
     }
   };
 
-export const { userLoginStart, userLoginFail, userLoginSuccess } =
+export const { userLoginStart, userLoginFail, userLoginSuccess, userLogout } =
   loginSlice.actions;
 
 export const userSelector = (state: RootState) => state.user;
