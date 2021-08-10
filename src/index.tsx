@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar";
 import Registration from "./components/Registration";
 import LocalityCreation from "./components/Registration/LocalityCreation";
 import Home from "./components/Home";
+import Login from "./components/Login";
 
 const App = () => {
   return (
@@ -20,10 +21,10 @@ const App = () => {
         <Router>
           <NavBar />
           <Switch>
-            <Route exact path="/login">
-              Login Page
+            <Route path="/login">
+              <Login />
             </Route>
-            <Route exact path="/registration">
+            <Route path="/registration">
               <Registration />
             </Route>
             <Route exact path="/registration/create-locality">

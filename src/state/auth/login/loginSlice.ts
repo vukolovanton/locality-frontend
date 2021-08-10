@@ -6,12 +6,14 @@ import { RootState } from "src/state/store";
 interface IUserLogin {
   loading: boolean;
   hasErrors: boolean;
+  isLoginSuccessfully: boolean;
   user: {};
 }
 
 const initialUserLogin: IUserLogin = {
   loading: false,
   hasErrors: false,
+  isLoginSuccessfully: false,
   user: {},
 };
 
@@ -25,6 +27,7 @@ export const loginSlice = createSlice({
     userLoginSuccess: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = false;
+      state.isLoginSuccessfully = true;
       state.user = payload;
     },
     userLoginFail: (state) => {
@@ -33,6 +36,7 @@ export const loginSlice = createSlice({
     },
     userLogout: (state) => {
       state.user = {};
+      state.isLoginSuccessfully = false;
     },
   },
 });
