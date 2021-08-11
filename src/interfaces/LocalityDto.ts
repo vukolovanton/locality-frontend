@@ -3,4 +3,5 @@ export interface LocalityDto {
   description: string;
   city: string;
   street: string;
+  userId?: number;
 }

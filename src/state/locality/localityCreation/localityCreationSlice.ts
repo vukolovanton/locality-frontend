@@ -41,6 +41,8 @@ export const postNewLocality =
     dispatch(localityCreationStart());
     const token = localStorage.token;
 
+    console.log(newLocality, "new");
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/locality`,

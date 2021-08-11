@@ -24,7 +24,7 @@ const App = () => {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/registration">
+            <Route exact path="/registration">
               <Registration />
             </Route>
             <Route exact path="/registration/create-locality">

@@ -8,7 +8,7 @@ import {
   postNewLocality,
 } from "src/state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
-import { userLoginFetch } from "src/state/auth/login/loginSlice";
+import { userLoginFetch, userSelector } from "src/state/auth/login/loginSlice";
 import { validateObjectValues } from "src/utils/helpers";
 
 const initialLocalityCreationState = {
@@ -22,6 +22,8 @@ export const useLocalityCreation = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<UserLoginDto>();
+
+  const { user } = useSelector(userSelector);
   const { isCreationSuccessful } = useSelector(
     isSuccessfulLocalityCreationSelector
   );
@@ -42,12 +44,14 @@ export const useLocalityCreation = () => {
 
     if (errorMessage === "") {
       // Call locality creation API
-      dispatch(postNewLocality(localityCreationState));
+      dispatch(postNewLocality({ ...localityCreationState, userId: user.id }));
       // Clean up
       setLocalityCreationState(initialLocalityCreationState);
     }
   };
 
+  // If we get on this page with state != undefined
+  // it means we successfully completed registration
   useEffect(() => {
     if (location.state) {
       const { username, password } = location.state;
@@ -55,6 +59,7 @@ export const useLocalityCreation = () => {
     }
   }, [dispatch, location.state]);
 
+  // If locality creation was successfully, redirect to the home page
   useEffect(() => {
     if (isCreationSuccessful) {
       history.push("/home");
