@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { History } from "history";
 import { UserModel } from "src/interfaces/UserModel";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { RootState } from "src/state/store";
@@ -42,7 +43,12 @@ export const loginSlice = createSlice({
 });
 
 export const userLoginFetch =
-  (userLoginCredentials: UserLoginDto) => async (dispatch: any) => {
+  (
+    userLoginCredentials: UserLoginDto,
+    shouldSetToken: boolean,
+    history?: History
+  ) =>
+  async (dispatch: any) => {
     dispatch(userLoginStart());
 
     try {
@@ -63,7 +69,12 @@ export const userLoginFetch =
 
       if (response.status === 200) {
         dispatch(userLoginSuccess(result));
-        localStorage.setItem("token", result.token);
+        if (shouldSetToken) {
+          localStorage.setItem("token", result.token);
+          if (history) {
+            history.push("/");
+          }
+        }
       } else {
         dispatch(userLoginFail());
       }

@@ -1,10 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { validateObjectValues } from "src/utils/helpers";
-import { userLoginFetch, userSelector } from "src/state/auth/login/loginSlice";
+import { userLoginFetch } from "src/state/auth/login/loginSlice";
 
 const initialLoginState: UserLoginDto = {
   username: "",
@@ -17,8 +17,6 @@ export const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loginState, setLoginState] = useState<UserLoginDto>(initialLoginState);
 
-  const { isLoginSuccessfully } = useSelector(userSelector);
-
   const isHasToken = Boolean(localStorage.getItem("token"));
 
   const handleStateChange = (key: string, value: string) => {
@@ -30,15 +28,17 @@ export const useLogin = () => {
     // Make sure all values in there
     validateObjectValues(loginState, setErrorMessage);
     // Send API request
-    dispatch(userLoginFetch(loginState));
+    dispatch(userLoginFetch(loginState, true, history));
     setLoginState(initialLoginState);
   };
 
+  // If user already logged in, he must have token
+  // If user has token, he shouldn't be able to use login page
   useEffect(() => {
-    if (isLoginSuccessfully || isHasToken) {
+    if (isHasToken) {
       history.push("/");
     }
-  }, [history, isHasToken, isLoginSuccessfully]);
+  }, [history, isHasToken]);
 
   return {
     loginState,

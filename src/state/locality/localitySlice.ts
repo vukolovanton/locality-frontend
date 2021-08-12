@@ -32,37 +32,38 @@ export const localitySlice = createSlice({
   },
 });
 
-export const fetchUsersLocality = () => async (dispatch: any) => {
-  dispatch(fetchLocalityStart());
-  const token = localStorage.token;
+export const fetchUsersLocality =
+  (localityId: number) => async (dispatch: any) => {
+    dispatch(fetchLocalityStart());
+    const token = localStorage.token;
 
-  try {
-    const response = await fetch(
-      `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/locality`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (response.status === 200) {
-      dispatch(fetchLocalitySuccess());
-    } else {
-      dispatch(
-        fetchLocalityFail(
-          "Something went wrong. Review your entities and try again"
-        )
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/locality/id/${localityId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
+      if (response.status === 200) {
+        dispatch(fetchLocalitySuccess());
+      } else {
+        dispatch(
+          fetchLocalityFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(fetchLocalityFail(error));
     }
-  } catch (error) {
-    dispatch(fetchLocalityFail(error));
-  }
-};
+  };
 
 export const { fetchLocalityStart, fetchLocalitySuccess, fetchLocalityFail } =
   localitySlice.actions;

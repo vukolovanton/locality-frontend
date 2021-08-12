@@ -3,13 +3,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { LocalityDto } from "src/interfaces/LocalityDto";
-import {
-  isSuccessfulLocalityCreationSelector,
-  postNewLocality,
-} from "src/state/locality/localityCreation/localityCreationSlice";
+import { postNewLocality } from "src/state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { userLoginFetch, userSelector } from "src/state/auth/login/loginSlice";
-import { validateObjectValues } from "../../utils/helpers";
+import { validateObjectValues } from "src/utils/helpers";
 
 const initialLocalityCreationState = {
   title: "",
@@ -18,15 +15,19 @@ const initialLocalityCreationState = {
   street: "",
 };
 
+/**
+ * Registration process step #2:
+ * 1. Use username and password from props to login user
+ * We need to have initial login here in order to get user id
+ * 2. When we get user id, we can submit locality form and assign locality id to the user
+ * 3. If everything completed successfully, proceed to step #3 - login
+ */
 export const useLocalityCreation = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<UserLoginDto>();
 
   const { user } = useSelector(userSelector);
-  const { isCreationSuccessful } = useSelector(
-    isSuccessfulLocalityCreationSelector
-  );
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [localityCreationState, setLocalityCreationState] =
@@ -47,7 +48,13 @@ export const useLocalityCreation = () => {
 
     if (isValid) {
       // Call locality creation API
-      dispatch(postNewLocality({ ...localityCreationState, userId: user.id }));
+      dispatch(
+        postNewLocality(
+          { ...localityCreationState, userId: user.id },
+          user.token,
+          history
+        )
+      );
       // Clean up
       setLocalityCreationState(initialLocalityCreationState);
     }
@@ -55,19 +62,14 @@ export const useLocalityCreation = () => {
 
   // If we get on this page with state != undefined
   // it means we successfully completed registration
+  // and we need to login in order to get new user id
   useEffect(() => {
     if (location.state) {
       const { username, password } = location.state;
-      dispatch(userLoginFetch({ username, password }));
+      dispatch(userLoginFetch({ username, password }, false));
     }
-  }, [dispatch, location.state]);
-
-  // If locality creation was successfully, redirect to the home page
-  useEffect(() => {
-    if (isCreationSuccessful) {
-      history.push("/");
-    }
-  }, [isCreationSuccessful, history]);
+    // eslint-disable-next-line
+  }, []);
 
   return {
     localityCreationState,

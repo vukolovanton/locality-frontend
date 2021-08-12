@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { History } from "history";
 import { LocalityDto } from "src/interfaces/LocalityDto";
-import { RootState } from "../../store";
+import { RootState } from "src/state/store";
 
 interface ILocalityCreationState {
   loading: boolean;
@@ -37,9 +38,9 @@ export const localityCreationSlice = createSlice({
 });
 
 export const postNewLocality =
-  (newLocality: LocalityDto) => async (dispatch: any) => {
+  (newLocality: LocalityDto, token: string, history: History) =>
+  async (dispatch: any) => {
     dispatch(localityCreationStart());
-    const token = localStorage.token;
 
     try {
       const response = await fetch(
@@ -58,6 +59,7 @@ export const postNewLocality =
 
       if (response.status === 200) {
         dispatch(localityCreationSuccess());
+        history.push("/login");
       } else if (response.status === 403) {
         dispatch(
           localityCreationFail(

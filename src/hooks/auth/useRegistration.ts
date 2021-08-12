@@ -20,6 +20,12 @@ const initialRegistrationState: UserRegistrationDto = {
   roles: [Roles.USER],
 };
 
+/**
+ * Registration process step #1:
+ * 1. Fill local state with form inputs
+ * 2. Submit form and create a new user on the backend
+ * 3. Redirect to registration step #2: locality creation process. Pass username and password there
+ */
 export const useRegistration = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -55,6 +61,7 @@ export const useRegistration = () => {
     }
   };
 
+  // Handle successful registration
   useEffect(() => {
     if (userRegistrationStatus.message === "SUCCESS" && !hasErrors) {
       history.push({

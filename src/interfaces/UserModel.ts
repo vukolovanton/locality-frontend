@@ -8,4 +8,5 @@ export interface UserModel {
   token: string;
   roles: [Roles];
   id: number;
+  localityId: number;
 }
