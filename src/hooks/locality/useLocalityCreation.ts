@@ -9,7 +9,7 @@ import {
 } from "src/state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { userLoginFetch, userSelector } from "src/state/auth/login/loginSlice";
-import { validateObjectValues } from "src/utils/helpers";
+import { validateObjectValues } from "../../utils/helpers";
 
 const initialLocalityCreationState = {
   title: "",
@@ -40,9 +40,12 @@ export const useLocalityCreation = () => {
   const handleSubmitCreateLocalityForm = async (e: FormEvent) => {
     e.preventDefault();
     // Make sure all values in there
-    validateObjectValues(localityCreationState, setErrorMessage);
+    const isValid = validateObjectValues(
+      localityCreationState,
+      setErrorMessage
+    );
 
-    if (errorMessage === "") {
+    if (isValid) {
       // Call locality creation API
       dispatch(postNewLocality({ ...localityCreationState, userId: user.id }));
       // Clean up
@@ -62,7 +65,7 @@ export const useLocalityCreation = () => {
   // If locality creation was successfully, redirect to the home page
   useEffect(() => {
     if (isCreationSuccessful) {
-      history.push("/home");
+      history.push("/");
     }
   }, [isCreationSuccessful, history]);
 

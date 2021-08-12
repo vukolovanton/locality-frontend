@@ -18,7 +18,6 @@ export const useLogin = () => {
   const [loginState, setLoginState] = useState<UserLoginDto>(initialLoginState);
 
   const { isLoginSuccessfully } = useSelector(userSelector);
-  console.log(isLoginSuccessfully);
 
   const isHasToken = Boolean(localStorage.getItem("token"));
 

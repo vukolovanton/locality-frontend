@@ -43,13 +43,13 @@ export const useRegistration = () => {
   const handleSubmitRegistrationForm = async (e: FormEvent) => {
     e.preventDefault();
     // Make sure all values in there
-    validateObjectValues(registrationState, setErrorMessage);
+    const isValid = validateObjectValues(registrationState, setErrorMessage);
     // Compare passwords
     if (registrationState.password !== registrationState.confirmPassword) {
       setErrorMessage("Passwords should match");
       return;
     }
-    if (errorMessage === "") {
+    if (isValid) {
       // Call registration API
       dispatch(postNewUser(registrationState));
     }

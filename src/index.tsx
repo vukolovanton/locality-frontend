@@ -8,6 +8,7 @@ import { store, persistor } from "./state/store";
 import "./styles/index.scss";
 
 // Components
+import ProtectedRoute from "./components/shared/ProtectedRoute";
 import NavBar from "./components/NavBar";
 import Registration from "./components/Registration";
 import LocalityCreation from "./components/Registration/LocalityCreation";
@@ -30,9 +31,7 @@ const App = () => {
             <Route exact path="/registration/create-locality">
               <LocalityCreation />
             </Route>
-            <Route exact path="/">
-              <Home />
-            </Route>
+            <ProtectedRoute exact path="/" component={Home} />
           </Switch>
         </Router>
       </PersistGate>
