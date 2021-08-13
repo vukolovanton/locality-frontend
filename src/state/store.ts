@@ -43,6 +43,8 @@ const store: any = configureStore({
 
 let persistor = persistStore(store);
 
+export const purge = () => persistor.purge();
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

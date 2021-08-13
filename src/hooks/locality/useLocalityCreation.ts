@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { LocalityDto } from "src/interfaces/LocalityDto";
 import { postNewLocality } from "src/state/locality/localityCreation/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
-import { userLoginFetch, userSelector } from "src/state/auth/login/loginSlice";
+import {
+  userLoginFetch,
+  userStateSelector,
+} from "src/state/auth/login/loginSlice";
 import { validateObjectValues } from "src/utils/helpers";
 
 const initialLocalityCreationState = {
@@ -27,7 +30,7 @@ export const useLocalityCreation = () => {
   const history = useHistory();
   const location = useLocation<UserLoginDto>();
 
-  const { user } = useSelector(userSelector);
+  const { user } = useSelector(userStateSelector);
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [localityCreationState, setLocalityCreationState] =
@@ -62,7 +65,7 @@ export const useLocalityCreation = () => {
 
   // If we get on this page with state != undefined
   // it means we successfully completed registration
-  // and we need to login in order to get new user id
+  // and we need to login in order to get new user id and token
   useEffect(() => {
     if (location.state) {
       const { username, password } = location.state;

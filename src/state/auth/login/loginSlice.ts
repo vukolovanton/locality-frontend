@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { History } from "history";
 import { UserModel } from "src/interfaces/UserModel";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
@@ -69,6 +69,7 @@ export const userLoginFetch =
 
       if (response.status === 200) {
         dispatch(userLoginSuccess(result));
+
         if (shouldSetToken) {
           localStorage.setItem("token", result.token);
           if (history) {
@@ -86,6 +87,10 @@ export const userLoginFetch =
 export const { userLoginStart, userLoginFail, userLoginSuccess, userLogout } =
   loginSlice.actions;
 
-export const userSelector = (state: RootState) => state.user;
+const stateSelector = (state: RootState) => state;
+export const userStateSelector = createDraftSafeSelector(
+  stateSelector,
+  (state) => state.user
+);
 
 export default loginSlice.reducer;
