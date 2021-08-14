@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocalityCreation } from "src/hooks/locality/useLocalityCreation";
+import Title from "../Title";
 import InputField from "src/components/shared/InputField/InputField";
 
 const LocalityCreation: React.FC = () => {
@@ -12,7 +13,7 @@ const LocalityCreation: React.FC = () => {
 
   return (
     <section className="container">
-      <h3>Welcome to Locality!</h3>
+      <Title />
       {errorMessage && <span className="error">{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitCreateLocalityForm}>
         <fieldset>

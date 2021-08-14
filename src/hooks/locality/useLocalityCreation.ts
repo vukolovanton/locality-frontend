@@ -19,7 +19,7 @@ const initialLocalityCreationState = {
 };
 
 /**
- * Registration process step #2:
+ * UserRegistration process step #2:
  * 1. Use username and password from props to login user
  * We need to have initial login here in order to get user id
  * 2. When we get user id, we can submit locality form and assign locality id to the user

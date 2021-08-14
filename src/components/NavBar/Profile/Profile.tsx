@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
     location.pathname.includes("registration") ||
     location.pathname.includes("login")
   ) {
-    return <div></div>;
+    return <div />;
   }
 
   const handleLogout = (event: React.MouseEvent<HTMLElement>) => {

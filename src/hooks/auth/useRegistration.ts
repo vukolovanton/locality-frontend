@@ -21,7 +21,7 @@ const initialRegistrationState: UserRegistrationDto = {
 };
 
 /**
- * Registration process step #1:
+ * UserRegistration process step #1:
  * 1. Fill local state with form inputs
  * 2. Submit form and create a new user on the backend
  * 3. Redirect to registration step #2: locality creation process. Pass username and password there

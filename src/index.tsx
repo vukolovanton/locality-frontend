@@ -10,7 +10,7 @@ import "./styles/index.scss";
 // Components
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import NavBar from "./components/NavBar";
-import Registration from "./components/Registration";
+import UserRegistration from "./components/Registration/UserRegistration";
 import LocalityCreation from "./components/Registration/LocalityCreation";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -26,7 +26,7 @@ const App = () => {
               <Login />
             </Route>
             <Route exact path="/registration">
-              <Registration />
+              <UserRegistration />
             </Route>
             <Route exact path="/registration/create-locality">
               <LocalityCreation />

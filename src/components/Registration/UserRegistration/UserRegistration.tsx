@@ -1,9 +1,10 @@
 import React from "react";
 import { useRegistration } from "src/hooks/auth/useRegistration";
 import InputField from "src/components/shared/InputField";
-import "./styles.scss";
+import Title from "../Title";
+import "../styles.scss";
 
-const Registration: React.FC = () => {
+const UserRegistration: React.FC = () => {
   const {
     registrationState,
     errorMessage,
@@ -13,7 +14,7 @@ const Registration: React.FC = () => {
 
   return (
     <section className="container">
-      <h3>Welcome to Locality!</h3>
+      <Title />
       {errorMessage && <span className="error">{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitRegistrationForm}>
         <fieldset>
@@ -80,4 +81,4 @@ const Registration: React.FC = () => {
   );
 };
 
-export default Registration;
+export default UserRegistration;
