@@ -12,7 +12,7 @@ import {
 } from "redux-persist";
 import registrationReducer from "./auth/registration/registrationSlice";
 import loginReducer from "./auth/login/loginSlice";
-import localityCreationReducer from "./locality/localityCreation/localityCreationSlice";
+import localityCreationReducer from "./locality/localityCreationSlice";
 import localityReducer from "./locality/localitySlice";
 
 const reducers = combineReducers({

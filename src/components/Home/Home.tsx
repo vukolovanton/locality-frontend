@@ -1,18 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersLocality } from "src/state/locality/localitySlice";
-import { userStateSelector } from "src/state/auth/login/loginSlice";
+import { useFetchLocality } from "../../hooks/locality/useFetchLocality";
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector(userStateSelector);
+  const { locality } = useFetchLocality();
 
-  React.useEffect(() => {
-    dispatch(fetchUsersLocality(user.localityId));
-  }, []);
   return (
     <div>
-      <h1>DICK</h1>
+      <h1>{locality.title}</h1>
     </div>
   );
 };

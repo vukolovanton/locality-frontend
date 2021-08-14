@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { LocalityDto } from "src/interfaces/LocalityDto";
-import { postNewLocality } from "src/state/locality/localityCreation/localityCreationSlice";
+import { postNewLocality } from "src/state/locality/localityCreationSlice";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import {
   userLoginFetch,
