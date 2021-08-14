@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
     location.pathname.includes("registration") ||
     location.pathname.includes("login")
   ) {
-    return <div />;
+    return null;
   }
 
   const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,7 +29,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="account-container">
       <span className="account">{user.username}</span>
       <button onClick={handleLogout}>Log Out</button>
     </div>
