@@ -14,12 +14,14 @@ import registrationReducer from "./auth/registration/registrationSlice";
 import loginReducer from "./auth/login/loginSlice";
 import localityCreationReducer from "./locality/localityCreationSlice";
 import localityReducer from "./locality/localitySlice";
+import IssuesReducer from "./issues/issuesSlice";
 
 const reducers = combineReducers({
   registration: registrationReducer,
   localityCreation: localityCreationReducer,
   user: loginReducer,
   locality: localityReducer,
+  issues: IssuesReducer,
 });
 
 const persistConfig = {

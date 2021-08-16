@@ -23,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
         id={id}
         type={inputType}
         aria-required={true}
+        required={true}
         value={value}
         className="input-field"
         onChange={(e) => handleValueChange(id, e.target.value)}

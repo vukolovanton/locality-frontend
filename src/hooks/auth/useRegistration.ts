@@ -17,7 +17,7 @@ const initialRegistrationState: UserRegistrationDto = {
   email: "",
   password: "",
   confirmPassword: "",
-  roles: [Roles.USER],
+  roles: Roles.USER,
 };
 
 /**
@@ -39,10 +39,6 @@ export const useRegistration = () => {
 
   // Set state properties on registration form changes
   const handleStateChange = (key: string, value: string | Roles) => {
-    if (key === "roles") {
-      setRegistrationState({ ...registrationState, roles: [value as Roles] });
-      return;
-    }
     setRegistrationState({ ...registrationState, [key]: value });
   };
 
