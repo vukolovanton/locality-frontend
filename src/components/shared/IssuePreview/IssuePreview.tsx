@@ -2,6 +2,7 @@ import React from "react";
 import { IssuesModel } from "src/interfaces/IssuesModel";
 import { USER_FACING_ISSUES_STATUS } from "src/interfaces/IssueStatuses";
 import logo from "src/assets/default.png";
+import { formatDate } from "src/utils/helpers";
 import styles from "./styles.module.scss";
 
 interface IssuePreviewProps {
@@ -21,7 +22,7 @@ const IssuePreview: React.FC<IssuePreviewProps> = ({ issue }) => {
       <span className={styles.title}>{issue.title}</span>
       <div className={styles.info}>
         <span>{USER_FACING_ISSUES_STATUS[issue.status]}</span>
-        <span>{issue.createdAt}</span>
+        <span>{formatDate(issue.createdAt)}</span>
       </div>
     </div>
   );

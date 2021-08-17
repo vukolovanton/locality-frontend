@@ -13,3 +13,7 @@ export const validateObjectValues = (
 
   return isValid;
 };
+
+export const formatDate = (mysqlDate: string) => {
+  return new Date(mysqlDate).toLocaleDateString();
+};

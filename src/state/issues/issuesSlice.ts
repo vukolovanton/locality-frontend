@@ -87,28 +87,41 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
   }
 };
 
-export const fetchAllIssues = (localityId: number) => async (dispatch: any) => {
-  dispatch(getAllIssuesStart());
+export const fetchAllIssues =
+  (localityId: number, orderBy?: string, limit?: number) =>
+  async (dispatch: any) => {
+    dispatch(getAllIssuesStart());
 
-  try {
-    const response = await api.getRequest("/issues", {
+    // Oh, this is bad, but it's 23:02 and I don't know how to make is easier
+    const queryParams: any = {
       localityId: localityId.toString(),
-    });
-    const data = await response.json();
-
-    if (response.status === 200) {
-      dispatch(getAllIssuesSuccess(data));
-    } else {
-      dispatch(
-        getAllIssuesFail(
-          "Something went wrong. Review your entities and try again"
-        )
-      );
+    };
+    if (orderBy) {
+      queryParams.orderBy = orderBy;
     }
-  } catch (error) {
-    dispatch(getAllIssuesFail(error));
-  }
-};
+    if (limit) {
+      queryParams.limit = limit;
+    }
+
+    try {
+      const response = await api.getRequest("/issues", {
+        ...queryParams,
+      });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        dispatch(getAllIssuesSuccess(data));
+      } else {
+        dispatch(
+          getAllIssuesFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(getAllIssuesFail(error));
+    }
+  };
 
 export const patchIssue =
   (issueId: number, imageUrl: string) => async (dispatch: any) => {
