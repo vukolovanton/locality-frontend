@@ -4,14 +4,16 @@ import { RootState } from "../store";
 import { IssuesModel } from "../../interfaces/IssuesModel";
 
 interface IIssuesState {
-  loading: boolean;
+  isFetching: boolean;
+  isUpdating: boolean;
   hasErrors: boolean;
   errorMessage: string;
   data: Array<IssuesModel>;
 }
 
 const initialIssuesState: IIssuesState = {
-  loading: false,
+  isFetching: false,
+  isUpdating: false,
   hasErrors: false,
   errorMessage: "",
   data: [],
@@ -22,42 +24,29 @@ export const issuesSlice = createSlice({
   initialState: initialIssuesState,
   reducers: {
     // POST
-    postIssueStart: (state) => {
-      state.loading = true;
+    updateIssueStart: (state) => {
+      state.isUpdating = true;
     },
-    postIssueSuccess: (state) => {
-      state.loading = false;
+    updateIssueSuccess: (state) => {
+      state.isUpdating = false;
       state.hasErrors = false;
     },
-    postIssueFail: (state, { payload }) => {
-      state.loading = false;
+    updateIssueFail: (state, { payload }) => {
+      state.isUpdating = false;
       state.hasErrors = true;
       state.errorMessage = payload;
     },
     // GET
     getAllIssuesStart: (state) => {
-      state.loading = true;
+      state.isFetching = true;
     },
     getAllIssuesSuccess: (state, { payload }) => {
-      state.loading = false;
+      state.isFetching = false;
       state.hasErrors = false;
       state.data = payload;
     },
     getAllIssuesFail: (state, { payload }) => {
-      state.loading = false;
-      state.hasErrors = true;
-      state.errorMessage = payload;
-    },
-    // PATCH
-    patchIssueStart: (state) => {
-      state.loading = true;
-    },
-    patchIssueSuccess: (state) => {
-      state.loading = false;
-      state.hasErrors = false;
-    },
-    patchIssueFail: (state, { payload }) => {
-      state.loading = false;
+      state.isFetching = false;
       state.hasErrors = true;
       state.errorMessage = payload;
     },
@@ -65,7 +54,7 @@ export const issuesSlice = createSlice({
 });
 
 export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
-  dispatch(postIssueStart());
+  dispatch(updateIssueStart());
   const token = localStorage.token;
 
   try {
@@ -84,16 +73,16 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
     );
 
     if (response.status === 200) {
-      dispatch(postIssueSuccess());
+      dispatch(updateIssueSuccess());
     } else {
       dispatch(
-        postIssueFail(
+        updateIssueFail(
           "Something went wrong. Review your entities and try again"
         )
       );
     }
   } catch (error) {
-    dispatch(postIssueFail(error));
+    dispatch(updateIssueFail(error));
   }
 };
 
@@ -133,7 +122,7 @@ export const fetchAllIssues = (localityId: number) => async (dispatch: any) => {
 
 export const patchIssue =
   (issueId: number, imageUrl: string) => async (dispatch: any) => {
-    dispatch(patchIssueStart());
+    dispatch(updateIssueStart());
     const token = localStorage.token;
 
     try {
@@ -155,16 +144,16 @@ export const patchIssue =
       );
 
       if (response.status === 200) {
-        dispatch(patchIssueSuccess());
+        dispatch(updateIssueSuccess());
       } else {
         dispatch(
-          patchIssueFail(
+          updateIssueFail(
             "Something went wrong. Review your entities and try again"
           )
         );
       }
     } catch (error) {
-      dispatch(patchIssueFail(error));
+      dispatch(updateIssueFail(error));
     }
   };
 
@@ -179,15 +168,12 @@ export const issuesSelector = createDraftSafeSelector(
 );
 
 export const {
-  postIssueStart,
-  postIssueSuccess,
-  postIssueFail,
+  updateIssueStart,
+  updateIssueSuccess,
+  updateIssueFail,
   getAllIssuesStart,
   getAllIssuesSuccess,
   getAllIssuesFail,
-  patchIssueStart,
-  patchIssueSuccess,
-  patchIssueFail,
 } = issuesSlice.actions;
 
 export default issuesSlice.reducer;
