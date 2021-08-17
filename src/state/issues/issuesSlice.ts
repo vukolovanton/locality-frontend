@@ -21,6 +21,7 @@ export const issuesSlice = createSlice({
   name: "issues",
   initialState: initialIssuesState,
   reducers: {
+    // POST
     postIssueStart: (state) => {
       state.loading = true;
     },
@@ -33,7 +34,7 @@ export const issuesSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
-    //
+    // GET
     getAllIssuesStart: (state) => {
       state.loading = true;
     },
@@ -43,6 +44,19 @@ export const issuesSlice = createSlice({
       state.data = payload;
     },
     getAllIssuesFail: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // PATCH
+    patchIssueStart: (state) => {
+      state.loading = true;
+    },
+    patchIssueSuccess: (state) => {
+      state.loading = false;
+      state.hasErrors = false;
+    },
+    patchIssueFail: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = true;
       state.errorMessage = payload;
@@ -117,6 +131,43 @@ export const fetchAllIssues = (localityId: number) => async (dispatch: any) => {
   }
 };
 
+export const patchIssue =
+  (issueId: number, imageUrl: string) => async (dispatch: any) => {
+    dispatch(patchIssueStart());
+    const token = localStorage.token;
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/issues/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            issueId,
+            imageUrl,
+          }),
+        }
+      );
+
+      if (response.status === 200) {
+        dispatch(patchIssueSuccess());
+      } else {
+        dispatch(
+          patchIssueFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(patchIssueFail(error));
+    }
+  };
+
 const stateSelector = (state: RootState) => state;
 export const issuesStateSelector = createDraftSafeSelector(
   stateSelector,
@@ -134,6 +185,9 @@ export const {
   getAllIssuesStart,
   getAllIssuesSuccess,
   getAllIssuesFail,
+  patchIssueStart,
+  patchIssueSuccess,
+  patchIssueFail,
 } = issuesSlice.actions;
 
 export default issuesSlice.reducer;

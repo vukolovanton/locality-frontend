@@ -7,26 +7,6 @@ import "./styles.scss";
 
 const CreateNewIssue: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [image, setImage] = useState<File>();
-  const [url, setUrl] = useState("");
-
-  const uploadImage = () => {
-    const data = new FormData();
-    data.append("file", image || "");
-    data.append("upload_preset", "locality");
-    data.append("cloud_name", "vukolovanton");
-
-    fetch("https://api.cloudinary.com/v1_1/vukolovanton/image/upload", {
-      method: "POST",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setUrl(data.url);
-        console.log(url, "NOPE");
-      })
-      .catch((err) => console.log(err));
-  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -41,6 +21,8 @@ const CreateNewIssue: React.FC = () => {
     errorMessage,
     handleStateChange,
     handleSubmitCreateIssueForm,
+    uploadImage,
+    setImage,
   } = useIssueCreation(handleCloseModal);
 
   return (
