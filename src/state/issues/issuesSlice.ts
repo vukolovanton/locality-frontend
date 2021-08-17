@@ -1,4 +1,5 @@
 import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
+import { IssuesDto } from "src/interfaces/IssuesDto";
 import { RootState } from "../store";
 
 interface IIssuesState {
@@ -34,41 +35,38 @@ export const issuesSlice = createSlice({
   },
 });
 
-export const postNewIssue =
-  (newIssue: { title: string; description: string }) =>
-  async (dispatch: any) => {
-    dispatch(postIssueStart());
-    const token = localStorage.token;
-    console.log(token);
+export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
+  dispatch(postIssueStart());
+  const token = localStorage.token;
 
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/issues/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(newIssue),
-        }
-      );
-
-      if (response.status === 200) {
-        dispatch(postIssueSuccess());
-      } else {
-        dispatch(
-          postIssueFail(
-            "Something went wrong. Review your entities and try again"
-          )
-        );
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/issues/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newIssue),
       }
-    } catch (error) {
-      dispatch(postIssueFail(error));
+    );
+
+    if (response.status === 200) {
+      dispatch(postIssueSuccess());
+    } else {
+      dispatch(
+        postIssueFail(
+          "Something went wrong. Review your entities and try again"
+        )
+      );
     }
-  };
+  } catch (error) {
+    dispatch(postIssueFail(error));
+  }
+};
 
 const stateSelector = (state: RootState) => state;
 export const issuesStateSelector = createDraftSafeSelector(

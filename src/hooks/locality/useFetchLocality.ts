@@ -5,12 +5,12 @@ import {
   fetchCurrentUserLocality,
   localitySelector,
 } from "src/state/locality/localitySlice";
-import { LocalityDto } from "src/interfaces/LocalityDto";
 
 export const useFetchLocality = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(userStateSelector);
-  const locality: LocalityDto = useSelector(localitySelector);
+  const locality = useSelector(localitySelector);
+  console.log(locality);
 
   useEffect(() => {
     dispatch(fetchCurrentUserLocality(user.localityId));

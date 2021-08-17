@@ -1,16 +1,18 @@
 import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { validateObjectValues } from "src/utils/helpers";
 import { postNewIssue } from "../../state/issues/issuesSlice";
+import { currentUserSelector } from "../../state/auth/login/loginSlice";
 
 const initialIssueCreationState = {
   title: "",
   description: "",
 };
 
-export const useIssueCreation = () => {
+export const useIssueCreation = (onClose: () => void) => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(currentUserSelector);
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [issueCreationState, setIssueCreationState] = useState(
@@ -28,9 +30,17 @@ export const useIssueCreation = () => {
 
     if (isValid) {
       // Call issues creation API
-      dispatch(postNewIssue(issueCreationState));
+      dispatch(
+        postNewIssue({
+          ...issueCreationState,
+          imageUrl: "",
+          userId: currentUser.id,
+          localityId: currentUser.localityId,
+        })
+      );
       // Clean up
       setIssueCreationState(initialIssueCreationState);
+      onClose();
     }
   };
 

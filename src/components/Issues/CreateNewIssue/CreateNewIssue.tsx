@@ -8,13 +8,6 @@ import "./styles.scss";
 const CreateNewIssue: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const {
-    issueCreationState,
-    errorMessage,
-    handleStateChange,
-    handleSubmitCreateIssueForm,
-  } = useIssueCreation();
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -22,6 +15,13 @@ const CreateNewIssue: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const {
+    issueCreationState,
+    errorMessage,
+    handleStateChange,
+    handleSubmitCreateIssueForm,
+  } = useIssueCreation(handleCloseModal);
 
   return (
     <div>

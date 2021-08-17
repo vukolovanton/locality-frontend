@@ -3,19 +3,30 @@ import { History } from "history";
 import { UserModel } from "src/interfaces/UserModel";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { RootState } from "src/state/store";
+import { Roles } from "src/interfaces/roles";
 
-interface IUserLogin {
+interface IUserLoginState {
   loading: boolean;
   hasErrors: boolean;
   isLoginSuccessfully: boolean;
-  user: {};
+  user: UserModel;
 }
 
-const initialUserLogin: IUserLogin = {
+const initialUserLogin: IUserLoginState = {
   loading: false,
   hasErrors: false,
   isLoginSuccessfully: false,
-  user: {},
+  user: {
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    token: "",
+    type: "",
+    roles: Roles.USER,
+    id: 0,
+    localityId: 0,
+  },
 };
 
 export const loginSlice = createSlice({
@@ -36,7 +47,7 @@ export const loginSlice = createSlice({
       state.hasErrors = true;
     },
     userLogout: (state) => {
-      state.user = {};
+      state.user = initialUserLogin.user;
       state.isLoginSuccessfully = false;
     },
   },
@@ -90,7 +101,11 @@ export const { userLoginStart, userLoginFail, userLoginSuccess, userLogout } =
 const stateSelector = (state: RootState) => state;
 export const userStateSelector = createDraftSafeSelector(
   stateSelector,
-  (state) => state.user
+  (state): IUserLoginState => state.user
+);
+export const currentUserSelector = createDraftSafeSelector(
+  userStateSelector,
+  (state): UserModel => state.user
 );
 
 export default loginSlice.reducer;

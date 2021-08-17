@@ -78,7 +78,8 @@ export const {
   userRegistrationFail,
 } = registrationSlice.actions;
 
-export const registrationUserSelector = (state: RootState) =>
-  state.registration;
+export const registrationUserSelector = (
+  state: RootState
+): IRegistrationState => state.registration;
 
 export default registrationSlice.reducer;

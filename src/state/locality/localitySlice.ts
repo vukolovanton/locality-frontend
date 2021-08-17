@@ -1,18 +1,24 @@
 import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
+import { LocalityDto } from "src/interfaces/LocalityDto";
 import { RootState } from "../store";
 
 interface ILocalityState {
   loading: boolean;
   hasErrors: boolean;
   errorMessage: string;
-  locality: {};
+  locality: LocalityDto;
 }
 
 const initialLocalityState: ILocalityState = {
   loading: false,
   hasErrors: false,
   errorMessage: "",
-  locality: {},
+  locality: {
+    title: "",
+    description: "",
+    street: "",
+    city: "",
+  },
 };
 
 export const localitySlice = createSlice({
@@ -72,11 +78,11 @@ export const fetchCurrentUserLocality =
 const stateSelector = (state: RootState) => state;
 export const localityStateSelector = createDraftSafeSelector(
   stateSelector,
-  (state) => state.locality
+  (state): ILocalityState => state.locality
 );
 export const localitySelector = createDraftSafeSelector(
   localityStateSelector,
-  (state) => state.locality
+  (state): LocalityDto => state.locality
 );
 
 export const { fetchLocalityStart, fetchLocalitySuccess, fetchLocalityFail } =
