@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validateObjectValues } from "src/utils/helpers";
 import { postNewIssue } from "../../state/issues/issuesSlice";
 import { currentUserSelector } from "../../state/auth/login/loginSlice";
+import { IssueStatuses } from "../../interfaces/IssueStatuses";
 
 const initialIssueCreationState = {
   title: "",
@@ -34,6 +35,7 @@ export const useIssueCreation = (onClose: () => void) => {
         postNewIssue({
           ...issueCreationState,
           imageUrl: "",
+          status: IssueStatuses.PENDING,
           userId: currentUser.id,
           localityId: currentUser.localityId,
         })

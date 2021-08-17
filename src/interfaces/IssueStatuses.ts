@@ -1,0 +1,6 @@
+export enum IssueStatuses {
+  PENDING = "PENDING",
+  IN_PROGRESS = "IN_PROGRESS",
+  RESOLVED = "RESOLVED",
+  REJECTED = "REJECTED",
+}

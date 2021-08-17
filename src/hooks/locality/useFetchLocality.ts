@@ -10,7 +10,6 @@ export const useFetchLocality = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(userStateSelector);
   const locality = useSelector(localitySelector);
-  console.log(locality);
 
   useEffect(() => {
     dispatch(fetchCurrentUserLocality(user.localityId));

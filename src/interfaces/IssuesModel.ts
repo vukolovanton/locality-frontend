@@ -1,9 +1,9 @@
 export interface IssuesModel {
+  id: number;
   title: string;
   description: string;
   status: string;
-  reportedBy: number;
   imageUrl: string;
-  userId: string;
-  localityId: string;
+  username: string;
+  createdAt: string;
 }
