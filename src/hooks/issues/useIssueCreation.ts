@@ -2,9 +2,9 @@ import { FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { validateObjectValues } from "src/utils/helpers";
-import { postNewIssue } from "../../state/issues/issuesSlice";
-import { currentUserSelector } from "../../state/auth/login/loginSlice";
-import { IssueStatuses } from "../../interfaces/IssueStatuses";
+import { postNewIssue } from "src/state/issues/issuesSlice";
+import { currentUserSelector } from "src/state/auth/login/loginSlice";
+import { IssueStatuses } from "src/interfaces/IssueStatuses";
 
 const initialIssueCreationState = {
   title: "",
