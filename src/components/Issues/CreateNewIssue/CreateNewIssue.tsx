@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ModalWindow from "src/components/shared/ModalWindow";
 import InputField from "src/components/shared/InputField";
 import InputContainer from "src/components/shared/InputContainer";
@@ -6,7 +6,27 @@ import { useIssueCreation } from "src/hooks/issues/useIssueCreation";
 import "./styles.scss";
 
 const CreateNewIssue: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [image, setImage] = useState<File>();
+  const [url, setUrl] = useState("");
+
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", image || "");
+    data.append("upload_preset", "locality");
+    data.append("cloud_name", "vukolovanton");
+
+    fetch("https://api.cloudinary.com/v1_1/vukolovanton/image/upload", {
+      method: "POST",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUrl(data.url);
+        console.log(url, "NOPE");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -43,7 +63,6 @@ const CreateNewIssue: React.FC = () => {
             id="title"
           />
           <label htmlFor="description">Description</label>
-
           <div className="grow-wrap">
             <textarea
               rows={5}
@@ -55,6 +74,16 @@ const CreateNewIssue: React.FC = () => {
               placeholder="Describe an issue you want to share"
             />
           </div>
+
+          <input
+            type="file"
+            onChange={(e) => {
+              const target = e.target as HTMLInputElement;
+              const file: File = (target.files as FileList)[0];
+              setImage(file);
+            }}
+          />
+          <button onClick={uploadImage}>Upload</button>
         </InputContainer>
       </ModalWindow>
     </div>
