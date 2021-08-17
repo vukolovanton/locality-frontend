@@ -1,7 +1,7 @@
 import React from "react";
 import { useFetchIssues } from "src/hooks/issues/useFetchIssues";
 import IssuePreview from "src/components/shared/IssuePreview";
-import styles from "./styles.module.scss";
+import styles from "../styles.module.scss";
 
 const AllIssues: React.FC = () => {
   const { issues } = useFetchIssues();

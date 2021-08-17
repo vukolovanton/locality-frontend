@@ -9,7 +9,7 @@ export const useFetchIssues = () => {
   const issues = useSelector(issuesSelector);
 
   useEffect(() => {
-    dispatch(fetchAllIssues(currentUser.localityId));
+    dispatch(fetchAllIssues(currentUser.localityId, "createdAt", 3));
   }, []);
 
   return {

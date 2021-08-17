@@ -11,14 +11,17 @@ interface IssuePreviewProps {
 
 const IssuePreview: React.FC<IssuePreviewProps> = ({ issue }) => {
   return (
-    <div className={styles.box}>
-      <img
-        src={issue.imageUrl || logo}
-        alt={issue.title}
-        className={styles.image}
-        width="600"
-        height="400"
-      />
+    <div>
+      <div className={styles.box}>
+        <img
+          src={issue.imageUrl || logo}
+          alt={issue.title}
+          className={styles.image}
+          width="600"
+          height="400"
+        />
+      </div>
+
       <span className={styles.title}>{issue.title}</span>
       <div className={styles.info}>
         <span>{USER_FACING_ISSUES_STATUS[issue.status]}</span>
