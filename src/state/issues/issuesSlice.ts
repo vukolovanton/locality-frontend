@@ -2,6 +2,7 @@ import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IssuesDto } from "src/interfaces/IssuesDto";
 import { RootState } from "../store";
 import { IssuesModel } from "../../interfaces/IssuesModel";
+import { api } from "../../utils/api";
 
 interface IIssuesState {
   isFetching: boolean;
@@ -88,22 +89,11 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
 
 export const fetchAllIssues = (localityId: number) => async (dispatch: any) => {
   dispatch(getAllIssuesStart());
-  const token = localStorage.token;
 
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/issues?` +
-        new URLSearchParams({ localityId: localityId.toString() }),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await api.getRequest("/issues", {
+      localityId: localityId.toString(),
+    });
     const data = await response.json();
 
     if (response.status === 200) {
@@ -123,24 +113,15 @@ export const fetchAllIssues = (localityId: number) => async (dispatch: any) => {
 export const patchIssue =
   (issueId: number, imageUrl: string) => async (dispatch: any) => {
     dispatch(updateIssueStart());
-    const token = localStorage.token;
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/issues/`,
+      const response = await api.postRequest(
+        "/issues",
         {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            issueId,
-            imageUrl,
-          }),
-        }
+          issueId,
+          imageUrl,
+        },
+        "PATCH"
       );
 
       if (response.status === 200) {

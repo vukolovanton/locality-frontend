@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "src/state/store";
 import { UserRegistrationDto } from "src/interfaces/UserRegistrationDto";
+import { api } from "src/utils/api";
 
 interface IRegistrationState {
   loading: boolean;
@@ -8,10 +9,6 @@ interface IRegistrationState {
   userRegistrationStatus: {
     message: string;
   };
-}
-
-export interface RegistrationResponseMessage {
-  message: string;
 }
 
 const initialRegistrationState: IRegistrationState = {
@@ -47,19 +44,7 @@ export const postNewUser =
     dispatch(userRegistrationStart());
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-          },
-          body: JSON.stringify(newUser),
-        }
-      );
-
+      const response = await api.postRequest("/v1/auth/signup", newUser);
       const result = await response.json();
 
       if (response.status === 200) {

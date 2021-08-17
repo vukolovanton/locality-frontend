@@ -4,6 +4,7 @@ import { UserModel } from "src/interfaces/UserModel";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { RootState } from "src/state/store";
 import { Roles } from "src/interfaces/roles";
+import { api } from "../../../utils/api";
 
 interface IUserLoginState {
   loading: boolean;
@@ -63,19 +64,10 @@ export const userLoginFetch =
     dispatch(userLoginStart());
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/auth/signin`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-          },
-          body: JSON.stringify(userLoginCredentials),
-        }
+      const response = await api.postRequest(
+        "/v1/auth/signin",
+        userLoginCredentials
       );
-
       const result: UserModel = await response.json();
 
       if (response.status === 200) {
