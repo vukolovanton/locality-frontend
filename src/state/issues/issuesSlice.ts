@@ -71,6 +71,7 @@ export const issuesSlice = createSlice({
   },
 });
 
+// POST
 export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
   dispatch(updateIssueStart());
   const token = localStorage.token;
@@ -104,6 +105,7 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
   }
 };
 
+// FETCH RECENT
 export const fetchRecentIssues =
   (localityId: number, orderBy: string, limit: number) =>
   async (dispatch: any) => {
@@ -129,6 +131,7 @@ export const fetchRecentIssues =
     }
   };
 
+// FETCH ALL
 export const fetchAllIssues =
   (localityId: number, status: IssueStatuses) => async (dispatch: any) => {
     dispatch(getAllIssuesStart());
@@ -152,8 +155,9 @@ export const fetchAllIssues =
     }
   };
 
+// PATCH ISSUE
 export const patchIssue =
-  (issueId: number, imageUrl: string) => async (dispatch: any) => {
+  (issueId: number, key: string, value: string) => async (dispatch: any) => {
     dispatch(updateIssueStart());
 
     try {
@@ -161,12 +165,14 @@ export const patchIssue =
         "/issues",
         {
           issueId,
-          imageUrl,
+          key,
+          value,
         },
         "PATCH"
       );
 
       if (response.status === 200) {
+        // TODO: when we do patch update, we need to update local state
         dispatch(updateIssueSuccess());
       } else {
         dispatch(

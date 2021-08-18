@@ -7,7 +7,7 @@ const apiConnect = (token: string) => {
     return fetch(
       `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api${url}`,
       {
-        method: "POST" || method,
+        method: method || "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
