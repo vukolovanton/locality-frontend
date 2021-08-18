@@ -3,13 +3,15 @@ import { IssuesDto } from "src/interfaces/IssuesDto";
 import { RootState } from "../store";
 import { IssuesModel } from "../../interfaces/IssuesModel";
 import { api } from "../../utils/api";
+import { IssueStatuses } from "../../interfaces/IssueStatuses";
 
 interface IIssuesState {
   isFetching: boolean;
   isUpdating: boolean;
   hasErrors: boolean;
   errorMessage: string;
-  data: Array<IssuesModel>;
+  allIssues: Array<IssuesModel>;
+  recentIssues: Array<IssuesModel>;
 }
 
 const initialIssuesState: IIssuesState = {
@@ -17,7 +19,8 @@ const initialIssuesState: IIssuesState = {
   isUpdating: false,
   hasErrors: false,
   errorMessage: "",
-  data: [],
+  allIssues: [],
+  recentIssues: [],
 };
 
 export const issuesSlice = createSlice({
@@ -37,16 +40,30 @@ export const issuesSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
-    // GET
+    // GET ALL
     getAllIssuesStart: (state) => {
       state.isFetching = true;
     },
     getAllIssuesSuccess: (state, { payload }) => {
       state.isFetching = false;
       state.hasErrors = false;
-      state.data = payload;
+      state.allIssues = payload;
     },
     getAllIssuesFail: (state, { payload }) => {
+      state.isFetching = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // GET RECENT
+    getRecentIssuesStart: (state) => {
+      state.isFetching = true;
+    },
+    getRecentIssuesSuccess: (state, { payload }) => {
+      state.isFetching = false;
+      state.hasErrors = false;
+      state.recentIssues = payload;
+    },
+    getRecentIssuesFail: (state, { payload }) => {
       state.isFetching = false;
       state.hasErrors = true;
       state.errorMessage = payload;
@@ -87,21 +104,39 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
   }
 };
 
-export const fetchAllIssues =
-  (localityId: number, orderBy?: string, limit?: number) =>
+export const fetchRecentIssues =
+  (localityId: number, orderBy: string, limit: number) =>
   async (dispatch: any) => {
-    dispatch(getAllIssuesStart());
+    dispatch(getRecentIssuesStart());
 
-    // Oh, this is bad, but it's 23:02 and I don't know how to make is easier
     const queryParams: any = {
       localityId: localityId.toString(),
+      orderBy: orderBy,
+      limit: limit,
     };
-    if (orderBy) {
-      queryParams.orderBy = orderBy;
+
+    try {
+      const response = await api.getRequest("/issues", {
+        ...queryParams,
+      });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        dispatch(getRecentIssuesSuccess(data));
+      }
+    } catch (error) {
+      dispatch(getRecentIssuesFail(error));
     }
-    if (limit) {
-      queryParams.limit = limit;
-    }
+  };
+
+export const fetchAllIssues =
+  (localityId: number, status: IssueStatuses) => async (dispatch: any) => {
+    dispatch(getAllIssuesStart());
+
+    const queryParams: any = {
+      localityId: localityId.toString(),
+      status: status,
+    };
 
     try {
       const response = await api.getRequest("/issues", {
@@ -111,12 +146,6 @@ export const fetchAllIssues =
 
       if (response.status === 200) {
         dispatch(getAllIssuesSuccess(data));
-      } else {
-        dispatch(
-          getAllIssuesFail(
-            "Something went wrong. Review your entities and try again"
-          )
-        );
       }
     } catch (error) {
       dispatch(getAllIssuesFail(error));
@@ -151,14 +180,21 @@ export const patchIssue =
     }
   };
 
+// STATE
 const stateSelector = (state: RootState) => state;
 export const issuesStateSelector = createDraftSafeSelector(
   stateSelector,
   (state): IIssuesState => state.issues
 );
-export const issuesSelector = createDraftSafeSelector(
+// RECENT
+export const recentIssuesSelector = createDraftSafeSelector(
   issuesStateSelector,
-  (state): Array<IssuesModel> => state.data
+  (state): Array<IssuesModel> => state.recentIssues
+);
+// ALL
+export const allIssuesSelector = createDraftSafeSelector(
+  issuesStateSelector,
+  (state): Array<IssuesModel> => state.allIssues
 );
 
 export const {
@@ -168,6 +204,9 @@ export const {
   getAllIssuesStart,
   getAllIssuesSuccess,
   getAllIssuesFail,
+  getRecentIssuesStart,
+  getRecentIssuesSuccess,
+  getRecentIssuesFail,
 } = issuesSlice.actions;
 
 export default issuesSlice.reducer;

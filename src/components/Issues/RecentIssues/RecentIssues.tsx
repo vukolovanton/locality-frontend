@@ -1,10 +1,14 @@
 import React from "react";
-import { useFetchIssues } from "src/hooks/issues/useFetchIssues";
 import IssuePreview from "src/components/shared/IssuePreview";
+import { IssuesModel } from "src/interfaces/IssuesModel";
+
 import styles from "../styles.module.scss";
 
-const RecentlyAdded: React.FC = () => {
-  const { issues } = useFetchIssues();
+interface RecentIssuesProps {
+  issues: Array<IssuesModel>;
+}
+
+const RecentIssues: React.FC<RecentIssuesProps> = ({ issues }) => {
   return (
     <section>
       <h3>Recently added</h3>
@@ -17,4 +21,4 @@ const RecentlyAdded: React.FC = () => {
   );
 };
 
-export default RecentlyAdded;
+export default RecentIssues;

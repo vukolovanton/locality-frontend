@@ -1,18 +1,32 @@
 import React from "react";
-import { useFetchIssues } from "src/hooks/issues/useFetchIssues";
 import IssuePreview from "src/components/shared/IssuePreview";
+import { IssuesModel } from "src/interfaces/IssuesModel";
+
 import styles from "../styles.module.scss";
 
-const AllIssues: React.FC = () => {
-  const { issues } = useFetchIssues();
+interface AllIssuesProps {
+  issues: Array<IssuesModel>;
+  handleExpandRowClick: () => void;
+  isShowAllRowExpanded: boolean;
+}
+
+const AllIssues: React.FC<AllIssuesProps> = ({
+  issues,
+  handleExpandRowClick,
+  isShowAllRowExpanded,
+}) => {
   return (
     <section>
-      <h3>All issues</h3>
-      <div className={styles.issuesContainer}>
-        {issues.map((issue) => (
-          <IssuePreview issue={issue} key={issue.id} />
-        ))}
-      </div>
+      <h3 onClick={handleExpandRowClick} className={styles.allIssuesTitle}>
+        All issues {isShowAllRowExpanded ? "↥" : "↧"}
+      </h3>
+      {isShowAllRowExpanded && (
+        <div className={styles.issuesContainer}>
+          {issues.map((issue) => (
+            <IssuePreview issue={issue} key={issue.id} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
