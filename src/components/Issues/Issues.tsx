@@ -13,6 +13,8 @@ const Issues: React.FC = () => {
     allIssues,
     isShowAllRowExpanded,
     handleExpandRowClick,
+    filterStatus,
+    setFilterStatus,
   } = useFetchIssues();
 
   return (
@@ -23,6 +25,8 @@ const Issues: React.FC = () => {
           issues={allIssues}
           isShowAllRowExpanded={isShowAllRowExpanded}
           handleExpandRowClick={handleExpandRowClick}
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
         />
       </div>
 

@@ -7,7 +7,7 @@ import {
   recentIssuesSelector,
 } from "src/state/issues/issuesSlice";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
-import { IssueStatuses } from "../../interfaces/IssueStatuses";
+import { IssueStatuses } from "src/interfaces/IssueStatuses";
 
 export const useFetchIssues = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,9 @@ export const useFetchIssues = () => {
 
   const [isShowAllRowExpanded, setIsShowAllRowExpanded] =
     useState<boolean>(false);
+  const [filterStatus, setFilterStatus] = useState<IssueStatuses>(
+    IssueStatuses.IN_PROGRESS
+  );
 
   const handleExpandRowClick = () => {
     setIsShowAllRowExpanded((value) => !value);
@@ -27,16 +30,17 @@ export const useFetchIssues = () => {
   }, []);
 
   useEffect(() => {
-    console.log(allIssues, "allIssues");
     if (isShowAllRowExpanded) {
-      dispatch(fetchAllIssues(currentUser.localityId, IssueStatuses.PENDING));
+      dispatch(fetchAllIssues(currentUser.localityId, filterStatus));
     }
-  }, [isShowAllRowExpanded]);
+  }, [isShowAllRowExpanded, filterStatus]);
 
   return {
     recentIssues,
     allIssues,
     isShowAllRowExpanded,
     handleExpandRowClick,
+    filterStatus,
+    setFilterStatus,
   };
 };

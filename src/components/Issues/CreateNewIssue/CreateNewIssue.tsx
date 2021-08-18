@@ -27,7 +27,9 @@ const CreateNewIssue: React.FC = () => {
 
   return (
     <div>
-      <button onClick={() => handleOpenModal()}>Create new</button>
+      <button onClick={() => handleOpenModal()} className="primary">
+        Create new
+      </button>
       {errorMessage && <span className="error">{errorMessage}</span>}
       <ModalWindow
         isModalOpen={isModalOpen}

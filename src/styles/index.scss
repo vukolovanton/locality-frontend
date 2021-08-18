@@ -1,3 +1,4 @@
+@import "src/styles/colors.scss";
 *,
 *::before,
 *::after {
@@ -54,3 +55,83 @@ ul {
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margins */
 }
+
+button {
+  font-weight: 600;
+  border: solid 2px $locality-dark;
+  outline: 0;
+  padding: 0.2rem 0.4rem;
+  font-size: 1rem;
+  background-color: $locality-light;
+  border-radius: $radius;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: 90%;
+    background-color: $locality-primary;
+    z-index: -1;
+    border-radius: $radius;
+    border: solid $border-width $locality-dark;
+    transition: all $transition ease-in-out;
+  }
+
+  &:hover {
+    &::after {
+      width: 100%;
+      height: 100%;
+      top: $offset;
+      left: $offset;
+    }
+  }
+
+  &:disabled {
+    cursor: unset;
+    border: solid 2px $locality-dark-faded;
+
+    &:hover {
+      &::after {
+        top: 0;
+        left: 0
+      }
+    }
+  }
+}
+
+button.primary {
+  background-color: $locality-primary;
+  color: $locality-light;
+
+  &::after {
+    border: 0;
+    box-shadow: 0 0 0 $border-width $locality-primary;
+    top: $offset;
+    left: $offset;
+  }
+
+  &:hover {
+    background-color: $locality-dark;
+
+    &::after {
+      background-color: $locality-primary;
+      box-shadow: none;
+    }
+  }
+
+  &:disabled {
+    cursor: unset;
+    background-color: $locality-light;
+    color: $locality-dark-faded;
+
+    &::after {
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
