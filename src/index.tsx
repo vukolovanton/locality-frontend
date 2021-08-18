@@ -15,6 +15,7 @@ import LocalityCreation from "./components/Registration/LocalityCreation";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Issues from "./components/Issues";
+import Issue from "./components/Issues/Issue";
 
 const App = () => {
   return (
@@ -33,7 +34,8 @@ const App = () => {
               <LocalityCreation />
             </Route>
             <ProtectedRoute exact path="/" component={Home} />
-            <ProtectedRoute path="/issues" component={Issues} />
+            <ProtectedRoute exact path="/issues" component={Issues} />
+            <ProtectedRoute path="/issues/:id" component={Issue} />
           </Switch>
         </Router>
       </PersistGate>

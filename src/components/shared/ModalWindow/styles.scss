@@ -8,6 +8,8 @@
   background-color: $locality-light;
   border-radius: 5px;
   border: 1px solid $locality-primary;
+  max-height: 80%;
+  overflow-y: scroll;
 }
 
 .overlay {

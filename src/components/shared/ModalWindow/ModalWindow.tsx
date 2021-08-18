@@ -5,7 +5,7 @@ import "./styles.scss";
 interface ModalWindowProps {
   handleCloseModal: () => void;
   isModalOpen: boolean;
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { IssuesModel } from "src/interfaces/IssuesModel";
 import { USER_FACING_ISSUES_STATUS } from "src/interfaces/IssueStatuses";
 import logo from "src/assets/default.png";
@@ -21,8 +22,14 @@ const IssuePreview: React.FC<IssuePreviewProps> = ({ issue }) => {
           height="400"
         />
       </div>
-
-      <span className={styles.title}>{issue.title}</span>
+      <Link
+        to={{
+          pathname: `/issues/${issue.id}`,
+          state: issue,
+        }}
+      >
+        <span className={styles.title}>{issue.title}</span>
+      </Link>
       <div className={styles.info}>
         <span>{USER_FACING_ISSUES_STATUS[issue.status]}</span>
         <span>{formatDate(issue.createdAt)}</span>
