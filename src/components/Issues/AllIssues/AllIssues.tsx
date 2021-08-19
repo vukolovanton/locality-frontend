@@ -5,11 +5,10 @@ import { IssuesModel } from "src/interfaces/IssuesModel";
 import styles from "../styles.module.scss";
 import Filters from "./Filters";
 import { IssueStatuses } from "../../../interfaces/IssueStatuses";
+import { PAGINATION_LIMIT } from "../../../interfaces/constants";
 
 interface AllIssuesProps {
   issues: Array<IssuesModel>;
-  handleExpandRowClick: () => void;
-  isShowAllRowExpanded: boolean;
   filterStatus: IssueStatuses;
   setFilterStatus: (status: IssueStatuses) => void;
   currentPage: number;
@@ -18,8 +17,6 @@ interface AllIssuesProps {
 
 const AllIssues: React.FC<AllIssuesProps> = ({
   issues,
-  handleExpandRowClick,
-  isShowAllRowExpanded,
   filterStatus,
   setFilterStatus,
   currentPage,
@@ -27,29 +24,31 @@ const AllIssues: React.FC<AllIssuesProps> = ({
 }) => {
   return (
     <section>
-      <h3 onClick={handleExpandRowClick} className={styles.allIssuesTitle}>
-        All issues {isShowAllRowExpanded ? "↥" : "↧"}
-      </h3>
-      {isShowAllRowExpanded && (
-        <div>
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePaginationClick("PREV")}
-          >
-            Prev
-          </button>
-          <button onClick={() => handlePaginationClick("NEXT")}>Next</button>
-          <Filters
-            filterStatus={filterStatus}
-            setFilterStatus={setFilterStatus}
-          />
-          <div className={styles.issuesContainer}>
-            {issues.map((issue) => (
-              <IssuePreview issue={issue} key={issue.id} />
-            ))}
-          </div>
+      <h2 className={styles.allIssuesTitle}>All issues</h2>
+      <div>
+        <Filters
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
+        />
+        <div className={styles.issuesContainer}>
+          {issues.map((issue) => (
+            <IssuePreview issue={issue} key={issue.id} />
+          ))}
         </div>
-      )}
+
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePaginationClick("PREV")}
+        >
+          Prev
+        </button>
+        <button
+          disabled={issues.length < PAGINATION_LIMIT}
+          onClick={() => handlePaginationClick("NEXT")}
+        >
+          Next
+        </button>
+      </div>
     </section>
   );
 };

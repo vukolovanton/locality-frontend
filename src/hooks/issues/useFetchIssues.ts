@@ -8,6 +8,7 @@ import {
 } from "src/state/issues/issuesSlice";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
 import { IssueStatuses } from "src/interfaces/IssueStatuses";
+import { PAGINATION_LIMIT } from "src/interfaces/constants";
 
 export const useFetchIssues = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,10 @@ export const useFetchIssues = () => {
   const recentIssues = useSelector(recentIssuesSelector);
   const allIssues = useSelector(allIssuesSelector);
 
-  const [isShowAllRowExpanded, setIsShowAllRowExpanded] =
-    useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [filterStatus, setFilterStatus] = useState<IssueStatuses>(
     IssueStatuses.IN_PROGRESS
   );
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handlePaginationClick = (type: string) => {
     switch (type) {
@@ -33,27 +32,25 @@ export const useFetchIssues = () => {
     }
   };
 
-  const handleExpandRowClick = () => {
-    setIsShowAllRowExpanded((value) => !value);
-  };
-
+  // Fetch items for 'Recently added' section
   useEffect(() => {
     dispatch(fetchRecentIssues(currentUser.localityId, "createdAt", 4));
   }, []);
-
+  // Fetch items for 'All issues' section
   useEffect(() => {
-    if (isShowAllRowExpanded) {
-      dispatch(
-        fetchAllIssues(currentUser.localityId, filterStatus, 4, currentPage)
-      );
-    }
-  }, [isShowAllRowExpanded, filterStatus, currentPage]);
+    dispatch(
+      fetchAllIssues(
+        currentUser.localityId,
+        filterStatus,
+        PAGINATION_LIMIT,
+        currentPage
+      )
+    );
+  }, [filterStatus, currentPage]);
 
   return {
     recentIssues,
     allIssues,
-    isShowAllRowExpanded,
-    handleExpandRowClick,
     filterStatus,
     setFilterStatus,
     currentPage,

@@ -11,8 +11,6 @@ const Issues: React.FC = () => {
   const {
     recentIssues,
     allIssues,
-    isShowAllRowExpanded,
-    handleExpandRowClick,
     filterStatus,
     setFilterStatus,
     currentPage,
@@ -25,8 +23,6 @@ const Issues: React.FC = () => {
         <RecentIssues issues={recentIssues} />
         <AllIssues
           issues={allIssues}
-          isShowAllRowExpanded={isShowAllRowExpanded}
-          handleExpandRowClick={handleExpandRowClick}
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
           currentPage={currentPage}
