@@ -133,12 +133,15 @@ export const fetchRecentIssues =
 
 // FETCH ALL
 export const fetchAllIssues =
-  (localityId: number, status: IssueStatuses) => async (dispatch: any) => {
+  (localityId: number, status: IssueStatuses, limit: number, page: number) =>
+  async (dispatch: any) => {
     dispatch(getAllIssuesStart());
 
     const queryParams: any = {
       localityId: localityId.toString(),
       status: status,
+      limit: limit,
+      page: page,
     };
 
     try {

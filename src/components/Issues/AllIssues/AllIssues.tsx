@@ -12,6 +12,8 @@ interface AllIssuesProps {
   isShowAllRowExpanded: boolean;
   filterStatus: IssueStatuses;
   setFilterStatus: (status: IssueStatuses) => void;
+  currentPage: number;
+  handlePaginationClick: (type: string) => void;
 }
 
 const AllIssues: React.FC<AllIssuesProps> = ({
@@ -20,6 +22,8 @@ const AllIssues: React.FC<AllIssuesProps> = ({
   isShowAllRowExpanded,
   filterStatus,
   setFilterStatus,
+  currentPage,
+  handlePaginationClick,
 }) => {
   return (
     <section>
@@ -28,6 +32,13 @@ const AllIssues: React.FC<AllIssuesProps> = ({
       </h3>
       {isShowAllRowExpanded && (
         <div>
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePaginationClick("PREV")}
+          >
+            Prev
+          </button>
+          <button onClick={() => handlePaginationClick("NEXT")}>Next</button>
           <Filters
             filterStatus={filterStatus}
             setFilterStatus={setFilterStatus}

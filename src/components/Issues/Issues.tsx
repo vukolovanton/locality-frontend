@@ -15,6 +15,8 @@ const Issues: React.FC = () => {
     handleExpandRowClick,
     filterStatus,
     setFilterStatus,
+    currentPage,
+    handlePaginationClick,
   } = useFetchIssues();
 
   return (
@@ -27,6 +29,8 @@ const Issues: React.FC = () => {
           handleExpandRowClick={handleExpandRowClick}
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
+          currentPage={currentPage}
+          handlePaginationClick={handlePaginationClick}
         />
       </div>
 

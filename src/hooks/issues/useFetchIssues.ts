@@ -20,6 +20,18 @@ export const useFetchIssues = () => {
   const [filterStatus, setFilterStatus] = useState<IssueStatuses>(
     IssueStatuses.IN_PROGRESS
   );
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const handlePaginationClick = (type: string) => {
+    switch (type) {
+      case "PREV":
+        setCurrentPage((value: number) => value - 1);
+        break;
+      case "NEXT":
+        setCurrentPage((value: number) => value + 1);
+        break;
+    }
+  };
 
   const handleExpandRowClick = () => {
     setIsShowAllRowExpanded((value) => !value);
@@ -31,9 +43,11 @@ export const useFetchIssues = () => {
 
   useEffect(() => {
     if (isShowAllRowExpanded) {
-      dispatch(fetchAllIssues(currentUser.localityId, filterStatus));
+      dispatch(
+        fetchAllIssues(currentUser.localityId, filterStatus, 4, currentPage)
+      );
     }
-  }, [isShowAllRowExpanded, filterStatus]);
+  }, [isShowAllRowExpanded, filterStatus, currentPage]);
 
   return {
     recentIssues,
@@ -42,5 +56,7 @@ export const useFetchIssues = () => {
     handleExpandRowClick,
     filterStatus,
     setFilterStatus,
+    currentPage,
+    handlePaginationClick,
   };
 };
