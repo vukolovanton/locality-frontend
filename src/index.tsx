@@ -16,6 +16,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Issues from "./components/Issues";
 import Issue from "./components/Issues/Issue";
+import Announcements from "./components/Announcements";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
             <ProtectedRoute exact path="/" component={Home} />
             <ProtectedRoute exact path="/issues" component={Issues} />
             <ProtectedRoute path="/issues/:id" component={Issue} />
+            <ProtectedRoute path="/announcements" component={Announcements} />
           </Switch>
         </Router>
       </PersistGate>

@@ -10,7 +10,7 @@ import { currentUserSelector } from "src/state/auth/login/loginSlice";
 import { IssueStatuses } from "src/interfaces/IssueStatuses";
 import { PAGINATION_LIMIT } from "src/interfaces/constants";
 
-export const useFetchIssues = () => {
+export const useIssues = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(currentUserSelector);
   const recentIssues = useSelector(recentIssuesSelector);

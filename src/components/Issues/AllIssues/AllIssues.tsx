@@ -1,11 +1,11 @@
 import React from "react";
-import IssuePreview from "src/components/shared/IssuePreview";
+import PreviewItem from "src/components/shared/IssuePreview";
 import { IssuesModel } from "src/interfaces/IssuesModel";
+import { IssueStatuses } from "src/interfaces/IssueStatuses";
+import { PAGINATION_LIMIT } from "src/interfaces/constants";
 
 import styles from "../styles.module.scss";
 import Filters from "./Filters";
-import { IssueStatuses } from "../../../interfaces/IssueStatuses";
-import { PAGINATION_LIMIT } from "../../../interfaces/constants";
 
 interface AllIssuesProps {
   issues: Array<IssuesModel>;
@@ -32,7 +32,7 @@ const AllIssues: React.FC<AllIssuesProps> = ({
         />
         <div className={styles.issuesContainer}>
           {issues.map((issue) => (
-            <IssuePreview issue={issue} key={issue.id} />
+            <PreviewItem item={issue} key={issue.id} path="/issues" />
           ))}
         </div>
 

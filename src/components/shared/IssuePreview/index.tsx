@@ -1,3 +1,3 @@
-import IssuePreview from "./IssuePreview";
+import PreviewItem from "./PreviewItem";
 
-export default IssuePreview;
+export default PreviewItem;

@@ -1,11 +1,10 @@
 import React from "react";
-import { useFetchIssues } from "src/hooks/issues/useFetchIssues";
-
+import { useIssues } from "src/hooks/issues/useIssues";
+import SectionPageLayout from "src/components/shared/SectionPageLayout";
 import RecentIssues from "./RecentIssues";
 import Reports from "./Reports";
 import AllIssues from "./AllIssues";
 import CreateNewIssue from "./CreateNewIssue";
-import styles from "./styles.module.scss";
 
 const Issues: React.FC = () => {
   const {
@@ -15,10 +14,10 @@ const Issues: React.FC = () => {
     setFilterStatus,
     currentPage,
     handlePaginationClick,
-  } = useFetchIssues();
+  } = useIssues();
 
   return (
-    <section className={styles.mainLayout}>
+    <SectionPageLayout>
       <div>
         <RecentIssues issues={recentIssues} />
         <AllIssues
@@ -34,7 +33,7 @@ const Issues: React.FC = () => {
         <CreateNewIssue />
         <Reports />
       </div>
-    </section>
+    </SectionPageLayout>
   );
 };
 
