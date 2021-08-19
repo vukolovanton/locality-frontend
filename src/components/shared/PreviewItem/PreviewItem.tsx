@@ -5,8 +5,8 @@ import { USER_FACING_ISSUES_STATUS } from "src/interfaces/IssueStatuses";
 import logo from "src/assets/default.png";
 import { formatDate } from "src/utils/helpers";
 import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
+import { USER_FACING_ANNOUNCEMENTS_STATUSES } from "src/interfaces/AnnouncementsStatuses";
 import styles from "./styles.module.scss";
-import { USER_FACING_ANNOUNCEMENTS_STATUSES } from "../../../interfaces/AnnouncementsStatuses";
 
 interface PreviewItemProps {
   item: IssuesModel | AnnouncementsModel;

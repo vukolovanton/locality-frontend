@@ -11,34 +11,15 @@ const initialIssueCreationState = {
   description: "",
 };
 
-export const useIssueCreation = (onClose: () => void) => {
+export const useIssueCreation = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(currentUserSelector);
 
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [issueCreationState, setIssueCreationState] = useState(
     initialIssueCreationState
   );
-  const [image, setImage] = useState<File>();
-  const [url, setUrl] = useState("");
-
-  const uploadImage = (e: FormEvent) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("file", image || "");
-    data.append("upload_preset", "locality");
-    data.append("cloud_name", "vukolovanton");
-
-    fetch("https://api.cloudinary.com/v1_1/vukolovanton/image/upload", {
-      method: "POST",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setUrl(data.url);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const handleStateChange = (key: string, value: string) => {
     setIssueCreationState({ ...issueCreationState, [key]: value });
@@ -54,7 +35,7 @@ export const useIssueCreation = (onClose: () => void) => {
       dispatch(
         postNewIssue({
           ...issueCreationState,
-          imageUrl: url,
+          imageUrl: imageUrl,
           status: IssueStatuses.PENDING,
           userId: currentUser.id,
           localityId: currentUser.localityId,
@@ -62,7 +43,6 @@ export const useIssueCreation = (onClose: () => void) => {
       );
       // Clean up
       setIssueCreationState(initialIssueCreationState);
-      onClose();
     }
   };
 
@@ -71,7 +51,6 @@ export const useIssueCreation = (onClose: () => void) => {
     errorMessage,
     handleStateChange,
     handleSubmitCreateIssueForm,
-    uploadImage,
-    setImage,
+    setImageUrl,
   };
 };

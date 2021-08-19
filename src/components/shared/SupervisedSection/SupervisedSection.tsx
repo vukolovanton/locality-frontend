@@ -13,7 +13,7 @@ const SupervisedSection: React.FC<SupervisedSectionProps> = ({
   return (
     <section className={styles.section}>
       <h3>{title}</h3>
-      <div className={styles.container}>{children}</div>
+      <div className="grid-container">{children}</div>
     </section>
   );
 };

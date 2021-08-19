@@ -1,6 +1,6 @@
 import React from "react";
 import SupervisedSection from "src/components/shared/SupervisedSection";
-import PreviewItem from "src/components/shared/IssuePreview";
+import PreviewItem from "src/components/shared/PreviewItem";
 import { IssuesModel } from "src/interfaces/IssuesModel";
 
 interface RecentIssuesProps {

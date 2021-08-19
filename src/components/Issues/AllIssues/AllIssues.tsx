@@ -1,5 +1,5 @@
 import React from "react";
-import PreviewItem from "src/components/shared/IssuePreview";
+import PreviewItem from "src/components/shared/PreviewItem";
 import { IssuesModel } from "src/interfaces/IssuesModel";
 import { IssueStatuses } from "src/interfaces/IssueStatuses";
 import { PAGINATION_LIMIT } from "src/interfaces/constants";
@@ -30,7 +30,7 @@ const AllIssues: React.FC<AllIssuesProps> = ({
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
         />
-        <div className={styles.issuesContainer}>
+        <div className="grid-container">
           {issues.map((issue) => (
             <PreviewItem item={issue} key={issue.id} path="/issues" />
           ))}
