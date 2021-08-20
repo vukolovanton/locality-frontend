@@ -47,6 +47,18 @@ export const announcementSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
+    patchAnnouncementsStart: (state) => {
+      state.loading = true;
+    },
+    patchAnnouncementsSuccess: (state) => {
+      state.loading = false;
+      state.hasErrors = false;
+    },
+    patchAnnouncementsFail: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
   },
 });
 
@@ -104,6 +116,38 @@ export const postNewAnnouncement =
     }
   };
 
+// PATCH ISSUE
+export const patchAnnouncement =
+  (announcementId: number, key: string, value: string) =>
+  async (dispatch: any) => {
+    dispatch(patchAnnouncementsStart());
+
+    try {
+      const response = await api.postRequest(
+        "/announcements",
+        {
+          entityId: announcementId,
+          key,
+          value,
+        },
+        "PATCH"
+      );
+
+      if (response.status === 200) {
+        // TODO: when we do patch update, we need to update local state
+        dispatch(patchAnnouncementsSuccess());
+      } else {
+        dispatch(
+          patchAnnouncementsFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(patchAnnouncementsFail(error));
+    }
+  };
+
 const stateSelector = (state: RootState) => state;
 export const announcementsStateSelector = createDraftSafeSelector(
   stateSelector,
@@ -121,6 +165,9 @@ export const {
   postAnnouncementsStart,
   postAnnouncementsSuccess,
   postAnnouncementsFail,
+  patchAnnouncementsStart,
+  patchAnnouncementsSuccess,
+  patchAnnouncementsFail,
 } = announcementSlice.actions;
 
 export default announcementSlice.reducer;

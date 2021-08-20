@@ -4,16 +4,15 @@ import { useLocation } from "react-router-dom";
 import NotFound from "src/components/shared/NotFound";
 import ModalWindow from "src/components/shared/ModalWindow";
 import logo from "src/assets/default.png";
-import { formatDate } from "src/utils/helpers";
 import {
   ISSUE_STATUSES_CONFIG,
   USER_FACING_ISSUES_STATUS,
 } from "src/interfaces/IssueStatuses";
-import styles from "./styles.module.scss";
 import { useDispatch } from "react-redux";
-import { patchIssue } from "../../../state/issues/issuesSlice";
+import { patchIssue } from "src/state/issues/issuesSlice";
+import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
 
-const Issue: React.FC = () => {
+const SingleIssuePage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<IssuesModel>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -43,10 +42,11 @@ const Issue: React.FC = () => {
   };
 
   return (
-    <section className={styles.container}>
-      <h1>{issue.title}</h1>
-      <span>{formatDate(issue.createdAt)}</span>
-      <span>{USER_FACING_ISSUES_STATUS[issue.status]}</span>
+    <SingleItemPageLayout
+      title={issue.title}
+      date={issue.createdAt}
+      status={USER_FACING_ISSUES_STATUS[issue.status]}
+    >
       <label htmlFor="options">
         Change status:
         <select
@@ -71,8 +71,8 @@ const Issue: React.FC = () => {
       >
         {renderImage()}
       </ModalWindow>
-    </section>
+    </SingleItemPageLayout>
   );
 };
 
-export default Issue;
+export default SingleIssuePage;

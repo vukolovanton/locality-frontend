@@ -15,8 +15,9 @@ import LocalityCreation from "./components/Registration/LocalityCreation";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Issues from "./components/Issues";
-import Issue from "./components/Issues/Issue";
+import SingleIssuePage from "./components/Issues/SingleIssuePage";
 import Announcements from "./components/Announcements";
+import SingleAnnouncementPage from "./components/Announcements/SingleAnnouncementPage";
 
 const App = () => {
   return (
@@ -36,8 +37,16 @@ const App = () => {
             </Route>
             <ProtectedRoute exact path="/" component={Home} />
             <ProtectedRoute exact path="/issues" component={Issues} />
-            <ProtectedRoute path="/issues/:id" component={Issue} />
-            <ProtectedRoute path="/announcements" component={Announcements} />
+            <ProtectedRoute path="/issues/:id" component={SingleIssuePage} />
+            <ProtectedRoute
+              exact
+              path="/announcements"
+              component={Announcements}
+            />
+            <ProtectedRoute
+              path="/announcements/:id"
+              component={SingleAnnouncementPage}
+            />
           </Switch>
         </Router>
       </PersistGate>
