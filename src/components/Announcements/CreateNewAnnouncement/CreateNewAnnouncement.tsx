@@ -1,27 +1,27 @@
 import React from "react";
 import InputField from "src/components/shared/InputField";
-import { useIssueCreation } from "src/hooks/issues/useIssueCreation";
 import ImageUpload from "src/components/shared/ImageUpload";
 import CreateNew from "src/components/shared/CreateNew";
+import { useAnnouncementsCreation } from "../../../hooks/announcements/useAnnouncementsCreation";
 
-const CreateNewIssue: React.FC = () => {
+const CreateNewAnnouncement: React.FC = () => {
   const {
-    issueCreationState,
+    announcementCreationState,
     errorMessage,
     handleStateChange,
-    handleSubmitCreateIssueForm,
+    handleSubmitCreateAnnouncementForm,
     setImageUrl,
-  } = useIssueCreation();
+  } = useAnnouncementsCreation();
 
   return (
     <div>
       <CreateNew
-        title="Submit a new issue"
+        title="Create new announcement"
+        handleSubmitForm={handleSubmitCreateAnnouncementForm}
         errorMessage={errorMessage}
-        handleSubmitForm={handleSubmitCreateIssueForm}
       >
         <InputField
-          value={issueCreationState.title}
+          value={announcementCreationState.title}
           handleValueChange={handleStateChange}
           title="Title"
           id="title"
@@ -34,8 +34,8 @@ const CreateNewIssue: React.FC = () => {
             name="Description"
             required={true}
             onChange={(e) => handleStateChange("description", e.target.value)}
-            value={issueCreationState.description}
-            placeholder="Describe an issue you want to share"
+            value={announcementCreationState.description}
+            placeholder="Put announcement text here"
           />
         </div>
         <ImageUpload setImageUrl={setImageUrl} />
@@ -44,4 +44,4 @@ const CreateNewIssue: React.FC = () => {
   );
 };
 
-export default CreateNewIssue;
+export default CreateNewAnnouncement;

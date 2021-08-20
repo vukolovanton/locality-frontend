@@ -1,6 +1,7 @@
 import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import { api } from "src/utils/api";
+import { AnnouncementDto } from "src/interfaces/AnnouncementDto";
 import { RootState } from "../store";
 
 interface IAnnouncementsState {
@@ -34,9 +35,22 @@ export const announcementSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
+    postAnnouncementsStart: (state) => {
+      state.loading = true;
+    },
+    postAnnouncementsSuccess: (state) => {
+      state.loading = false;
+      state.hasErrors = false;
+    },
+    postAnnouncementsFail: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
   },
 });
 
+// GET
 export const fetchAllAnnouncements =
   (localityId: number, limit: number, page: number) =>
   async (dispatch: any) => {
@@ -68,6 +82,28 @@ export const fetchAllAnnouncements =
     }
   };
 
+// POST
+export const postNewAnnouncement =
+  (newAnnouncement: AnnouncementDto) => async (dispatch: any) => {
+    dispatch(postAnnouncementsStart());
+
+    try {
+      const res = await api.postRequest("/announcements", newAnnouncement);
+
+      if (res.status === 200) {
+        dispatch(postAnnouncementsSuccess());
+      } else {
+        dispatch(
+          postAnnouncementsFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(postAnnouncementsFail(error));
+    }
+  };
+
 const stateSelector = (state: RootState) => state;
 export const announcementsStateSelector = createDraftSafeSelector(
   stateSelector,
@@ -82,6 +118,9 @@ export const {
   fetchAnnouncementsStart,
   fetchAnnouncementsSuccess,
   fetchAnnouncementsFail,
+  postAnnouncementsStart,
+  postAnnouncementsSuccess,
+  postAnnouncementsFail,
 } = announcementSlice.actions;
 
 export default announcementSlice.reducer;

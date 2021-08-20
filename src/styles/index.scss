@@ -159,3 +159,25 @@ button.primary {
   grid-column-gap: 1rem;
 }
 
+.text-input-field {
+  display: grid;
+
+  &::after {
+    /* Note the weird space! Needed to prevent jumpy behavior */
+    content: attr(data-replicated-value) " ";
+    white-space: pre-wrap;
+    /* Hidden from view, clicks, and screen readers */
+    visibility: hidden;
+  }
+
+  & > textarea {
+    resize: none;
+    overflow: hidden;
+
+    &::after {
+      padding: 0.5rem;
+      grid-area: 1 / 1 / 2 / 2;
+    }
+  }
+}
+
