@@ -3,6 +3,7 @@ import InputField from "src/components/shared/InputField";
 import { useIssueCreation } from "src/hooks/issues/useIssueCreation";
 import ImageUpload from "src/components/shared/ImageUpload";
 import CreateNew from "src/components/shared/CreateNew";
+import InputTextareaField from "src/components/shared/InputTextareaField";
 
 const CreateNewIssue: React.FC = () => {
   const {
@@ -26,18 +27,13 @@ const CreateNewIssue: React.FC = () => {
           title="Title"
           id="title"
         />
-        <label htmlFor="description">Description</label>
-        <div className="text-input-field">
-          <textarea
-            rows={5}
-            id="description"
-            name="Description"
-            required={true}
-            onChange={(e) => handleStateChange("description", e.target.value)}
-            value={issueCreationState.description}
-            placeholder="Describe an issue you want to share"
-          />
-        </div>
+        <InputTextareaField
+          handleValueChange={handleStateChange}
+          value={issueCreationState.description}
+          id="description"
+          label="Description"
+          placeholder="Describe an issue you want to share"
+        />
         <ImageUpload setImageUrl={setImageUrl} />
       </CreateNew>
     </div>

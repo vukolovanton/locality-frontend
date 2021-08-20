@@ -1,8 +1,9 @@
 import React from "react";
 import InputField from "src/components/shared/InputField";
+import InputTextareaField from "src/components/shared/InputTextareaField";
 import ImageUpload from "src/components/shared/ImageUpload";
 import CreateNew from "src/components/shared/CreateNew";
-import { useAnnouncementsCreation } from "../../../hooks/announcements/useAnnouncementsCreation";
+import { useAnnouncementsCreation } from "src/hooks/announcements/useAnnouncementsCreation";
 
 const CreateNewAnnouncement: React.FC = () => {
   const {
@@ -26,18 +27,13 @@ const CreateNewAnnouncement: React.FC = () => {
           title="Title"
           id="title"
         />
-        <label htmlFor="description">Description</label>
-        <div className="text-input-field">
-          <textarea
-            rows={5}
-            id="description"
-            name="Description"
-            required={true}
-            onChange={(e) => handleStateChange("description", e.target.value)}
-            value={announcementCreationState.description}
-            placeholder="Put announcement text here"
-          />
-        </div>
+        <InputTextareaField
+          handleValueChange={handleStateChange}
+          value={announcementCreationState.description}
+          id="description"
+          label="Description"
+          placeholder="Put announcement text here"
+        />
         <ImageUpload setImageUrl={setImageUrl} />
       </CreateNew>
     </div>
