@@ -11,7 +11,7 @@ const Pinned: React.FC<PinnedProps> = ({ announcements }) => {
   return (
     <SupervisedSection title="Most important">
       {announcements.map((a) => (
-        <PreviewItem item={a} path="/announcements" />
+        <PreviewItem item={a} path="/announcements" key={a.id} />
       ))}
     </SupervisedSection>
   );

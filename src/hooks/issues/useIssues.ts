@@ -36,6 +36,7 @@ export const useIssues = () => {
   useEffect(() => {
     dispatch(fetchRecentIssues(currentUser.localityId, "createdAt", 4));
   }, []);
+
   // Fetch items for 'All issues' section
   useEffect(() => {
     dispatch(

@@ -3,38 +3,57 @@ import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import { api } from "src/utils/api";
 import { AnnouncementDto } from "src/interfaces/AnnouncementDto";
 import { RootState } from "../store";
+import { AnnouncementsStatuses } from "../../interfaces/AnnouncementsStatuses";
 
 interface IAnnouncementsState {
   loading: boolean;
   hasErrors: boolean;
   errorMessage: string;
-  announcements: Array<AnnouncementsModel>;
+  allAnnouncements: Array<AnnouncementsModel>;
+  pinnedAnnouncements: Array<AnnouncementsModel>;
 }
 
 const initialAnnouncementsState: IAnnouncementsState = {
   loading: false,
   hasErrors: false,
   errorMessage: "",
-  announcements: [],
+  allAnnouncements: [],
+  pinnedAnnouncements: [],
 };
 
 export const announcementSlice = createSlice({
   name: "announcement",
   initialState: initialAnnouncementsState,
   reducers: {
-    fetchAnnouncementsStart: (state) => {
+    // GET ALL
+    fetchAllAnnouncementsStart: (state) => {
       state.loading = true;
     },
-    fetchAnnouncementsSuccess: (state, { payload }) => {
+    fetchAllAnnouncementsSuccess: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = false;
-      state.announcements = payload;
+      state.allAnnouncements = payload;
     },
-    fetchAnnouncementsFail: (state, { payload }) => {
+    fetchAllAnnouncementsFail: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = true;
       state.errorMessage = payload;
     },
+    // GET PINNED
+    fetchPinnedAnnouncementsStart: (state) => {
+      state.loading = true;
+    },
+    fetchPinnedAnnouncementsSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = false;
+      state.pinnedAnnouncements = payload;
+    },
+    fetchPinnedAnnouncementsFail: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // POST
     postAnnouncementsStart: (state) => {
       state.loading = true;
     },
@@ -47,6 +66,7 @@ export const announcementSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
+    // PATCH
     patchAnnouncementsStart: (state) => {
       state.loading = true;
     },
@@ -62,17 +82,18 @@ export const announcementSlice = createSlice({
   },
 });
 
-// GET
-export const fetchAllAnnouncements =
+// GET PINNED
+export const fetchPinnedAnnouncements =
   (localityId: number, limit: number, page: number) =>
   async (dispatch: any) => {
-    dispatch(fetchAnnouncementsStart());
+    dispatch(fetchPinnedAnnouncementsStart());
 
     try {
       const queryParams: any = {
         localityId: localityId.toString(),
         limit: limit,
         page: page,
+        isPinned: true,
       };
 
       const response = await api.getRequest("/announcements", {
@@ -81,16 +102,54 @@ export const fetchAllAnnouncements =
 
       if (response.status === 200) {
         const data = await response.json();
-        dispatch(fetchAnnouncementsSuccess(data));
+        dispatch(fetchPinnedAnnouncementsSuccess(data));
       } else {
         dispatch(
-          fetchAnnouncementsFail(
+          fetchAllAnnouncementsFail(
             "Something went wrong. Review your entities and try again"
           )
         );
       }
     } catch (error) {
-      dispatch(fetchAnnouncementsFail(error));
+      dispatch(fetchPinnedAnnouncementsFail(error));
+    }
+  };
+
+// GET ALL
+export const fetchAllAnnouncements =
+  (
+    localityId: number,
+    status: AnnouncementsStatuses,
+    limit: number,
+    page: number
+  ) =>
+  async (dispatch: any) => {
+    dispatch(fetchAllAnnouncementsStart());
+
+    try {
+      const queryParams: any = {
+        localityId: localityId.toString(),
+        limit: limit,
+        page: page,
+        status: status,
+      };
+
+      const response = await api.getRequest("/announcements", {
+        ...queryParams,
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        dispatch(fetchAllAnnouncementsSuccess(data));
+      } else {
+        dispatch(
+          fetchAllAnnouncementsFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(fetchAllAnnouncementsFail(error));
     }
   };
 
@@ -153,15 +212,22 @@ export const announcementsStateSelector = createDraftSafeSelector(
   stateSelector,
   (state): IAnnouncementsState => state.announcements
 );
-export const announcementsSelector = createDraftSafeSelector(
+export const allAnnouncementsSelector = createDraftSafeSelector(
   announcementsStateSelector,
-  (state): Array<AnnouncementsModel> => state.announcements
+  (state): Array<AnnouncementsModel> => state.allAnnouncements
+);
+export const pinnedAnnouncementsSelector = createDraftSafeSelector(
+  announcementsStateSelector,
+  (state): Array<AnnouncementsModel> => state.pinnedAnnouncements
 );
 
 export const {
-  fetchAnnouncementsStart,
-  fetchAnnouncementsSuccess,
-  fetchAnnouncementsFail,
+  fetchAllAnnouncementsStart,
+  fetchAllAnnouncementsSuccess,
+  fetchAllAnnouncementsFail,
+  fetchPinnedAnnouncementsStart,
+  fetchPinnedAnnouncementsSuccess,
+  fetchPinnedAnnouncementsFail,
   postAnnouncementsStart,
   postAnnouncementsSuccess,
   postAnnouncementsFail,

@@ -1,11 +1,13 @@
 import React from "react";
 import PreviewItem from "src/components/shared/PreviewItem";
 import { IssuesModel } from "src/interfaces/IssuesModel";
-import { IssueStatuses } from "src/interfaces/IssueStatuses";
+import {
+  ISSUE_STATUSES_CONFIG,
+  IssueStatuses,
+} from "src/interfaces/IssueStatuses";
 import { PAGINATION_LIMIT } from "src/interfaces/constants";
-
+import Filters from "src/components/shared/Filters";
 import styles from "../styles.module.scss";
-import Filters from "./Filters";
 
 interface AllIssuesProps {
   issues: Array<IssuesModel>;
@@ -29,6 +31,7 @@ const AllIssues: React.FC<AllIssuesProps> = ({
         <Filters
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
+          config={ISSUE_STATUSES_CONFIG}
         />
         <div className="grid-container">
           {issues.map((issue) => (

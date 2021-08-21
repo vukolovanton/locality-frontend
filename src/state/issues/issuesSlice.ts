@@ -27,19 +27,6 @@ export const issuesSlice = createSlice({
   name: "issues",
   initialState: initialIssuesState,
   reducers: {
-    // POST
-    updateIssueStart: (state) => {
-      state.isUpdating = true;
-    },
-    updateIssueSuccess: (state) => {
-      state.isUpdating = false;
-      state.hasErrors = false;
-    },
-    updateIssueFail: (state, { payload }) => {
-      state.isUpdating = false;
-      state.hasErrors = true;
-      state.errorMessage = payload;
-    },
     // GET ALL
     getAllIssuesStart: (state) => {
       state.isFetching = true;
@@ -65,6 +52,19 @@ export const issuesSlice = createSlice({
     },
     getRecentIssuesFail: (state, { payload }) => {
       state.isFetching = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // POST AND PATCH
+    updateIssueStart: (state) => {
+      state.isUpdating = true;
+    },
+    updateIssueSuccess: (state) => {
+      state.isUpdating = false;
+      state.hasErrors = false;
+    },
+    updateIssueFail: (state, { payload }) => {
+      state.isUpdating = false;
       state.hasErrors = true;
       state.errorMessage = payload;
     },
