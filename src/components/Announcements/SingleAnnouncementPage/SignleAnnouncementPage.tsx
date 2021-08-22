@@ -43,7 +43,7 @@ const SingleAnnouncementPage: React.FC = () => {
     );
   };
 
-  if (!announcement) {
+  if (Object.keys(announcement).length === 0) {
     return <NotFound />;
   }
 

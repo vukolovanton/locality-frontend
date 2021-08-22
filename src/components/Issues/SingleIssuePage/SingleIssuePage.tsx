@@ -29,7 +29,7 @@ const SingleIssuePage: React.FC = () => {
     dispatch(fetchSingleIssue(Number(urlId)));
   }, []);
 
-  if (!issue) {
+  if (Object.keys(issue).length === 0) {
     return <NotFound />;
   }
 
