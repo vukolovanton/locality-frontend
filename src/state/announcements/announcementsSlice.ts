@@ -7,6 +7,7 @@ import { RootState } from "../store";
 
 interface IAnnouncementsState {
   loading: boolean;
+  loadingSearchItems: boolean;
   hasErrors: boolean;
   errorMessage: string;
   allAnnouncements: Array<AnnouncementsModel>;
@@ -16,6 +17,7 @@ interface IAnnouncementsState {
 
 const initialAnnouncementsState: IAnnouncementsState = {
   loading: false,
+  loadingSearchItems: false,
   hasErrors: false,
   errorMessage: "",
   allAnnouncements: [],

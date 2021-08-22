@@ -4,6 +4,7 @@ import SectionPageLayout from "src/components/shared/SectionPageLayout";
 import CreateNewAnnouncement from "./CreateNewAnnouncement";
 import Pinned from "./Pinned";
 import AllAnnouncements from "./AllAnnouncements";
+import SearchAnnouncement from "./SearchAnnouncement";
 
 const Announcements: React.FC = () => {
   const {
@@ -30,6 +31,7 @@ const Announcements: React.FC = () => {
 
       <div>
         <CreateNewAnnouncement />
+        <SearchAnnouncement />
       </div>
     </SectionPageLayout>
   );
