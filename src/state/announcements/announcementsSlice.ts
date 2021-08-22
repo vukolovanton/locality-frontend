@@ -2,8 +2,8 @@ import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import { api } from "src/utils/api";
 import { AnnouncementDto } from "src/interfaces/AnnouncementDto";
+import { AnnouncementsStatuses } from "src/interfaces/AnnouncementsStatuses";
 import { RootState } from "../store";
-import { AnnouncementsStatuses } from "../../interfaces/AnnouncementsStatuses";
 
 interface IAnnouncementsState {
   loading: boolean;
@@ -11,6 +11,7 @@ interface IAnnouncementsState {
   errorMessage: string;
   allAnnouncements: Array<AnnouncementsModel>;
   pinnedAnnouncements: Array<AnnouncementsModel>;
+  singleAnnouncement: AnnouncementsModel;
 }
 
 const initialAnnouncementsState: IAnnouncementsState = {
@@ -19,6 +20,17 @@ const initialAnnouncementsState: IAnnouncementsState = {
   errorMessage: "",
   allAnnouncements: [],
   pinnedAnnouncements: [],
+  singleAnnouncement: {
+    id: 0,
+    title: "",
+    description: "",
+    imageUrl: "",
+    isPinned: false,
+    status: AnnouncementsStatuses.ACTIVE,
+    createdAt: "",
+    username: "",
+    email: "",
+  },
 };
 
 export const announcementSlice = createSlice({
@@ -53,6 +65,20 @@ export const announcementSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
+    // GET SINGLE
+    fetchSingleAnnouncementsStart: (state) => {
+      state.loading = true;
+    },
+    fetchSingleAnnouncementsSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = false;
+      state.singleAnnouncement = payload;
+    },
+    fetchSingleAnnouncementsFail: (state, { payload }) => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
     // POST
     postAnnouncementsStart: (state) => {
       state.loading = true;
@@ -70,9 +96,11 @@ export const announcementSlice = createSlice({
     patchAnnouncementsStart: (state) => {
       state.loading = true;
     },
-    patchAnnouncementsSuccess: (state) => {
+    patchAnnouncementsSuccess: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = false;
+      // @ts-ignore
+      state.singleAnnouncement[payload.key] = payload.value;
     },
     patchAnnouncementsFail: (state, { payload }) => {
       state.loading = false;
@@ -153,6 +181,36 @@ export const fetchAllAnnouncements =
     }
   };
 
+// GET SINGLE ANNOUNCEMENT
+export const getSingleAnnouncement =
+  (localityId: number, announcementId: number) => async (dispatch: any) => {
+    dispatch(fetchSingleAnnouncementsStart());
+
+    try {
+      const queryParams: any = {
+        localityId: localityId,
+        announcementId: announcementId,
+      };
+
+      const response = await api.getRequest("/announcements", {
+        ...queryParams,
+      });
+
+      if (response.status === 200) {
+        const data: Array<AnnouncementsModel> = await response.json();
+        dispatch(fetchSingleAnnouncementsSuccess(data[0]));
+      } else {
+        dispatch(
+          fetchSingleAnnouncementsFail(
+            "Something went wrong. Review your entities and try again"
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(fetchSingleAnnouncementsFail(error));
+    }
+  };
+
 // POST
 export const postNewAnnouncement =
   (newAnnouncement: AnnouncementDto) => async (dispatch: any) => {
@@ -177,7 +235,7 @@ export const postNewAnnouncement =
 
 // PATCH ISSUE
 export const patchAnnouncement =
-  (announcementId: number, key: string, value: string) =>
+  (announcementId: number, key: string, value: boolean | string) =>
   async (dispatch: any) => {
     dispatch(patchAnnouncementsStart());
 
@@ -194,7 +252,7 @@ export const patchAnnouncement =
 
       if (response.status === 200) {
         // TODO: when we do patch update, we need to update local state
-        dispatch(patchAnnouncementsSuccess());
+        dispatch(patchAnnouncementsSuccess({ key, value }));
       } else {
         dispatch(
           patchAnnouncementsFail(
@@ -220,6 +278,10 @@ export const pinnedAnnouncementsSelector = createDraftSafeSelector(
   announcementsStateSelector,
   (state): Array<AnnouncementsModel> => state.pinnedAnnouncements
 );
+export const singleAnnouncementsSelector = createDraftSafeSelector(
+  announcementsStateSelector,
+  (state): AnnouncementsModel => state.singleAnnouncement || {}
+);
 
 export const {
   fetchAllAnnouncementsStart,
@@ -228,6 +290,9 @@ export const {
   fetchPinnedAnnouncementsStart,
   fetchPinnedAnnouncementsSuccess,
   fetchPinnedAnnouncementsFail,
+  fetchSingleAnnouncementsStart,
+  fetchSingleAnnouncementsSuccess,
+  fetchSingleAnnouncementsFail,
   postAnnouncementsStart,
   postAnnouncementsSuccess,
   postAnnouncementsFail,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IssuesModel } from "src/interfaces/IssuesModel";
 import { useLocation } from "react-router-dom";
 import NotFound from "src/components/shared/NotFound";
@@ -8,20 +8,31 @@ import {
   ISSUE_STATUSES_CONFIG,
   USER_FACING_ISSUES_STATUS,
 } from "src/interfaces/IssueStatuses";
-import { useDispatch } from "react-redux";
-import { patchIssue } from "src/state/issues/issuesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchSingleIssue,
+  patchIssue,
+  singleIssueSelector,
+} from "src/state/issues/issuesSlice";
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
 
 const SingleIssuePage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<IssuesModel>();
+  const issue = useSelector(singleIssueSelector);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // TODO: fetch issue from backend
-  if (!location.state) {
+  const urlId = location.pathname.split("/")[2] || 0;
+
+  useEffect(() => {
+    dispatch(fetchSingleIssue(Number(urlId)));
+  }, []);
+
+  if (!issue) {
     return <NotFound />;
   }
-  const issue = location.state;
+
   const handleIssueStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(patchIssue(issue.id, "status", e.target.value));
   };
@@ -53,6 +64,7 @@ const SingleIssuePage: React.FC = () => {
           name="options"
           id="options"
           required
+          value={issue.status}
           onChange={handleIssueStatusChange}
         >
           {ISSUE_STATUSES_CONFIG.map((c) => (

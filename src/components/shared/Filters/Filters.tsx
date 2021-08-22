@@ -6,7 +6,7 @@ import { AnnouncementsStatuses } from "../../../interfaces/AnnouncementsStatuses
 interface FiltersProps {
   filterStatus: IssueStatuses | AnnouncementsStatuses;
   setFilterStatus: (status: any) => void;
-  config: Array<object>;
+  config: Array<{ value: string; title: string }>;
 }
 
 const Filters: React.FC<FiltersProps> = ({

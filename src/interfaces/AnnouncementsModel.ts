@@ -8,6 +8,6 @@ export interface AnnouncementsModel {
   isPinned: boolean;
   status: AnnouncementsStatuses;
   createdAt: string;
-  username: number;
-  email: number;
+  username: string;
+  email: string;
 }

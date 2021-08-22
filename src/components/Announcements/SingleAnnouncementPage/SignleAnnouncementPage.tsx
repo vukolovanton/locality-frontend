@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import logo from "src/assets/default.png";
 import {
@@ -10,23 +10,42 @@ import ModalWindow from "src/components/shared/ModalWindow";
 import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import NotFound from "src/components/shared/NotFound";
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
-import { patchAnnouncement } from "src/state/announcements/announcementsSlice";
+import {
+  getSingleAnnouncement,
+  patchAnnouncement,
+  singleAnnouncementsSelector,
+} from "src/state/announcements/announcementsSlice";
+import { currentUserSelector } from "src/state/auth/login/loginSlice";
 
 const SingleAnnouncementPage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<AnnouncementsModel>();
+  const currentUser = useSelector(currentUserSelector);
+  const announcement = useSelector(singleAnnouncementsSelector);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // TODO: fetch issue from backend
-  if (!location.state) {
-    return <NotFound />;
-  }
-  const announcement: AnnouncementsModel = location.state;
+  const urlId = location.pathname.split("/")[2] || 0;
+
+  useEffect(() => {
+    dispatch(getSingleAnnouncement(currentUser.localityId, Number(urlId)));
+  }, []);
+
   const handleAnnouncementStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     dispatch(patchAnnouncement(announcement.id, "status", e.target.value));
   };
+
+  const handleAnnouncementPinnedChange = () => {
+    dispatch(
+      patchAnnouncement(announcement.id, "isPinned", !announcement.isPinned)
+    );
+  };
+
+  if (!announcement) {
+    return <NotFound />;
+  }
 
   const renderImage = () => {
     return (
@@ -55,6 +74,7 @@ const SingleAnnouncementPage: React.FC = () => {
           name="options"
           id="options"
           required
+          value={announcement.status}
           onChange={handleAnnouncementStatusChange}
         >
           {ANNOUNCEMENTS_STATUSES_CONFIG.map((c) => (
@@ -64,6 +84,16 @@ const SingleAnnouncementPage: React.FC = () => {
           ))}
         </select>
       </label>
+
+      <input
+        type="checkbox"
+        name="isPinned"
+        id="isPinned"
+        className="custom-checkbox"
+        checked={announcement.isPinned}
+        onChange={handleAnnouncementPinnedChange}
+      />
+      <label htmlFor="isPinned">Is Pinned</label>
 
       <div>{renderImage()}</div>
       <p>{announcement.description}</p>

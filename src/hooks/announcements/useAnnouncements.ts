@@ -44,8 +44,11 @@ export const useAnnouncements = () => {
     );
   }, [currentPage, filterStatus]);
 
+  // Fetch pinned announcements
   useEffect(() => {
-    dispatch(fetchPinnedAnnouncements(currentUser.localityId, 4, 1));
+    dispatch(
+      fetchPinnedAnnouncements(currentUser.localityId, PAGINATION_LIMIT, 1)
+    );
   }, []);
 
   return {

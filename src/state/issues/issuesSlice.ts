@@ -1,9 +1,9 @@
 import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { IssuesDto } from "src/interfaces/IssuesDto";
+import { IssuesModel } from "src/interfaces/IssuesModel";
+import { api } from "src/utils/api";
+import { IssueStatuses } from "src/interfaces/IssueStatuses";
 import { RootState } from "../store";
-import { IssuesModel } from "../../interfaces/IssuesModel";
-import { api } from "../../utils/api";
-import { IssueStatuses } from "../../interfaces/IssueStatuses";
 
 interface IIssuesState {
   isFetching: boolean;
@@ -12,6 +12,7 @@ interface IIssuesState {
   errorMessage: string;
   allIssues: Array<IssuesModel>;
   recentIssues: Array<IssuesModel>;
+  singleIssue: IssuesModel;
 }
 
 const initialIssuesState: IIssuesState = {
@@ -21,6 +22,15 @@ const initialIssuesState: IIssuesState = {
   errorMessage: "",
   allIssues: [],
   recentIssues: [],
+  singleIssue: {
+    id: 0,
+    title: "",
+    description: "",
+    status: "",
+    imageUrl: "",
+    username: "",
+    createdAt: ",",
+  },
 };
 
 export const issuesSlice = createSlice({
@@ -55,7 +65,21 @@ export const issuesSlice = createSlice({
       state.hasErrors = true;
       state.errorMessage = payload;
     },
-    // POST AND PATCH
+    // GET SINGLE
+    getSingleIssueStart: (state) => {
+      state.isFetching = true;
+    },
+    getSingleIssueSuccess: (state, { payload }) => {
+      state.isFetching = false;
+      state.hasErrors = false;
+      state.singleIssue = payload;
+    },
+    getSingleIssueFail: (state, { payload }) => {
+      state.isFetching = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // POST
     updateIssueStart: (state) => {
       state.isUpdating = true;
     },
@@ -64,6 +88,21 @@ export const issuesSlice = createSlice({
       state.hasErrors = false;
     },
     updateIssueFail: (state, { payload }) => {
+      state.isUpdating = false;
+      state.hasErrors = true;
+      state.errorMessage = payload;
+    },
+    // PATCH
+    patchIssueStart: (state) => {
+      state.isUpdating = true;
+    },
+    patchIssueSuccess: (state, { payload }) => {
+      state.isUpdating = false;
+      state.hasErrors = false;
+      // @ts-ignore
+      state.singleIssue[payload.key] = payload.value;
+    },
+    patchIssueFail: (state, { payload }) => {
       state.isUpdating = false;
       state.hasErrors = true;
       state.errorMessage = payload;
@@ -158,10 +197,26 @@ export const fetchAllIssues =
     }
   };
 
+// FETCH SINGLE
+export const fetchSingleIssue = (issueId: number) => async (dispatch: any) => {
+  dispatch(getSingleIssueStart());
+
+  try {
+    const response = await api.getRequest(`/issues/${issueId}`, {});
+    const data = await response.json();
+
+    if (response.status === 200) {
+      dispatch(getSingleIssueSuccess(data));
+    }
+  } catch (error) {
+    dispatch(getSingleIssueFail(error));
+  }
+};
+
 // PATCH ISSUE
 export const patchIssue =
   (issueId: number, key: string, value: string) => async (dispatch: any) => {
-    dispatch(updateIssueStart());
+    dispatch(patchIssueStart());
 
     try {
       const response = await api.postRequest(
@@ -176,16 +231,16 @@ export const patchIssue =
 
       if (response.status === 200) {
         // TODO: when we do patch update, we need to update local state
-        dispatch(updateIssueSuccess());
+        dispatch(patchIssueSuccess({ key, value }));
       } else {
         dispatch(
-          updateIssueFail(
+          patchIssueFail(
             "Something went wrong. Review your entities and try again"
           )
         );
       }
     } catch (error) {
-      dispatch(updateIssueFail(error));
+      dispatch(patchIssueFail(error));
     }
   };
 
@@ -205,6 +260,11 @@ export const allIssuesSelector = createDraftSafeSelector(
   issuesStateSelector,
   (state): Array<IssuesModel> => state.allIssues
 );
+// SINGLE
+export const singleIssueSelector = createDraftSafeSelector(
+  issuesStateSelector,
+  (state): IssuesModel => state.singleIssue || {}
+);
 
 export const {
   updateIssueStart,
@@ -216,6 +276,12 @@ export const {
   getRecentIssuesStart,
   getRecentIssuesSuccess,
   getRecentIssuesFail,
+  patchIssueStart,
+  patchIssueSuccess,
+  patchIssueFail,
+  getSingleIssueStart,
+  getSingleIssueSuccess,
+  getSingleIssueFail,
 } = issuesSlice.actions;
 
 export default issuesSlice.reducer;
