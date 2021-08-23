@@ -41,3 +41,10 @@ export const postImageToCloudinary = async (image: File) => {
 
   return url;
 };
+
+export const normalizeBy = (key: string) => {
+  return (data: any, item: any) => {
+    data[item[key]] = item;
+    return data;
+  };
+};

@@ -10,16 +10,20 @@ import {
 } from "src/interfaces/IssueStatuses";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearSingleIssueState,
   fetchSingleIssue,
+  issuesStateSelector,
   patchIssue,
   singleIssueSelector,
 } from "src/state/issues/issuesSlice";
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
+import Loader from "src/components/shared/Loader";
 
 const SingleIssuePage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<IssuesModel>();
   const issue = useSelector(singleIssueSelector);
+  const { isFetching } = useSelector(issuesStateSelector);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -27,9 +31,17 @@ const SingleIssuePage: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchSingleIssue(Number(urlId)));
+    return () => {
+      dispatch(clearSingleIssueState());
+    };
   }, []);
 
-  if (Object.keys(issue).length === 0) {
+  if (isFetching) {
+    return <Loader />;
+  }
+
+  // Only default reducer issue has id = 0
+  if (issue.id === 0) {
     return <NotFound />;
   }
 

@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
-import { currentUserSelector } from "../../../state/auth/login/loginSlice";
-import { api } from "../../../utils/api";
-import { AnnouncementsModel } from "../../../interfaces/AnnouncementsModel";
+import { currentUserSelector } from "src/state/auth/login/loginSlice";
+import { api } from "src/utils/api";
+import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import SearchResults from "./SearchResults";
 import styles from "./styles.module.scss";
 

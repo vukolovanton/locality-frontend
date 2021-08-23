@@ -83,9 +83,10 @@ export const issuesSlice = createSlice({
     updateIssueStart: (state) => {
       state.isUpdating = true;
     },
-    updateIssueSuccess: (state) => {
+    updateIssueSuccess: (state, { payload }) => {
       state.isUpdating = false;
       state.hasErrors = false;
+      state.recentIssues = [payload, ...state.recentIssues];
     },
     updateIssueFail: (state, { payload }) => {
       state.isUpdating = false;
@@ -106,6 +107,9 @@ export const issuesSlice = createSlice({
       state.isUpdating = false;
       state.hasErrors = true;
       state.errorMessage = payload;
+    },
+    clearSingleIssueState: (state) => {
+      state.singleIssue = initialIssuesState.singleIssue;
     },
   },
 });
@@ -130,8 +134,10 @@ export const postNewIssue = (newIssue: IssuesDto) => async (dispatch: any) => {
       }
     );
 
+    const data = await response.json();
+
     if (response.status === 200) {
-      dispatch(updateIssueSuccess());
+      dispatch(updateIssueSuccess(data));
     } else {
       dispatch(
         updateIssueFail(
@@ -282,6 +288,7 @@ export const {
   getSingleIssueStart,
   getSingleIssueSuccess,
   getSingleIssueFail,
+  clearSingleIssueState,
 } = issuesSlice.actions;
 
 export default issuesSlice.reducer;

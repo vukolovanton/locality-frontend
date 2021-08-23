@@ -4,6 +4,7 @@ import { api } from "src/utils/api";
 import { AnnouncementDto } from "src/interfaces/AnnouncementDto";
 import { AnnouncementsStatuses } from "src/interfaces/AnnouncementsStatuses";
 import { RootState } from "../store";
+import { normalizeBy } from "../../utils/helpers";
 
 interface IAnnouncementsState {
   loading: boolean;
@@ -170,6 +171,13 @@ export const fetchAllAnnouncements =
 
       if (response.status === 200) {
         const data = await response.json();
+
+        const tData = [...data];
+        const n = tData.reduce(normalizeBy("id"), {});
+
+        console.log(n, "nData");
+        console.log(data, "data");
+
         dispatch(fetchAllAnnouncementsSuccess(data));
       } else {
         dispatch(
