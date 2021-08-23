@@ -11,17 +11,20 @@ import { AnnouncementsModel } from "src/interfaces/AnnouncementsModel";
 import NotFound from "src/components/shared/NotFound";
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
 import {
+  announcementsStateSelector,
   getSingleAnnouncement,
   patchAnnouncement,
   singleAnnouncementsSelector,
 } from "src/state/announcements/announcementsSlice";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
+import Loader from "../../shared/Loader";
 
 const SingleAnnouncementPage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<AnnouncementsModel>();
   const currentUser = useSelector(currentUserSelector);
   const announcement = useSelector(singleAnnouncementsSelector);
+  const { loading } = useSelector(announcementsStateSelector);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -30,6 +33,14 @@ const SingleAnnouncementPage: React.FC = () => {
   useEffect(() => {
     dispatch(getSingleAnnouncement(currentUser.localityId, Number(urlId)));
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (announcement.id === 0) {
+    return <NotFound />;
+  }
 
   const handleAnnouncementStatusChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -42,10 +53,6 @@ const SingleAnnouncementPage: React.FC = () => {
       patchAnnouncement(announcement.id, "isPinned", !announcement.isPinned)
     );
   };
-
-  if (Object.keys(announcement).length === 0) {
-    return <NotFound />;
-  }
 
   const renderImage = () => {
     return (
