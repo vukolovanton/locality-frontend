@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import CreateNew from "./CreateNew";
-import ChooseExisting from "./ChooseExisting";
 import styles from "src/components/Registration/styles.module.scss";
+import CreateNew from "./CreateNew";
+import JoinExisting from "./JoinExisting";
+import Title from "../Title";
 
 const LocalityCreation: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("new");
@@ -12,7 +13,7 @@ const LocalityCreation: React.FC = () => {
         return <CreateNew />;
       }
       case "existing": {
-        return <ChooseExisting />;
+        return <JoinExisting />;
       }
     }
     return null;
@@ -20,18 +21,22 @@ const LocalityCreation: React.FC = () => {
 
   return (
     <section className={styles.container}>
-      <button
-        onClick={() => setActiveTab("new")}
-        className={activeTab === "new" ? "primary" : ""}
-      >
-        Create New
-      </button>
-      <button
-        onClick={() => setActiveTab("existing")}
-        className={activeTab === "existing" ? "primary" : ""}
-      >
-        Join to existing
-      </button>
+      <Title />
+
+      <div className={styles.tabButtonsContainer}>
+        <button
+          onClick={() => setActiveTab("new")}
+          className={activeTab === "new" ? "primary" : ""}
+        >
+          Create New
+        </button>
+        <button
+          onClick={() => setActiveTab("existing")}
+          className={activeTab === "existing" ? "primary" : ""}
+        >
+          Join Existing
+        </button>
+      </div>
       {renderTab()}
     </section>
   );

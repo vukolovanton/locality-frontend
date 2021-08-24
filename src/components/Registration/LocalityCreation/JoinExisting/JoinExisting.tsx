@@ -3,7 +3,7 @@ import { useJoinLocality } from "src/hooks/locality/useJoinLocality";
 import styles from "src/components/Registration/styles.module.scss";
 import SearchPreview from "./SearchPreview";
 
-const ChooseExisting: React.FC = () => {
+const JoinExisting: React.FC = () => {
   const {
     handleLocalityIdSelect,
     handleSubmitSearchForm,
@@ -18,18 +18,21 @@ const ChooseExisting: React.FC = () => {
     <div>
       <span className="error">{errorMessage}</span>
       <form method="GET" onSubmit={handleSubmitSearchForm}>
-        <label htmlFor="searchText">Find your Locality</label>
-        <input
-          id={searchText}
-          type="text"
-          required={true}
-          value={searchText}
-          className="input-field"
-          onChange={handleSearchTextChange}
-        />
-        <button type="submit" className="btn" disabled={searchText === ""}>
-          Search
-        </button>
+        <fieldset>
+          <legend>Find your Locality</legend>
+          <input
+            id={searchText}
+            type="text"
+            required={true}
+            value={searchText}
+            className="input-field"
+            onChange={handleSearchTextChange}
+            placeholder="Start typing locality name"
+          />
+          <button type="submit" className="btn" disabled={searchText === ""}>
+            Search
+          </button>
+        </fieldset>
       </form>
       <div className={styles.previewItemsContainer}>
         {resultList.map((locality) => (
@@ -45,4 +48,4 @@ const ChooseExisting: React.FC = () => {
   );
 };
 
-export default ChooseExisting;
+export default JoinExisting;
