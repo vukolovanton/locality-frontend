@@ -18,12 +18,15 @@ import {
 } from "src/state/issues/issuesSlice";
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
 import Loader from "src/components/shared/Loader";
+import { currentUserSelector } from "src/state/auth/login/loginSlice";
+import { Roles } from "../../../interfaces/roles";
 
 const SingleIssuePage: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<IssuesModel>();
   const issue = useSelector(singleIssueSelector);
   const { isFetching } = useSelector(issuesStateSelector);
+  const currentUser = useSelector(currentUserSelector);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -44,6 +47,8 @@ const SingleIssuePage: React.FC = () => {
   if (issue.id === 0) {
     return <NotFound />;
   }
+
+  console.log(currentUser);
 
   const handleIssueStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(patchIssue(issue.id, "status", e.target.value));
@@ -70,22 +75,24 @@ const SingleIssuePage: React.FC = () => {
       date={issue.createdAt}
       status={USER_FACING_ISSUES_STATUS[issue.status]}
     >
-      <label htmlFor="options">
-        Change status:
-        <select
-          name="options"
-          id="options"
-          required
-          value={issue.status}
-          onChange={handleIssueStatusChange}
-        >
-          {ISSUE_STATUSES_CONFIG.map((c) => (
-            <option value={c.value} key={c.value}>
-              {c.title}
-            </option>
-          ))}
-        </select>
-      </label>
+      {currentUser.role !== Roles.USER ? (
+        <label htmlFor="options">
+          Change status:
+          <select
+            name="options"
+            id="options"
+            required
+            value={issue.status}
+            onChange={handleIssueStatusChange}
+          >
+            {ISSUE_STATUSES_CONFIG.map((c) => (
+              <option value={c.value} key={c.value}>
+                {c.title}
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : null}
 
       <div>{renderImage()}</div>
       <p>{issue.description}</p>

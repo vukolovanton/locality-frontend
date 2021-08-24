@@ -7,7 +7,7 @@ export interface UserModel {
   email: string;
   token: string;
   type: string;
-  roles: Roles;
+  role: Roles;
   id: number;
   localityId: number;
 }

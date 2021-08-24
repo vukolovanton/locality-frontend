@@ -24,7 +24,7 @@ const initialUserLogin: IUserLoginState = {
     email: "",
     token: "",
     type: "",
-    roles: Roles.USER,
+    role: Roles.USER,
     id: 0,
     localityId: 0,
   },
