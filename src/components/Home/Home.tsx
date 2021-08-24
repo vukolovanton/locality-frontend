@@ -1,8 +1,11 @@
 import React from "react";
-import { useFetchLocality } from "../../hooks/locality/useFetchLocality";
+import { useFetchLocality } from "src/hooks/locality/useFetchLocality";
+import { useDashboard } from "src/hooks/dashboard/useDashboard";
 
 const Home: React.FC = () => {
   const { locality } = useFetchLocality();
+  const { usersStats } = useDashboard();
+  console.log(usersStats, "issueStats");
 
   return (
     <div>

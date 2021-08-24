@@ -16,6 +16,7 @@ import localityCreationReducer from "./locality/localityCreationSlice";
 import localityReducer from "./locality/localitySlice";
 import IssuesReducer from "./issues/issuesSlice";
 import AnnouncementsReducer from "./announcements/announcementsSlice";
+import DashboardReducer from "./dashboard/dashboardSlice";
 
 const reducers = combineReducers({
   registration: registrationReducer,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   locality: localityReducer,
   issues: IssuesReducer,
   announcements: AnnouncementsReducer,
+  dashboard: DashboardReducer,
 });
 
 const persistConfig = {
