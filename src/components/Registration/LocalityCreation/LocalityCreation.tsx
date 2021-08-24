@@ -34,7 +34,7 @@ const LocalityCreation: React.FC = () => {
           onClick={() => setActiveTab("existing")}
           className={activeTab === "existing" ? "primary" : ""}
         >
-          Join Existing
+          Join To Existing
         </button>
       </div>
       {renderTab()}

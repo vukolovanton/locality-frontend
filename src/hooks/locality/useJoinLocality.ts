@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { currentUserSelector } from "../../state/auth/login/loginSlice";
-import React, { FormEvent, useState } from "react";
-import { LocalityDto } from "../../interfaces/LocalityDto";
 import { useHistory } from "react-router-dom";
+import useDebounce from "src/utils/useDebounce";
+import { currentUserSelector } from "src/state/auth/login/loginSlice";
+import { LocalityDto } from "src/interfaces/LocalityDto";
 
 export const useJoinLocality = () => {
   const history = useHistory();
@@ -12,6 +13,17 @@ export const useJoinLocality = () => {
   const [resultList, setResultList] = useState<Array<LocalityDto>>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  const debouncedSearchText = useDebounce(searchText, 500);
+
+  useEffect(() => {
+    if (searchText !== "") {
+      handleSubmitSearchForm();
+    } else {
+      setResultList([]);
+      setSelectedLocalityId("");
+    }
+  }, [debouncedSearchText]);
+
   const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -20,9 +32,7 @@ export const useJoinLocality = () => {
     setSelectedLocalityId(e.target.value);
   };
 
-  const handleSubmitSearchForm = async (e: FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmitSearchForm = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/locality?` +
         new URLSearchParams({ searchText: searchText }),
@@ -62,17 +72,17 @@ export const useJoinLocality = () => {
     if (response.status === 200) {
       history.push("/login");
     } else {
-      setErrorMessage("Can't join to locality. Please try again.");
+      setErrorMessage("Can't join locality. Please try again.");
     }
   };
 
   return {
     handleLocalityIdSelect,
-    handleSubmitSearchForm,
     handleSearchTextChange,
     handleJoinLocality,
     resultList,
     searchText,
+    selectedLocalityId,
     errorMessage,
   };
 };

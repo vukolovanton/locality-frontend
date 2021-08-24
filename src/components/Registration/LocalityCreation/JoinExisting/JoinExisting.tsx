@@ -6,18 +6,18 @@ import SearchPreview from "./SearchPreview";
 const JoinExisting: React.FC = () => {
   const {
     handleLocalityIdSelect,
-    handleSubmitSearchForm,
     handleSearchTextChange,
     handleJoinLocality,
     resultList,
     searchText,
+    selectedLocalityId,
     errorMessage,
   } = useJoinLocality();
 
   return (
     <div>
       <span className="error">{errorMessage}</span>
-      <form method="GET" onSubmit={handleSubmitSearchForm}>
+      <form method="GET">
         <fieldset>
           <legend>Find your Locality</legend>
           <input
@@ -29,9 +29,6 @@ const JoinExisting: React.FC = () => {
             onChange={handleSearchTextChange}
             placeholder="Start typing locality name"
           />
-          <button type="submit" className="btn" disabled={searchText === ""}>
-            Search
-          </button>
         </fieldset>
       </form>
       <div className={styles.previewItemsContainer}>
@@ -43,7 +40,9 @@ const JoinExisting: React.FC = () => {
           />
         ))}
       </div>
-      <button onClick={handleJoinLocality}>Join</button>
+      <button onClick={handleJoinLocality} disabled={!selectedLocalityId}>
+        Join
+      </button>
     </div>
   );
 };
