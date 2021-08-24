@@ -70,8 +70,9 @@ export const useLocalityCreation = () => {
     if (location.state) {
       const { username, password } = location.state;
       dispatch(userLoginFetch({ username, password }, false));
+    } else {
+      history.push("/registration");
     }
-    // eslint-disable-next-line
   }, []);
 
   return {
