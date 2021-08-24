@@ -1,0 +1,23 @@
+@import "src/styles/colors.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewItemsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.previewItem {
+  padding: 0.5rem 0;
+}
+
+.localityTitle {
+  font-weight: bold;
+  color:$locality-primary;
+  margin-right: 2rem;
+}

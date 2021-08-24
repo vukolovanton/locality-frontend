@@ -1,14 +1,14 @@
 import React from "react";
 import InputField from "src/components/shared/InputField";
 import { useLogin } from "src/hooks/auth/useLogin";
-import "src/components/Registration/styles.scss";
+import styles from "src/components/Registration/styles.module.scss";
 
 const Login: React.FC = () => {
   const { handleSubmitLoginForm, errorMessage, loginState, handleStateChange } =
     useLogin();
 
   return (
-    <section className="container">
+    <section className={styles.container}>
       <h3>Login to your account</h3>
       {errorMessage && <span className="error">{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitLoginForm}>

@@ -3,7 +3,7 @@ import { useRegistration } from "src/hooks/auth/useRegistration";
 import InputField from "src/components/shared/InputField";
 import InputContainer from "src/components/shared/InputContainer";
 import Title from "../Title";
-import "../styles.scss";
+import styles from "src/components/Registration/styles.module.scss";
 
 const UserRegistration: React.FC = () => {
   const {
@@ -14,7 +14,7 @@ const UserRegistration: React.FC = () => {
   } = useRegistration();
 
   return (
-    <section className="container">
+    <section className={styles.container}>
       <Title />
       {errorMessage && <span className="error">{errorMessage}</span>}
       <InputContainer

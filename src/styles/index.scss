@@ -118,6 +118,9 @@ button {
       }
     }
   }
+
+  &:active {}
+  color: inherit;
 }
 
 button.primary {
@@ -221,4 +224,9 @@ button.primary {
       transition: .25s all ease;
     }
   }
+}
+
+.error {
+  font-weight: bold;
+  color: $locality-primary;
 }
