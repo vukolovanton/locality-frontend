@@ -1,7 +1,7 @@
 import React from "react";
 import { useJoinLocality } from "src/hooks/locality/useJoinLocality";
 import styles from "src/components/Registration/styles.module.scss";
-import SearchLocalityPreview from "../SearchLocalityPreview";
+import SearchPreview from "./SearchPreview";
 
 const ChooseExisting: React.FC = () => {
   const {
@@ -33,7 +33,7 @@ const ChooseExisting: React.FC = () => {
       </form>
       <div className={styles.previewItemsContainer}>
         {resultList.map((locality) => (
-          <SearchLocalityPreview
+          <SearchPreview
             locality={locality}
             key={locality.id}
             handleLocalityIdSelect={handleLocalityIdSelect}

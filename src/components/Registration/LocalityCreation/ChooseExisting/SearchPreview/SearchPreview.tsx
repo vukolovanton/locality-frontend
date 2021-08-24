@@ -2,12 +2,12 @@ import React from "react";
 import { LocalityDto } from "src/interfaces/LocalityDto";
 import styles from "src/components/Registration/styles.module.scss";
 
-interface SearchLocalityPreviewProps {
+interface SearchPreviewProps {
   locality: LocalityDto;
   handleLocalityIdSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchLocalityPreview: React.FC<SearchLocalityPreviewProps> = ({
+const SearchPreview: React.FC<SearchPreviewProps> = ({
   locality,
   handleLocalityIdSelect,
 }) => {
@@ -30,4 +30,4 @@ const SearchLocalityPreview: React.FC<SearchLocalityPreviewProps> = ({
   );
 };
 
-export default SearchLocalityPreview;
+export default SearchPreview;
