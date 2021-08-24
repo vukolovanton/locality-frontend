@@ -7,12 +7,19 @@ interface InputUploadProps {
 
 const ImageUpload: React.FC<InputUploadProps> = ({ setImageUrl }) => {
   const [imageFile, setImageFile] = useState<File>();
+  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const handleImageUpload = async (e: FormEvent) => {
     e.preventDefault();
+    setIsUploading(true);
     if (imageFile) {
       const cloudinaryLink = await postImageToCloudinary(imageFile);
-      setImageUrl(cloudinaryLink);
+      if (cloudinaryLink !== "") {
+        setImageUrl(cloudinaryLink);
+        setIsSuccessful(true);
+        setIsUploading(false);
+      }
     }
   };
 
@@ -26,7 +33,13 @@ const ImageUpload: React.FC<InputUploadProps> = ({ setImageUrl }) => {
           setImageFile(file);
         }}
       />
-      <button onClick={handleImageUpload}>Upload</button>
+      {imageFile && isSuccessful ? (
+        <span>Image uploaded successfully!</span>
+      ) : (
+        <button onClick={handleImageUpload} disabled={!imageFile}>
+          {isUploading ? "Please wait..." : "Upload"}
+        </button>
+      )}
     </>
   );
 };
