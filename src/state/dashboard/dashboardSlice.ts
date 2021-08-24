@@ -130,6 +130,51 @@ export const fetchUsersStats =
     }
   };
 
+// export const fetchAllStatsV2 = (localityId: number) => async (dispatch: any) => {
+//   dispatch(getIssuesStatsStart());
+//   dispatch(getAnnouncementsStatsStart());
+//   dispatch(getUsersStatsStart());
+//
+//   try {
+//     const [issuesRes, announcementsRes, userRes] = await Promise.all([
+//       api.getRequest("/dashboard/issues", {
+//         localityId: localityId,
+//       }),
+//       api.getRequest("/dashboard/announcements", {
+//         localityId: localityId,
+//       }),
+//       api.getRequest("/dashboard/users", {
+//         localityId: localityId,
+//       }),
+//     ]);
+//
+//     if (issuesRes.status === 200) {
+//       const data = await issuesRes.json();
+//       dispatch(getIssuesStatsSuccess(data));
+//     }
+//
+//     if (announcementsRes.status === 200) {
+//       const data = await announcementsRes.json();
+//       dispatch(getAnnouncementsStatsSuccess(data));
+//     }
+//
+//     if (userRes.status === 200) {
+//       const data = await userRes.json();
+//       dispatch(getUsersStatsSuccess(data));
+//     }
+//   } catch (error) {
+//     getIssuesStatsFail(error);
+//     getAnnouncementsStatsFail(error);
+//     getUsersStatsFail(error);
+//   }
+// };
+
+export const fetchAllStats = (localityId: number) => async (dispatch: any) => {
+  dispatch(fetchIssuesStats(localityId));
+  dispatch(fetchAnnouncementsStats(localityId));
+  dispatch(fetchUsersStats(localityId));
+};
+
 export const {
   getIssuesStatsStart,
   getIssuesStatsSuccess,
@@ -141,12 +186,6 @@ export const {
   getUsersStatsSuccess,
   getUsersStatsFail,
 } = dashboardSlice.actions;
-
-export const fetchAllStats = (localityId: number) => async (dispatch: any) => {
-  dispatch(fetchIssuesStats(localityId));
-  dispatch(fetchAnnouncementsStats(localityId));
-  dispatch(fetchUsersStats(localityId));
-};
 
 const stateSelector = (state: RootState) => state;
 export const dashboardStateSelector = createDraftSafeSelector(
