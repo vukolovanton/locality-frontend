@@ -1,9 +1,11 @@
-const apiConnect = (token: string) => {
+const apiConnect = () => {
   const postRequest = (
     url: string,
     body: object,
     method?: string
   ): Promise<any> => {
+    const token = localStorage.getItem("token");
+
     return fetch(
       `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api${url}`,
       {
@@ -20,6 +22,7 @@ const apiConnect = (token: string) => {
   };
 
   const getRequest = (url: string, params: object): Promise<any> => {
+    const token = localStorage.getItem("token");
     return fetch(
       `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api${url}?` +
         new URLSearchParams({ ...params }),
@@ -38,5 +41,4 @@ const apiConnect = (token: string) => {
   return { postRequest, getRequest };
 };
 
-const token = localStorage.token;
-export const api = apiConnect(token);
+export const api = apiConnect();

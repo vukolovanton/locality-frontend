@@ -4,7 +4,7 @@ import { UserModel } from "src/interfaces/UserModel";
 import { UserLoginDto } from "src/interfaces/UserLoginDto";
 import { RootState } from "src/state/store";
 import { Roles } from "src/interfaces/roles";
-import { api } from "../../../utils/api";
+import { api } from "src/utils/api";
 
 interface IUserLoginState {
   loading: boolean;
@@ -68,6 +68,7 @@ export const userLoginFetch =
         "/v1/auth/signin",
         userLoginCredentials
       );
+
       const result: UserModel = await response.json();
 
       if (response.status === 200) {

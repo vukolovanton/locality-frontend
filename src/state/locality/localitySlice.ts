@@ -1,6 +1,7 @@
 import { createDraftSafeSelector, createSlice } from "@reduxjs/toolkit";
 import { LocalityDto } from "src/interfaces/LocalityDto";
 import { RootState } from "../store";
+import { api } from "../../utils/api";
 
 interface ILocalityState {
   loading: boolean;
@@ -44,21 +45,9 @@ export const localitySlice = createSlice({
 export const fetchCurrentUserLocality =
   (localityId: number) => async (dispatch: any) => {
     dispatch(fetchLocalityStart());
-    const token = localStorage.token;
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/locality/${localityId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.getRequest(`/locality/${localityId}`, {});
 
       if (response.status === 200) {
         const data = await response.json();
