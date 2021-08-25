@@ -4,7 +4,6 @@ import {
   announcementsStatsSelector,
   fetchAllStats,
   issuesStatsSelector,
-  usersStatsSelector,
 } from "src/state/dashboard/dashboardSlice";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
 
@@ -14,7 +13,6 @@ export const useDashboard = () => {
 
   const issueStats = useSelector(issuesStatsSelector);
   const announcementsStats = useSelector(announcementsStatsSelector);
-  const usersStats = useSelector(usersStatsSelector);
 
   useEffect(() => {
     dispatch(fetchAllStats(currentUser.localityId));
@@ -23,6 +21,5 @@ export const useDashboard = () => {
   return {
     issueStats,
     announcementsStats,
-    usersStats,
   };
 };

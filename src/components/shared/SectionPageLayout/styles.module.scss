@@ -1,11 +1,12 @@
 .mainLayout {
   display: flex;
   flex-direction: column-reverse;
+  max-width: 80%;
+  margin: 0 auto;
 
   @media screen and (min-width: 768px) {
     display: grid;
     grid-column-gap: 3rem;
     grid-template-columns: 2fr minmax(0, 1fr);
-    padding: 0.4rem 0.6rem;
   }
 }

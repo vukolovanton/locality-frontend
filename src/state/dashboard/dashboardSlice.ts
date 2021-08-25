@@ -9,9 +9,9 @@ interface IDashboardState {
   loadingIssuesStats: boolean;
   loadingAnnouncementsStats: boolean;
   loadingUsersStats: boolean;
-  issuesStats: Array<IssueStatsModel>;
-  announcementsStats: Array<AnnouncementsStatsModel>;
-  usersStats: Array<UserStatsModel>;
+  issuesStats: IssueStatsModel;
+  announcementsStats: AnnouncementsStatsModel;
+  usersStats: UserStatsModel;
   hasErrors: boolean;
   errorMessage: string;
 }
@@ -20,9 +20,19 @@ const initialDashboardState: IDashboardState = {
   loadingIssuesStats: false,
   loadingAnnouncementsStats: false,
   loadingUsersStats: false,
-  issuesStats: [],
-  announcementsStats: [],
-  usersStats: [],
+  issuesStats: {
+    IN_PROGRESS: 0,
+    RESOLVED: 0,
+    PENDING: 0,
+    REJECTED: 0,
+  },
+  announcementsStats: {
+    ACTIVE: 0,
+    CLOSED: 0,
+  },
+  usersStats: {
+    TOTAL_USERS: 0,
+  },
   hasErrors: false,
   errorMessage: "",
 };
@@ -130,6 +140,47 @@ export const fetchUsersStats =
     }
   };
 
+export const fetchAllStats = (localityId: number) => async (dispatch: any) => {
+  dispatch(fetchIssuesStats(localityId));
+  dispatch(fetchAnnouncementsStats(localityId));
+  dispatch(fetchUsersStats(localityId));
+};
+
+export const {
+  getIssuesStatsStart,
+  getIssuesStatsSuccess,
+  getIssuesStatsFail,
+  getAnnouncementsStatsStart,
+  getAnnouncementsStatsSuccess,
+  getAnnouncementsStatsFail,
+  getUsersStatsStart,
+  getUsersStatsSuccess,
+  getUsersStatsFail,
+} = dashboardSlice.actions;
+
+const stateSelector = (state: RootState) => state;
+export const dashboardStateSelector = createDraftSafeSelector(
+  stateSelector,
+  (state): IDashboardState => state.dashboard
+);
+// ISSUES
+export const issuesStatsSelector = createDraftSafeSelector(
+  dashboardStateSelector,
+  (state): IssueStatsModel => state.issuesStats
+);
+// ANNOUNCEMENTS
+export const announcementsStatsSelector = createDraftSafeSelector(
+  dashboardStateSelector,
+  (state): AnnouncementsStatsModel => state.announcementsStats
+);
+// USERS
+export const usersStatsSelector = createDraftSafeSelector(
+  dashboardStateSelector,
+  (state): UserStatsModel => state.usersStats
+);
+
+export default dashboardSlice.reducer;
+
 // export const fetchAllStatsV2 = (localityId: number) => async (dispatch: any) => {
 //   dispatch(getIssuesStatsStart());
 //   dispatch(getAnnouncementsStatsStart());
@@ -168,44 +219,3 @@ export const fetchUsersStats =
 //     getUsersStatsFail(error);
 //   }
 // };
-
-export const fetchAllStats = (localityId: number) => async (dispatch: any) => {
-  dispatch(fetchIssuesStats(localityId));
-  dispatch(fetchAnnouncementsStats(localityId));
-  dispatch(fetchUsersStats(localityId));
-};
-
-export const {
-  getIssuesStatsStart,
-  getIssuesStatsSuccess,
-  getIssuesStatsFail,
-  getAnnouncementsStatsStart,
-  getAnnouncementsStatsSuccess,
-  getAnnouncementsStatsFail,
-  getUsersStatsStart,
-  getUsersStatsSuccess,
-  getUsersStatsFail,
-} = dashboardSlice.actions;
-
-const stateSelector = (state: RootState) => state;
-export const dashboardStateSelector = createDraftSafeSelector(
-  stateSelector,
-  (state): IDashboardState => state.dashboard
-);
-// ISSUES
-export const issuesStatsSelector = createDraftSafeSelector(
-  dashboardStateSelector,
-  (state): Array<IssueStatsModel> => state.issuesStats
-);
-// ANNOUNCEMENTS
-export const announcementsStatsSelector = createDraftSafeSelector(
-  dashboardStateSelector,
-  (state): Array<AnnouncementsStatsModel> => state.announcementsStats
-);
-// USERS
-export const usersStatsSelector = createDraftSafeSelector(
-  dashboardStateSelector,
-  (state): Array<UserStatsModel> => state.usersStats
-);
-
-export default dashboardSlice.reducer;

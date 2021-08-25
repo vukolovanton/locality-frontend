@@ -17,5 +17,6 @@ export const useFetchLocality = () => {
 
   return {
     locality,
+    user,
   };
 };

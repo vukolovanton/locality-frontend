@@ -48,9 +48,10 @@ h3 {
   font-size: 2rem;
 }
 
-h3 {
+h4 {
   font-family: 'Abril Fatface', cursive;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  margin: 0;
 }
 
 input,
@@ -229,4 +230,9 @@ button.primary {
 .error {
   font-weight: bold;
   color: $locality-primary;
+}
+
+.page-layout {
+  max-width: 80%;
+  margin: 0 auto;
 }

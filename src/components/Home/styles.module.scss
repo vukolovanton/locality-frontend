@@ -1,0 +1,44 @@
+.title {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-between;
+
+  & h1 {
+    margin: 0
+  }
+
+  & span {
+    font-weight: bold;
+  }
+}
+
+.dashboardSection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.itemsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: inline-flex;
+
+  & span:nth-child(1) {
+    font-weight: bold;
+    padding-right: 1rem;
+  }
+
+  & span:nth-child(2) {
+    color: rebeccapurple;
+  }
+}
