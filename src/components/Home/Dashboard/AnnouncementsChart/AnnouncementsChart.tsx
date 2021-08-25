@@ -12,12 +12,12 @@ const AnnouncementsChart: React.FC<AnnouncementsChartProps> = ({ stats }) => {
     {
       name: "In Progress",
       value: stats.ACTIVE,
-      color: "#0088FE",
+      color: "#F6A9A9",
     },
     {
       name: "Pending",
       value: stats.CLOSED,
-      color: "#00C49F",
+      color: "#B6C9F0",
     },
   ];
 

@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   return (
     <div className="page-layout">
       <div className={styles.title}>
-        <h1>{locality.title}</h1>
+        <h1 className="title">{locality.title}</h1>
         <span>{usersStats.TOTAL_USERS} people in this locality</span>
       </div>
 

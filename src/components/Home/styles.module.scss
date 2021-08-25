@@ -1,28 +1,39 @@
+@import "src/styles/colors.scss";
+
 .title {
   display: flex;
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
 
-  & h1 {
-    margin: 0
-  }
-
-  & span {
-    font-weight: bold;
-  }
 }
 
 .dashboardSection {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  @media screen and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+  }
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
   display: flex;
+  box-shadow: $inner-shadow;
+  border-radius: $radius;
+  padding: 3rem;
+  flex-direction: column;
   align-content: center;
   align-items: center;
-  justify-content: space-between;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: $inner-shadow;
+    border-radius: $radius;
+    padding: 3rem;
+  }
 }
 
 .itemsContainer {

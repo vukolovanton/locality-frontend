@@ -161,3 +161,9 @@ img {
   max-width: 80%;
   margin: 0 auto;
 }
+
+.title {
+  display: inline-block;
+  border-bottom: 3px solid $locality-primary;
+  margin-bottom: 1rem;
+}

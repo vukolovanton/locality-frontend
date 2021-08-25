@@ -17,13 +17,16 @@ const PieChartGraph: React.FC<PieChartGraphProps> = ({ data }) => {
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={60}
+          innerRadius={30}
           outerRadius={80}
-          paddingAngle={5}
           dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+            <Cell
+              key={`cell-${index}`}
+              fill={entry.color}
+              stroke={entry.color}
+            />
           ))}
         </Pie>
         <Tooltip

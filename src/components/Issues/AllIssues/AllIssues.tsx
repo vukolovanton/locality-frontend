@@ -7,7 +7,6 @@ import {
 } from "src/interfaces/IssueStatuses";
 import { PAGINATION_LIMIT } from "src/interfaces/constants";
 import Filters from "src/components/shared/Filters";
-import styles from "../styles.module.scss";
 
 interface AllIssuesProps {
   issues: Array<IssuesModel>;
@@ -26,7 +25,7 @@ const AllIssues: React.FC<AllIssuesProps> = ({
 }) => {
   return (
     <section>
-      <h2 className={styles.allIssuesTitle}>All issues</h2>
+      <h2 className="title">All issues</h2>
       <div>
         <Filters
           filterStatus={filterStatus}

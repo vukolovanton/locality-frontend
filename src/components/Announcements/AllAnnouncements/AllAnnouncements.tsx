@@ -25,7 +25,7 @@ const AllAnnouncements: React.FC<AllAnnouncementsProps> = ({
 }) => {
   return (
     <section>
-      <h2>All announcements</h2>
+      <h2 className="title">All announcements</h2>
       <div>
         <Filters
           filterStatus={filterStatus}

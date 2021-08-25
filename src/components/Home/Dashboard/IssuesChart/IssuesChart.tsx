@@ -12,12 +12,12 @@ const IssuesChart: React.FC<IssuesChartProps> = ({ stats }) => {
     {
       name: "In Progress",
       value: stats.IN_PROGRESS,
-      color: "#0088FE",
+      color: "#B3E283",
     },
     {
       name: "Pending",
       value: stats.PENDING,
-      color: "#00C49F",
+      color: "#F3C583",
     },
     {
       name: "Resolved",
@@ -27,7 +27,7 @@ const IssuesChart: React.FC<IssuesChartProps> = ({ stats }) => {
     {
       name: "Rejected",
       value: stats.REJECTED,
-      color: "#FF8042",
+      color: "#E99497",
     },
   ];
 
