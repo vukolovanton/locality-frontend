@@ -43,7 +43,11 @@ const CreateNew: React.FC = () => {
             id="street"
           />
 
-          <input type="submit" value="Create Locality" className="btn" />
+          <input
+            type="submit"
+            value="Create Locality"
+            className="submit-button"
+          />
         </fieldset>
       </form>
     </div>

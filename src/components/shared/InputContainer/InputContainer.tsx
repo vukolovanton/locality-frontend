@@ -18,7 +18,7 @@ const InputContainer: React.FC<InputContainerProps> = ({
       <fieldset>
         <legend>{legend}</legend>
         {children}
-        <input type="submit" value={buttonTitle} className="btn" />
+        <input type="submit" value={buttonTitle} className="submit-button" />
       </fieldset>
     </form>
   );

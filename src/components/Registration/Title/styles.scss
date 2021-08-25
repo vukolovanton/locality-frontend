@@ -13,22 +13,21 @@
 }
 
 .circle {
-  width: 1.5rem;
-  height: 1.5rem;
-
+  width: 2.5rem;
+  height: 2.5rem;
+  color: $locality-dark;
+  font-weight: bold;
   background: transparent;
-  border: 1px solid $locality-dark;
-  color: $locality-primary;
   text-align: center;
   border-radius: 50%;
 
-  line-height: 1.5rem;
+  line-height: 2.5rem;
   box-sizing: content-box;
-
+  box-shadow: $shadow;
 }
 
 .active {
-  color: $locality-dark;
-  background-color: $locality-primary;
+  color: $locality-primary;
+  box-shadow: $inner-shadow;
 }
 

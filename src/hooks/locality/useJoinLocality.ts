@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useDebounce from "src/utils/useDebounce";
@@ -51,7 +51,8 @@ export const useJoinLocality = () => {
     setResultList(data);
   };
 
-  const handleJoinLocality = async () => {
+  const handleJoinLocality = async (e: FormEvent) => {
+    e.preventDefault();
     const response = await fetch(
       `${process.env.REACT_APP_LOCAL_ENVIRONMENT_PREFIX}/api/v1/user`,
       {
@@ -68,7 +69,6 @@ export const useJoinLocality = () => {
         }),
       }
     );
-
     if (response.status === 200) {
       history.push("/login");
     } else {

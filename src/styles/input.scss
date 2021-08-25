@@ -1,0 +1,69 @@
+@import "src/styles/colors.scss";
+
+input {
+  height: 2.5rem;
+  border: none;
+  border-radius: $radius;
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  box-shadow: $shadow;
+  background: none;
+  font-family: inherit;
+  color: $locality-dark;
+
+  &:focus {
+    outline: none;
+    box-shadow: $inner-shadow;;
+  }
+
+  &.submit-button {
+    margin: 1.5rem auto 0.5rem auto;
+    width: 10rem;
+    padding: 0;
+    display: block;
+    color:$locality-light;
+    text-shadow: none;
+    text-align: center;
+    font-weight: bold;
+    background: linear-gradient(215deg, $locality-primary, $locality-faded);
+    box-shadow: 2px 4px 7px $color-shadow;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 3px 3px 5px $color-white, 3px 4px 8px $color-shadow;
+    }
+  }
+}
+
+fieldset {
+  border: none;
+  border-radius: 20px;
+  box-shadow:  -5px 5px 9px #c4cad3,
+  5px -5px 9px #ffffff;
+  padding: 2rem;
+
+  & > legend {
+    position: relative;
+    top: 1.5rem;
+    color: $locality-dark-faded
+  }
+}
+
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  border-radius: $radius;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  height: 2.5rem;
+  box-shadow: $shadow;
+}
+
+radio {
+
+}

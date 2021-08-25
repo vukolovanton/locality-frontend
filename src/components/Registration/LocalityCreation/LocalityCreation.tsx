@@ -26,13 +26,13 @@ const LocalityCreation: React.FC = () => {
       <div className={styles.tabButtonsContainer}>
         <button
           onClick={() => setActiveTab("new")}
-          className={activeTab === "new" ? "primary" : ""}
+          className={activeTab === "new" ? "secondary" : ""}
         >
           Create New
         </button>
         <button
           onClick={() => setActiveTab("existing")}
-          className={activeTab === "existing" ? "primary" : ""}
+          className={activeTab === "existing" ? "secondary" : ""}
         >
           Join To Existing
         </button>

@@ -62,8 +62,8 @@ const UserRegistration: React.FC = () => {
           inputType="confirmPassword"
         />
 
-        <label htmlFor="options">
-          Choose role:
+        <div className="input-container">
+          <label htmlFor="options">Choose role:</label>
           <select
             name="options"
             id="options"
@@ -74,7 +74,7 @@ const UserRegistration: React.FC = () => {
             <option value="SUPERVISOR">Supervisor</option>
             <option value="CONTRACTOR">Contractor</option>
           </select>
-        </label>
+        </div>
       </InputContainer>
     </section>
   );

@@ -27,16 +27,33 @@ button {
     text-shadow: none;
     font-weight: bold;
     background: linear-gradient(215deg, $locality-primary, $locality-faded);
-    box-shadow: 2px 4px 15px $color-shadow;
+    box-shadow: 2px 4px 7px $color-shadow;
 
     &:hover {
-      box-shadow: 1px 2px 8px $color-shadow, inset 2px 1px 10px $locality-primary;
+      box-shadow: 3px 3px 5px $color-white, 3px 4px 8px $color-shadow;
+    }
+
+    &:disabled {
+     box-shadow: none;
+      background: none;
+    }
+  }
+
+  &.secondary {
+    display: block;
+    text-shadow: none;
+    background-color: transparent;
+    box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1),
+    inset 3px 3px 5px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      box-shadow: 3px 3px 5px $color-white, 3px 4px 8px $color-shadow;
     }
   }
 
   &:disabled {
     cursor: default;
-    box-shadow: none;
+    box-shadow: 3px 4px 8px $color-shadow;
     color:#AEAFB6;
     text-shadow: 1px 1px 15px $color-shadow;
     background-color: #e0e5ec;

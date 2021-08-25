@@ -29,20 +29,25 @@ const JoinExisting: React.FC = () => {
             onChange={handleSearchTextChange}
             placeholder="Start typing locality name"
           />
+          <div className={styles.previewItemsContainer}>
+            {resultList.map((locality) => (
+              <SearchPreview
+                locality={locality}
+                key={locality.id}
+                handleLocalityIdSelect={handleLocalityIdSelect}
+              />
+            ))}
+          </div>
+          <button
+            onClick={handleJoinLocality}
+            disabled={!selectedLocalityId}
+            style={{ margin: "2rem auto 0 auto" }}
+            className="primary"
+          >
+            Join
+          </button>
         </fieldset>
       </form>
-      <div className={styles.previewItemsContainer}>
-        {resultList.map((locality) => (
-          <SearchPreview
-            locality={locality}
-            key={locality.id}
-            handleLocalityIdSelect={handleLocalityIdSelect}
-          />
-        ))}
-      </div>
-      <button onClick={handleJoinLocality} disabled={!selectedLocalityId}>
-        Join
-      </button>
     </div>
   );
 };
