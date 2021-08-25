@@ -64,6 +64,16 @@ select {
   box-shadow: $shadow;
 }
 
-radio {
+.input-container {
+  padding: 0.2rem 0.4rem;
+  @media screen and (min-width: 568px) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0.4rem 0.6rem;
+    align-items: center;
+  }
+}
 
+.input-field {
+  width: 100%;
 }

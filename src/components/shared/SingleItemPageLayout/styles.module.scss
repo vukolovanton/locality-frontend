@@ -4,8 +4,25 @@
   max-width: 50%;
   margin: 0 auto;
 
-  div {
+  & img {
     height: 10rem;
-    margin-bottom: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  & h1 {
+    margin: 0;
+  }
+
+  & div {
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -17,9 +17,13 @@ const SingleItemPageLayout: React.FC<SingleItemPageLayoutProps> = ({
 }) => {
   return (
     <section className={styles.container}>
-      <h1>{title}</h1>
-      <span>{formatDate(date)}</span>
-      <span>{status}</span>
+      <div className={styles.header}>
+        <h1>{title}</h1>
+        <div>
+          <span>{formatDate(date)}</span>
+          <span>{status}</span>
+        </div>
+      </div>
       {children}
     </section>
   );

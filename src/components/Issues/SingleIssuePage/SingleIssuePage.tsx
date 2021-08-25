@@ -19,7 +19,7 @@ import {
 import SingleItemPageLayout from "src/components/shared/SingleItemPageLayout";
 import Loader from "src/components/shared/Loader";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
-import { Roles } from "../../../interfaces/roles";
+import { Roles } from "src/interfaces/roles";
 
 const SingleIssuePage: React.FC = () => {
   const dispatch = useDispatch();
