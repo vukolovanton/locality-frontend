@@ -8,12 +8,10 @@ const Dashboard: React.FC = () => {
   const { issueStats, announcementsStats } = useDashboard();
 
   return (
-    <div>
-      <section className={styles.dashboardSection}>
-        <IssuesChart stats={issueStats} />
-        <AnnouncementsChart stats={announcementsStats} />
-      </section>
-    </div>
+    <section className={styles.dashboardSection}>
+      <IssuesChart stats={issueStats} />
+      <AnnouncementsChart stats={announcementsStats} />
+    </section>
   );
 };
 

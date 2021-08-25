@@ -15,14 +15,16 @@
     grid-column-gap: 2rem;
   }
   display: flex;
+  gap: 2rem;
   flex-direction: column;
+  margin-bottom: 3rem;
 }
 
 .container {
   display: flex;
   box-shadow: $inner-shadow;
   border-radius: $radius;
-  padding: 3rem;
+  padding: 0.5rem 1rem;
   flex-direction: column;
   align-content: center;
   align-items: center;
@@ -32,7 +34,7 @@
     justify-content: space-between;
     box-shadow: $inner-shadow;
     border-radius: $radius;
-    padding: 3rem;
+    align-items: flex-start;
   }
 }
 

@@ -12,7 +12,7 @@ interface PieChartGraphProps {
 const PieChartGraph: React.FC<PieChartGraphProps> = ({ data }) => {
   return (
     <>
-      <PieChart width={300} height={200}>
+      <PieChart width={200} height={200}>
         <Pie
           data={data}
           cx="50%"
