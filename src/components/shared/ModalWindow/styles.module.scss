@@ -5,11 +5,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: $locality-light;
+  background-color: $background;
   border-radius: 5px;
   border: 1px solid $locality-primary;
   max-height: 80%;
   overflow-y: scroll;
+  padding: 2rem 4rem;
 }
 
 .overlay {
@@ -22,4 +23,14 @@
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 4.0px );
   -webkit-backdrop-filter: blur( 4.0px );
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+  & > h2 {
+    margin: 0;
+  }
 }

@@ -27,6 +27,7 @@ const ImageUpload: React.FC<InputUploadProps> = ({ setImageUrl }) => {
     <>
       <input
         type="file"
+        style={{ boxShadow: "none" }}
         onChange={(e) => {
           const target = e.target as HTMLInputElement;
           const file: File = (target.files as FileList)[0];

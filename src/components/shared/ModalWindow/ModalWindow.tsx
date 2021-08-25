@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 interface ModalWindowProps {
   handleCloseModal: () => void;
@@ -21,11 +21,13 @@ const ModalWindow: React.FC<ModalWindowProps> = ({
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         contentLabel="Example Modal"
-        className="modal"
-        overlayClassName="overlay"
+        className={styles.modal}
+        overlayClassName={styles.overlay}
       >
-        <h2>{title}</h2>
-        <button onClick={handleCloseModal}>close</button>
+        <div className={styles.titleContainer}>
+          <h2>{title}</h2>
+          <button onClick={handleCloseModal}>close</button>
+        </div>
         {children}
       </Modal>
     </>
