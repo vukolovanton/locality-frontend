@@ -4,8 +4,13 @@
     justify-self: end;
 
     span {
-        font-weight: 600;
-        color: $locality-primary;
+        @media screen and (min-width: 768px) {
+            font-weight: 600;
+            color: $locality-primary;
+            margin-right: 2rem;
+            display: inline-flex;
+        }
+        display: none;
     }
 
 

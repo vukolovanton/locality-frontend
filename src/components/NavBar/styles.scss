@@ -7,30 +7,23 @@
     align-items: center;
     padding: 0 1.5rem;
     margin-bottom: 3rem;
-    //box-shadow: 0 0 10px $locality-dark;
     background: linear-gradient(315deg, #e0e5ec, #e0e5ec);
     box-shadow:  0.3rem 0.5rem 1.8rem $color-shadow,
     1rem -1rem 1.5rem $color-shadow;
 
     &__list {
         position: relative;
+        box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1),
+        inset 3px 3px 5px rgba(0, 0, 0, 0.1);
+        display: inline-flex;
+        border-radius: $radius;
 
         &item {
             list-style: none;
-            padding: 1.5rem 1rem;
+            padding: 0.5rem 1.5rem;
             cursor: pointer;
-
-            &::after {
-                content: '';
-                width: 0;
-                height: 0.3rem;
-                border-radius: 4px;
-                position: absolute;
-                left: 1rem;
-                bottom: 0.8rem;
-                background-color: $locality-primary;
-                transition: width 200ms ease-in;
-            }
+            min-width: 15rem;
+            text-align: center;
 
             &:hover::after, &:focus::after {
                 width: 100%;
@@ -43,10 +36,10 @@
 
             &drop {
                 position: absolute;
-                top: 4rem;
-                left: -1rem;
+                top: 2rem;
                 box-shadow: 0 0 10px gray;
-                background-color: white;
+                background-color: transparent;
+                backdrop-filter: blur( 4.0px );
                 border-radius: 4px;
                 width: 12rem;
                 padding: 1rem;
@@ -63,7 +56,8 @@
                     cursor: pointer;
 
                     &:hover, &:focus {
-                        background-color: $locality-primary;
+                        box-shadow: $inner-shadow;
+                        border-radius: $radius;
                     }
 
                     a {
