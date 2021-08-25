@@ -8,6 +8,7 @@ import { RootState } from "../store";
 interface IAnnouncementsState {
   loading: boolean;
   loadingSearchItems: boolean;
+  isPatching: boolean;
   hasErrors: boolean;
   errorMessage: string;
   allAnnouncements: Array<AnnouncementsModel>;
@@ -18,6 +19,7 @@ interface IAnnouncementsState {
 const initialAnnouncementsState: IAnnouncementsState = {
   loading: false,
   loadingSearchItems: false,
+  isPatching: false,
   hasErrors: false,
   errorMessage: "",
   allAnnouncements: [],
@@ -96,16 +98,16 @@ export const announcementSlice = createSlice({
     },
     // PATCH
     patchAnnouncementsStart: (state) => {
-      state.loading = true;
+      state.isPatching = true;
     },
     patchAnnouncementsSuccess: (state, { payload }) => {
-      state.loading = false;
+      state.isPatching = false;
       state.hasErrors = false;
       // @ts-ignore
       state.singleAnnouncement[payload.key] = payload.value;
     },
     patchAnnouncementsFail: (state, { payload }) => {
-      state.loading = false;
+      state.isPatching = false;
       state.hasErrors = true;
       state.errorMessage = payload;
     },

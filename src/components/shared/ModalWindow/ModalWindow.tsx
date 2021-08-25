@@ -35,4 +35,4 @@ const ModalWindow: React.FC<ModalWindowProps> = ({
 };
 
 Modal.setAppElement("#root");
-export default ModalWindow;
+export default React.memo(ModalWindow);
