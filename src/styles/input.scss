@@ -77,3 +77,43 @@ select {
 .input-field {
   width: 100%;
 }
+
+.checkbox {
+  width: 6rem;
+  display: flex;
+  justify-content: center;
+
+  input {
+    display: none;
+  }
+
+  label {
+    box-shadow: $shadow;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+
+    &:hover i { color: red; }
+
+    i {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: $locality-dark-faded;
+      transition: .3s ease;
+    }
+  }
+
+  & input:checked {
+    & ~ label {
+      box-shadow: $inner-shadow;
+      i {
+        color: $locality-primary;
+      }
+    }
+}
+}

@@ -17,7 +17,7 @@ import {
   singleAnnouncementsSelector,
 } from "src/state/announcements/announcementsSlice";
 import { currentUserSelector } from "src/state/auth/login/loginSlice";
-import Loader from "../../shared/Loader";
+import Loader from "src/components/shared/Loader";
 
 const SingleAnnouncementPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -75,32 +75,49 @@ const SingleAnnouncementPage: React.FC = () => {
       date={announcement.createdAt}
       status={USER_FACING_ANNOUNCEMENTS_STATUSES[announcement.status]}
     >
-      <label htmlFor="options">
-        Change status:
-        <select
-          name="options"
-          id="options"
-          required
-          value={announcement.status}
-          onChange={handleAnnouncementStatusChange}
-        >
-          {ANNOUNCEMENTS_STATUSES_CONFIG.map((c) => (
-            <option value={c.value} key={c.value}>
-              {c.title}
-            </option>
-          ))}
-        </select>
-      </label>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr",
+          alignItems: "center",
+          justifyItems: "start",
+        }}
+      >
+        <div>
+          <label htmlFor="options">Change status:</label>
+          <select
+            name="options"
+            id="options"
+            required
+            value={announcement.status}
+            onChange={handleAnnouncementStatusChange}
+          >
+            {ANNOUNCEMENTS_STATUSES_CONFIG.map((c) => (
+              <option value={c.value} key={c.value}>
+                {c.title}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <input
-        type="checkbox"
-        name="isPinned"
-        id="isPinned"
-        className="custom-checkbox"
-        checked={announcement.isPinned}
-        onChange={handleAnnouncementPinnedChange}
-      />
-      <label htmlFor="isPinned">Is Pinned</label>
+        <div
+          className="checkbox"
+          style={{
+            justifySelf: "end",
+          }}
+        >
+          <input
+            type="checkbox"
+            name="isPinned"
+            id="isPinned"
+            checked={announcement.isPinned}
+            onChange={handleAnnouncementPinnedChange}
+          />
+          <label htmlFor="isPinned">
+            <i className="material-icons">bookmark_border</i>
+          </label>
+        </div>
+      </div>
 
       <div>{renderImage()}</div>
       <p>{announcement.description}</p>
