@@ -1,7 +1,7 @@
 import React from "react";
 import { IssueStatuses } from "src/interfaces/IssueStatuses";
 import styles from "../../Issues/styles.module.scss";
-import { AnnouncementsStatuses } from "../../../interfaces/AnnouncementsStatuses";
+import { AnnouncementsStatuses } from "src/interfaces/AnnouncementsStatuses";
 
 interface FiltersProps {
   filterStatus: IssueStatuses | AnnouncementsStatuses;
