@@ -7,14 +7,12 @@
     align-items: center;
     padding: 0 1.5rem;
     margin-bottom: 3rem;
-    box-shadow: 0 0 10px $locality-dark;
+    //box-shadow: 0 0 10px $locality-dark;
+    background: linear-gradient(315deg, #e0e5ec, #e0e5ec);
+    box-shadow:  0.3rem 0.5rem 1.8rem $color-shadow,
+    1rem -1rem 1.5rem $color-shadow;
 
     &__list {
-        //display: flex;
-        //justify-content: flex-end;
-        //align-items: center;
-        //gap: 2rem;
-        //margin: 0 2rem;
         position: relative;
 
         &item {
