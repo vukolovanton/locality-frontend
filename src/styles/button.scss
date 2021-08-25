@@ -1,0 +1,44 @@
+@import "src/styles/colors.scss";
+
+button {
+  border: 0;
+  outline: 0;
+  border-radius: 12px;
+  padding: 0.4rem 0.6rem;
+  background-color:$color-bg;
+  text-shadow: 1px 1px 0 $color-white;
+  color:#61677C;
+  box-shadow: -5px -5px 15px $color-white,  5px 5px 20px $color-shadow;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+
+  &:hover {
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+  }
+
+  &:active {
+    box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+  }
+
+  &.primary {
+    display: block;
+    color:$locality-light;
+    text-shadow: none;
+    font-weight: bold;
+    background: linear-gradient(215deg, $locality-primary, $locality-faded);
+    box-shadow: 2px 2px 8px $locality-primary;
+
+    &:hover {
+      box-shadow: 2px 2px 5px $color-shadow, inset 2px 1px 10px $locality-primary;
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    box-shadow: none;
+    color:#AEAFB6;
+    text-shadow: 1px 1px 15px $color-shadow;
+    background-color: #e0e5ec;
+  }
+}
