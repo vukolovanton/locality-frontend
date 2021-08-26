@@ -87,9 +87,10 @@ export const announcementSlice = createSlice({
     postAnnouncementsStart: (state) => {
       state.loading = true;
     },
-    postAnnouncementsSuccess: (state) => {
+    postAnnouncementsSuccess: (state, { payload }) => {
       state.loading = false;
       state.hasErrors = false;
+      state.allAnnouncements = [payload, ...state.allAnnouncements];
     },
     postAnnouncementsFail: (state, { payload }) => {
       state.loading = false;
@@ -223,9 +224,10 @@ export const postNewAnnouncement =
 
     try {
       const res = await api.postRequest("/announcements", newAnnouncement);
+      const data = await res.json();
 
       if (res.status === 200) {
-        dispatch(postAnnouncementsSuccess());
+        dispatch(postAnnouncementsSuccess(data));
       } else {
         dispatch(
           postAnnouncementsFail(
