@@ -16,10 +16,15 @@ export const useIssueCreation = () => {
   const currentUser = useSelector(currentUserSelector);
 
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [issueCreationState, setIssueCreationState] = useState(
     initialIssueCreationState
   );
+
+  const handleModalState = () => {
+    setIsModalOpen((value) => !value);
+  };
 
   const handleStateChange = (key: string, value: string) => {
     setIssueCreationState({ ...issueCreationState, [key]: value });
@@ -52,5 +57,7 @@ export const useIssueCreation = () => {
     handleStateChange,
     handleSubmitCreateIssueForm,
     setImageUrl,
+    isModalOpen,
+    handleModalState,
   };
 };

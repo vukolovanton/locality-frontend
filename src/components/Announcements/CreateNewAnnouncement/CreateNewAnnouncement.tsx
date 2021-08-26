@@ -13,6 +13,8 @@ const CreateNewAnnouncement: React.FC = () => {
     handleStateChange,
     handleSubmitCreateAnnouncementForm,
     setImageUrl,
+    isModalOpen,
+    handleModalState,
   } = useAnnouncementsCreation();
 
   return (
@@ -21,6 +23,8 @@ const CreateNewAnnouncement: React.FC = () => {
         title="Create new announcement"
         handleSubmitForm={handleSubmitCreateAnnouncementForm}
         errorMessage={errorMessage}
+        isModalOpen={isModalOpen}
+        handleModalState={handleModalState}
       >
         <InputField
           value={announcementCreationState.title}

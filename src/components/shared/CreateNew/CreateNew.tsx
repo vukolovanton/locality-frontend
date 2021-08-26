@@ -1,8 +1,10 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent } from "react";
 import ModalWindow from "src/components/shared/ModalWindow";
 import InputContainer from "../InputContainer";
 
 interface CreateNewItemProps {
+  isModalOpen: boolean;
+  handleModalState: () => void;
   title: string;
   errorMessage: string;
   handleSubmitForm: (e: FormEvent) => void | Promise<void>;
@@ -10,29 +12,21 @@ interface CreateNewItemProps {
 }
 
 const CreateNew: React.FC<CreateNewItemProps> = ({
+  isModalOpen,
+  handleModalState,
   title,
   errorMessage,
   handleSubmitForm,
   children,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
-      <button onClick={() => handleOpenModal()} className="primary">
+      <button onClick={handleModalState} className="primary">
         Create new
       </button>
       <ModalWindow
         isModalOpen={isModalOpen}
-        handleCloseModal={handleCloseModal}
+        handleCloseModal={handleModalState}
         title={title}
       >
         {errorMessage && <span className="error">{errorMessage}</span>}

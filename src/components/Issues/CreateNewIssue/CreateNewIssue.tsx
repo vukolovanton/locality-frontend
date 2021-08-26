@@ -12,6 +12,8 @@ const CreateNewIssue: React.FC = () => {
     handleStateChange,
     handleSubmitCreateIssueForm,
     setImageUrl,
+    isModalOpen,
+    handleModalState,
   } = useIssueCreation();
 
   return (
@@ -20,6 +22,8 @@ const CreateNewIssue: React.FC = () => {
         title="Submit a new issue"
         errorMessage={errorMessage}
         handleSubmitForm={handleSubmitCreateIssueForm}
+        isModalOpen={isModalOpen}
+        handleModalState={handleModalState}
       >
         <InputField
           value={issueCreationState.title}

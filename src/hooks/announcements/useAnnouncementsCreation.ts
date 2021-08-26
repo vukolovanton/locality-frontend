@@ -16,10 +16,15 @@ export const useAnnouncementsCreation = () => {
   const currentUser = useSelector(currentUserSelector);
 
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [announcementCreationState, setAnnouncementCreationState] = useState(
     initialAnnouncementCreationState
   );
+
+  const handleModalState = () => {
+    setIsModalOpen((value) => !value);
+  };
 
   const handleStateChange = (key: string, value: string) => {
     setAnnouncementCreationState({
@@ -50,6 +55,7 @@ export const useAnnouncementsCreation = () => {
       );
       // Clean up
       setAnnouncementCreationState(initialAnnouncementCreationState);
+      handleModalState();
     }
   };
 
@@ -59,5 +65,7 @@ export const useAnnouncementsCreation = () => {
     handleStateChange,
     handleSubmitCreateAnnouncementForm,
     setImageUrl,
+    isModalOpen,
+    handleModalState,
   };
 };
