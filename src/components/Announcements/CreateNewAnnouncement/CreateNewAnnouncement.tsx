@@ -4,6 +4,7 @@ import InputTextareaField from "src/components/shared/InputTextareaField";
 import ImageUpload from "src/components/shared/ImageUpload";
 import CreateNew from "src/components/shared/CreateNew";
 import { useAnnouncementsCreation } from "src/hooks/announcements/useAnnouncementsCreation";
+import styles from "src/components/Announcements/styles.module.scss";
 
 const CreateNewAnnouncement: React.FC = () => {
   const {
@@ -15,7 +16,7 @@ const CreateNewAnnouncement: React.FC = () => {
   } = useAnnouncementsCreation();
 
   return (
-    <div>
+    <div className={styles.buttonContainer}>
       <CreateNew
         title="Create new announcement"
         handleSubmitForm={handleSubmitCreateAnnouncementForm}

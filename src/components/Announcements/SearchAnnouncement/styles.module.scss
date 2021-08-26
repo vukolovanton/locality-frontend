@@ -17,7 +17,12 @@
 }
 
 .container {
+  margin-top: 2rem;
   & label {
     font-weight: 600;
+  }
+
+  & button {
+    margin-top: 1rem;
   }
 }

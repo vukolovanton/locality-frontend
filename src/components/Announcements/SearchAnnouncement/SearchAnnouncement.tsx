@@ -9,9 +9,14 @@ import styles from "./styles.module.scss";
 const SearchAnnouncement: React.FC = () => {
   const currentUser = useSelector(currentUserSelector);
   const [searchText, setSearchText] = useState<string>("");
-  const [resultList, setResultList] = useState<Array<AnnouncementsModel>>([]);
+  const [resultList, setResultList] =
+    useState<Array<AnnouncementsModel> | null>(null);
 
   const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === "") {
+      setResultList(null);
+    }
     setSearchText(e.target.value);
   };
 
@@ -24,7 +29,6 @@ const SearchAnnouncement: React.FC = () => {
     });
     const data = await response.json();
     setResultList(data);
-    setSearchText("");
   };
 
   return (
