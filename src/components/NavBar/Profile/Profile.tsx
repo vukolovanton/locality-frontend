@@ -30,7 +30,9 @@ const Profile: React.FC = () => {
 
   return (
     <div className="account-container">
-      <span>{user.username}</span>
+      <span>
+        {user.firstName}&nbsp;{user.lastName}
+      </span>
       <button onClick={handleLogout}>Log Out</button>
     </div>
   );

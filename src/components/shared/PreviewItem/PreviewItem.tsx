@@ -15,7 +15,7 @@ interface PreviewItemProps {
 
 const PreviewItem: React.FC<PreviewItemProps> = ({ item, path }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.box}>
         <img
           src={item.imageUrl || logo}
@@ -25,20 +25,22 @@ const PreviewItem: React.FC<PreviewItemProps> = ({ item, path }) => {
           height="400"
         />
       </div>
-      <Link
-        to={{
-          pathname: `${path}/${item.id}`,
-          state: item,
-        }}
-      >
-        <span className={styles.title}>{item.title}</span>
-      </Link>
-      <div className={styles.info}>
-        <span>
-          {USER_FACING_ISSUES_STATUS[item.status] ||
-            USER_FACING_ANNOUNCEMENTS_STATUSES[item.status]}
-        </span>
-        <span>{formatDate(item.createdAt)}</span>
+      <div className={styles.description}>
+        <Link
+          to={{
+            pathname: `${path}/${item.id}`,
+            state: item,
+          }}
+        >
+          <span className={styles.title}>{item.title}</span>
+        </Link>
+        <div className={styles.info}>
+          <span>
+            {USER_FACING_ISSUES_STATUS[item.status] ||
+              USER_FACING_ANNOUNCEMENTS_STATUSES[item.status]}
+          </span>
+          <span>{formatDate(item.createdAt)}</span>
+        </div>
       </div>
     </div>
   );
