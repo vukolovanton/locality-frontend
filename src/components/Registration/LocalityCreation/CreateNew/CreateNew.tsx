@@ -11,7 +11,7 @@ const CreateNew: React.FC = () => {
   } = useLocalityCreation();
 
   return (
-    <div>
+    <>
       {errorMessage && <span className="error">{errorMessage}</span>}
       <form method="post" onSubmit={handleSubmitCreateLocalityForm}>
         <fieldset>
@@ -50,7 +50,7 @@ const CreateNew: React.FC = () => {
           />
         </fieldset>
       </form>
-    </div>
+    </>
   );
 };
 

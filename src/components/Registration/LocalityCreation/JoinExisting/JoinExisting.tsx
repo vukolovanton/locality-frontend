@@ -15,7 +15,7 @@ const JoinExisting: React.FC = () => {
   } = useJoinLocality();
 
   return (
-    <div>
+    <>
       <span className="error">{errorMessage}</span>
       <form method="GET">
         <fieldset>
@@ -48,7 +48,7 @@ const JoinExisting: React.FC = () => {
           </button>
         </fieldset>
       </form>
-    </div>
+    </>
   );
 };
 
